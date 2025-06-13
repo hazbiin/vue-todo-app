@@ -1,3 +1,6 @@
 @import './base.css';
 
-/* main styles includes here */
+#app{
+    max-width: 700px;
+    margin: 0 auto;
+}

@@ -52,11 +52,6 @@
 </template>
 
 <style scoped>
-  .container{
-    margin: 0 auto;
-    padding: 60px 16px 30px;
-    max-width: 700px;
-  }
   .header{
     text-align: center;
     margin-bottom: 40px;
