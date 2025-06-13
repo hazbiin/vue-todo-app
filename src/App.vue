@@ -5,17 +5,13 @@
 
 <template>
   <Header/>
-  <div class="add-task-section">
+  <div class="add-task-container">
     <div class="input-wrapper">
       <input type="text" placeholder="add task.." class="task-input" v-model="newTask">
     </div>
-    <button class="add-btn" @click="addTask"> Add new task</button>
+    <button class="add-task-button" @click="addTask"> Add new task</button>
   </div>
     <div class="todo-list-section">
-      <!-- <div class="empty-list">
-        <h3>No tasks found!</h3>
-        <p>Add your first task to get started.</p>
-      </div> -->
       <ul>
         <li class="todo-item" v-for="(task, index) in tasks" :key="index">
             <div class="todo-content">
@@ -32,7 +28,7 @@
 </template>
 
 <style scoped>
-  .add-task-section{
+  .add-task-container{
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -62,7 +58,7 @@
     color: #fff;
     font-size: 16px;
   }
-  .add-btn{
+  .add-task-button{
     width: 100%;
     padding: 14px 32px;
     background: linear-gradient(45deg, #e0cf6fc0, #ff8e53);
@@ -128,10 +124,10 @@
 
 
   @media (min-width: 768px) {
-    .add-task-section {
+    .add-task-container {
       flex-direction: row;
     }
-    .add-btn{
+    .add-task-button{
       width: unset;
     }
   }
