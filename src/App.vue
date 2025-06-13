@@ -1,35 +1,16 @@
 <script setup>
-  import { ref } from 'vue';
-
-  const tasks = ref([]);
-  const newTask = ref();
-
-  const addTask = () => {
-    if(newTask.value !== "") {
-      tasks.value.push(newTask.value);
-      newTask.value = '';
-    }
-  }
-
-  const deleteTask = (index) => {
-    tasks.value.splice(index, 1);
-  }
-
+  import Header from './components/Header.vue';
 </script>
 
 
 <template>
-  <div class="container">
-    <div class="header">
-      <h1>Todo App</h1>
-      <p>stay productive, stay organized!</p>
+  <Header/>
+  <div class="add-task-section">
+    <div class="input-wrapper">
+      <input type="text" placeholder="add task.." class="task-input" v-model="newTask">
     </div>
-    <div class="add-task-section">
-      <div class="input-wrapper">
-        <input type="text" placeholder="add task.." class="task-input" v-model="newTask">
-      </div>
-      <button class="add-btn" @click="addTask"> Add new task</button>
-    </div>
+    <button class="add-btn" @click="addTask"> Add new task</button>
+  </div>
     <div class="todo-list-section">
       <!-- <div class="empty-list">
         <h3>No tasks found!</h3>
@@ -48,17 +29,9 @@
         </li>
       </ul>
     </div>
-  </div>
 </template>
 
 <style scoped>
-  .header{
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .header h1{
-    margin-bottom: 10px;
-  }
   .add-task-section{
     display: flex;
     flex-direction: column;
