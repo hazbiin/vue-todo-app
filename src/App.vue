@@ -6,29 +6,27 @@
 <template>
   <Header/>
   <div class="add-task-container">
-        <input class="task-input" type="text" placeholder="type here ...">
-        <button class="add-task-button" >Add new task</button>
+    <input class="task-input" type="text" placeholder="type here ...">
+    <button class="add-task-button" >Add new task</button>
   </div>
-    <div class="todo-list-section">
-      <ul>
-        <li class="todo-item" v-for="(task, index) in tasks" :key="index">
-            <div class="todo-content">
-              <div class="todo-checkbox"></div>
-              <div class="todo-text">{{ task }}</div>
-            </div>
-            <div class="todo-actions">
-              <button>edit</button>
-              <button v-on:click="() => deleteTask(index)">delete</button>
-            </div>
-        </li>
-      </ul>
-    </div>
+  <div class="todo-list-container">
+    <ul class="todo-list">
+      <li class="todo-item">
+        <span class="todo-item-text">Todo item</span>
+        <div class="todo-actions">
+          <button class="action-btn">edit</button>
+          <button class="action-btn">delete</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </template>
+
 
 <style scoped>
   .add-task-container{
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 15px;
     margin-bottom: 20px;
     background: rgba(255, 255, 255, 0.1);
@@ -66,62 +64,55 @@
   .add-task-button:active {
     transform: scale(0.99);
   }
-  .todo-list-section{
+  .todo-list-container{
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
-    border-radius: 20px;
+    border-radius: 15px;
+    padding: 18px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    max-height: 600px;
+    overflow-y: scroll;
   }
-  .empty-list{
-    text-align: center;
-    padding: 180px 20px;
-    color: rgba(255, 255, 255, 0.8);
+  .todo-list-container::-webkit-scrollbar{
+    display: none;
   }
-  .empty-list h3{
-    font-size: 30px;
-    margin-bottom: 20px;
+  .todo-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
-  .empty-list p{
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  /* /////////////////todo item/////////////// */
   .todo-item{
-    list-style: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px;
-    border-bottom:1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px 12px;
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
   }
-  .todo-item:last-child{
-    border-bottom: unset;
+  .todo-item-text{
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
   }
-  .todo-content{
+  .todo-actions{
     display: flex;
+    gap: 8px;
     align-items: center;
     justify-content: center;
-    gap: 8px;
   }
-  .todo-checkbox{
-    width: 24px;
-    height: 24px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    cursor: pointer;
+  .action-btn{
+    padding: 10px 13px;
+    background:#552275c0 ;
+    opacity: 0.9;
+    color: white;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 1px 10px rgba(255, 255, 255, 0.2);
   }
-
-
-  @media (min-width: 768px) {
-    .add-task-container {
-      flex-direction: row;
-    }
-    .add-task-button{
-      width: unset;
-    }
+  .action-btn:active {
+    transform: scale(0.99);
   }
-
 </style>
