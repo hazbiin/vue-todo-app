@@ -1,7 +1,23 @@
+<script setup>
+    import { ref, defineEmits } from 'vue';
+
+    const emit = defineEmits(['add-new-task']);
+
+    const newTask = ref('');
+
+    const addNewTask = () => {
+        if(newTask.value.trim() !== "") {
+            emit('add-new-task', newTask.value.trim());
+            newTask.value= "";
+        }
+    }
+
+</script>
+
 <template>
     <div class="add-task-container">
-        <input class="task-input" type="text" placeholder="type here ...">
-        <button class="add-task-button">Add new task</button>
+        <input class="task-input" type="text" placeholder="type here ..." v-model="newTask">
+        <button class="add-task-button" @click="addNewTask">Add new task</button>
     </div>
 </template>
 
