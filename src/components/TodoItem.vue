@@ -1,6 +1,17 @@
+<script setup>
+    import { defineProps } from 'vue';
+    const props = defineProps({
+        taskName: {
+            type: String
+        }
+    });
+
+</script>
+
+
 <template>
     <li class="todo-item">
-        <span class="todo-item-text">Todo item</span>
+        <span class="todo-item-text">{{ taskName }}</span>
         <div class="todo-actions">
             <button class="action-button">edit</button>
             <button class="action-button">delete</button>

@@ -1,11 +1,24 @@
 <script setup>
+    import { defineProps } from 'vue';
+
     import TodoItem from './TodoItem.vue';
+
+    const props = defineProps({
+        tasks: {
+            type: Array
+        }
+    });
+
 </script>
 
 <template>
     <div class="todo-list-container">
         <ul class="todo-list">
-            <TodoItem/>
+            <TodoItem
+                v-for="task in tasks"
+                :key="task.taskId"
+                :taskName="task.taskName"
+            />
         </ul>
     </div>
 </template>

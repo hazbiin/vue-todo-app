@@ -25,5 +25,5 @@
 <template>
   <Header/>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
-  <TodoListContainer/>
+  <TodoListContainer :tasks="tasks"/>
 </template>
