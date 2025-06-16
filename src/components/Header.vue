@@ -18,7 +18,7 @@
         margin-bottom: 7px;
     }
     .header-subtitle{
-        font-size: 20px;
+        font-size: 18px;
         letter-spacing: 3px;
         font-weight: bold;
     }

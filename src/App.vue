@@ -14,8 +14,8 @@
       <li class="todo-item">
         <span class="todo-item-text">Todo item</span>
         <div class="todo-actions">
-          <button class="action-btn">edit</button>
-          <button class="action-btn">delete</button>
+          <button class="action-button">edit</button>
+          <button class="action-button">delete</button>
         </div>
       </li>
     </ul>
@@ -101,7 +101,7 @@
     align-items: center;
     justify-content: center;
   }
-  .action-btn{
+  .action-button{
     padding: 10px 13px;
     background:#552275c0 ;
     opacity: 0.9;
@@ -112,7 +112,7 @@
     letter-spacing: 1px;
     box-shadow: 0 1px 10px rgba(255, 255, 255, 0.2);
   }
-  .action-btn:active {
+  .action-button:active {
     transform: scale(0.99);
   }
 </style>
