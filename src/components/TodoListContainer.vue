@@ -9,15 +9,20 @@
         }
     });
 
+    const deleteTask = (index) => {
+        props.tasks = props.tasks.splice(index, 1);
+    }
+
 </script>
 
 <template>
     <div class="todo-list-container">
         <ul class="todo-list">
             <TodoItem
-                v-for="task in tasks"
+                v-for="(task, index) in tasks"
                 :key="task.taskId"
                 :taskName="task.taskName"
+                @delete-task="deleteTask(index)"
             />
         </ul>
     </div>
