@@ -6,8 +6,9 @@
     const newTask = ref('');
 
     const addNewTask = () => {
-        if(newTask.value.trim() !== "") {
-            emit('add-new-task', newTask.value.trim());
+        const trimmedTaskInput = newTask.value.trim();
+        if(trimmedTaskInput !== "") {
+            emit('add-new-task', trimmedTaskInput);
             newTask.value= "";
         }
     }
