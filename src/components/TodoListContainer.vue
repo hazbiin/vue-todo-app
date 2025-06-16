@@ -1,5 +1,5 @@
 <script setup>
-    import { defineProps } from 'vue';
+    import { defineProps, computed } from 'vue';
 
     import TodoItem from './TodoItem.vue';
 
@@ -7,6 +7,10 @@
         tasks: {
             type: Array
         }
+    });
+
+    const isEmptyTodoList = computed (() => {
+        return props.tasks.length === 0;
     });
 
     const deleteTask = (index) => {
@@ -17,7 +21,13 @@
 
 <template>
     <div class="todo-list-container">
-        <ul class="todo-list">
+
+        <div v-if="isEmptyTodoList" class="empty-list">
+            <h2 class="empty-list-title">No tasks found!</h2>
+            <p class="empty-list-subtitle">Add your first task to get started.</p>
+        </div>
+
+        <ul v-else class="todo-list">
             <TodoItem
                 v-for="(task, index) in tasks"
                 :key="task.taskId"
@@ -41,6 +51,20 @@
     }
     .todo-list-container::-webkit-scrollbar{
         display: none;
+    }
+    .empty-list{
+        text-align: center;
+        padding: 50px 0px;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .empty-list-title{
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+    .empty-list-subtitle{
+        font-size: 18px;
     }
     .todo-list{
         display: flex;
