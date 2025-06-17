@@ -1,5 +1,5 @@
 <script setup>
-    import { defineProps, defineEmits } from 'vue';
+    import { ref, defineProps, defineEmits, watch } from 'vue';
 
     // component props
     const props = defineProps({
@@ -14,7 +14,28 @@
     // component emits
     const emits = defineEmits(['close-modal']);
 
-    // close modal function
+    // reactive varible 
+    const updatedTask = ref('');
+
+    // sync updated taskname to local reactive variable without directly changing original.
+    watch(
+        () => props.taskToUpdate,
+        (latestUpdatedTask) => {
+            if(latestUpdatedTask) {
+                updatedTask.value = latestUpdatedTask.taskName;
+            }
+        },
+        { immediate:true }
+    );
+
+    // save changes handler
+    const saveChanges = () => {
+        props.taskToUpdate.taskName = updatedTask.value;
+        props.taskToUpdate.isEditMode = false;
+        emits('close-modal');
+    }
+
+    // close modal handler
     const closeModal = () => {
         props.taskToUpdate.isEditMode = false;
         emits('close-modal');
@@ -26,9 +47,9 @@
     <div class="modal-overlay" v-if="showModal">
         <div class="modal-container">
             <h1 class="modal-title">Edit your task!</h1>
-            <input class="task-input" type="text" v-model="taskToUpdate.taskName"/>
+            <input class="task-input" type="text" v-model="updatedTask"/>
             <div class="todo-actions">
-                <button class="action-button" @click="closeModal">Save Changes</button>
+                <button class="action-button" @click="saveChanges">Save Changes</button>
                 <button class="action-button" @click="closeModal">Close</button>
             </div>
         </div>
