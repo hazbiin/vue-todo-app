@@ -44,6 +44,9 @@
     showModal.value = true;
   }
 
+  const getTaskToDelete = (index) => {
+    tasks.value.splice(index, 1);
+  }
 
   // watch() updates the localStorage when tasks array changes.
   watch(tasks, (updatedTasks) => {
@@ -59,6 +62,7 @@
   <TodoListContainer
     :tasks="tasks"
     @edit-task="getTaskToUpdate"
+    @delete-task="getTaskToDelete"
     />
   <Modal 
       :taskToUpdate="taskToUpdate"

@@ -10,7 +10,7 @@
     });
 
     // component emits
-    const emits = defineEmits(['edit-task']);
+    const emits = defineEmits(['edit-task', 'delete-task']);
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed (() => {
@@ -19,7 +19,7 @@
 
     // delete-task emit handler
     const deleteTask = (index) => {
-        props.tasks = props.tasks.splice(index, 1);
+        emits('delete-task', index);
     }
 
     // edit-task emit handler
@@ -42,7 +42,7 @@
                 v-for="(task, index) in tasks"
                 :key="task.taskId"
                 :todoItem="task.taskName"
-                @delete-task="deleteTask(index)"
+                @delete-task="() => deleteTask(index)"
                 @edit-task="() => editTask(index)"
             />
         </ul>
