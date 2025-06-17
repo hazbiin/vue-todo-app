@@ -5,9 +5,12 @@
   import Header from './components/Header.vue';
   import TaskInputContainer from './components/TaskInputContainer.vue';
   import TodoListContainer from './components/TodoListContainer.vue';
+  import Modal from './components/Modal.vue';
 
-  // tasks reactive variable
+  //reactive variables
   const tasks = ref([]);
+  const isModalVisible = ref(false);
+  const taskToUpdate = ref({});
 
 
   // get the savedTasks from localStorage at onMounted lifecycle hook.
@@ -18,7 +21,7 @@
     }
   });
 
-  
+
   // add task to tasks array
   const addTaskToArray = (newtask) => {
     const newTask = {
@@ -27,6 +30,18 @@
       isEditMode: false
     }
     tasks.value.push(newTask);
+  }
+
+
+  // edit-task emit handler
+  const getTaskToUpdate = (emittedTask) => {
+
+    // change the isEditMode value of orignal task object.
+    emittedTask.isEditMode = true;
+
+    // update the reactive variables
+    taskToUpdate.value = emittedTask;
+    isModalVisible.value = true;
   }
 
 
@@ -41,5 +56,11 @@
 <template>
   <Header/>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
-  <TodoListContainer :tasks="tasks"/>
+  <TodoListContainer
+    :tasks="tasks"
+    @edit-task="getTaskToUpdate"
+    />
+  <Modal 
+      v-if="isModalVisible"
+      :taskToUpdate="taskToUpdate"/>
 </template>

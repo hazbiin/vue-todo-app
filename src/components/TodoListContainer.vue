@@ -1,22 +1,32 @@
 <script setup>
-    import { defineProps, computed } from 'vue';
-
+    import { defineProps, computed, defineEmits } from 'vue';
     import TodoItem from './TodoItem.vue';
 
+    // component props
     const props = defineProps({
         tasks: {
             type: Array
         }
     });
 
+    // component emits
+    const emits = defineEmits(['edit-task']);
+
+    // handle visibility of empty todo-lis
     const isEmptyTodoList = computed (() => {
         return props.tasks.length === 0;
     });
 
+    // delete-task emit handler
     const deleteTask = (index) => {
         props.tasks = props.tasks.splice(index, 1);
     }
 
+    // edit-task emit handler
+    const editTask = (index) => {
+        const taskToUpdate = props.tasks[index];
+        emits('edit-task', taskToUpdate);
+    }
 </script>
 
 <template>
@@ -33,6 +43,7 @@
                 :key="task.taskId"
                 :todoItem="task.taskName"
                 @delete-task="deleteTask(index)"
+                @edit-task="() => editTask(index)"
             />
         </ul>
     </div>
