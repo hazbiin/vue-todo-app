@@ -1,7 +1,7 @@
 <script setup>
     import { defineProps, defineEmits } from 'vue';
     const props = defineProps({
-        taskName: {
+        todoItem: {
             type: String
         }
     });
@@ -13,7 +13,7 @@
 
 <template>
     <li class="todo-item">
-        <span class="todo-item-text">{{ taskName }}</span>
+        <span class="todo-item-text">{{ todoItem }}</span>
         <div class="todo-actions">
             <button class="action-button">edit</button>
             <button class="action-button" @click="$emit('delete-task')">delete</button>

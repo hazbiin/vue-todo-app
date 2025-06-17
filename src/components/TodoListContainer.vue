@@ -31,7 +31,7 @@
             <TodoItem
                 v-for="(task, index) in tasks"
                 :key="task.taskId"
-                :taskName="task.taskName"
+                :todoItem="task.taskName"
                 @delete-task="deleteTask(index)"
             />
         </ul>
