@@ -1,23 +1,35 @@
 <script setup>
-    import { defineProps } from 'vue';
+    import { defineProps, defineEmits } from 'vue';
+
+    // component props
     const props = defineProps({
         taskToUpdate: {
-            type: Object
+            type: Object,
+        },
+        showModal: {
+            type: Boolean
         }
     });
 
-    // console.log(props.taskToUpdate);
+    // component emits
+    const emits = defineEmits(['close-modal']);
 
+    // close modal function
+    const closeModal = () => {
+        props.taskToUpdate.isEditMode = false;
+        emits('close-modal');
+    }
+    
 </script>
 
 <template>
-    <div class="modal-overlay">
+    <div class="modal-overlay" v-if="showModal">
         <div class="modal-container">
             <h1 class="modal-title">Edit your task!</h1>
-            <input class="task-input" type="text" value="TodoItem" />
+            <input class="task-input" type="text" v-model="taskToUpdate.taskName"/>
             <div class="todo-actions">
-                <button class="action-button">Save Changes</button>
-                <button class="action-button">Close</button>
+                <button class="action-button" @click="closeModal">Save Changes</button>
+                <button class="action-button" @click="closeModal">Close</button>
             </div>
         </div>
     </div>

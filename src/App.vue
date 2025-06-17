@@ -9,7 +9,7 @@
 
   //reactive variables
   const tasks = ref([]);
-  const isModalVisible = ref(false);
+  const showModal = ref(false);
   const taskToUpdate = ref({});
 
 
@@ -41,7 +41,7 @@
 
     // update the reactive variables
     taskToUpdate.value = emittedTask;
-    isModalVisible.value = true;
+    showModal.value = true;
   }
 
 
@@ -61,6 +61,8 @@
     @edit-task="getTaskToUpdate"
     />
   <Modal 
-      v-if="isModalVisible"
-      :taskToUpdate="taskToUpdate"/>
+      :taskToUpdate="taskToUpdate"
+      :showModal="showModal"
+      @close-modal="showModal = false"
+    />
 </template>
