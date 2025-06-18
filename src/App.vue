@@ -44,9 +44,18 @@
     showModal.value = true;
   }
 
+
+  // delete-task emit handler
   const getTaskToDelete = (index) => {
     tasks.value.splice(index, 1);
   }
+
+
+  // close-modal emit handler
+  const closeModal = () => {
+    showModal.value = false;
+  }
+
 
   // watch() updates the localStorage when tasks array changes.
   watch(tasks, (updatedTasks) => {
@@ -64,9 +73,9 @@
     @edit-task="getTaskToUpdate"
     @delete-task="getTaskToDelete"
     />
-  <Modal 
+  <Modal
+      v-if="showModal"
       :taskToUpdate="taskToUpdate"
-      :showModal="showModal"
-      @close-modal="showModal = false"
+      @close-modal="closeModal"
     />
 </template>

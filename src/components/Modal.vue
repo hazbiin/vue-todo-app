@@ -1,32 +1,18 @@
 <script setup>
-    import { ref, defineProps, defineEmits, watch } from 'vue';
+    import { ref, defineProps, defineEmits } from 'vue';
 
     // component props
     const props = defineProps({
         taskToUpdate: {
             type: Object,
-        },
-        showModal: {
-            type: Boolean
         }
     });
 
     // component emits
     const emits = defineEmits(['close-modal']);
 
-    // reactive varible 
-    const updatedTask = ref('');
-
-    // sync updated taskname to local reactive variable without directly changing original.
-    watch(
-        () => props.taskToUpdate,
-        (latestUpdatedTask) => {
-            if(latestUpdatedTask) {
-                updatedTask.value = latestUpdatedTask.taskName;
-            }
-        },
-        { immediate:true }
-    );
+    // reactive variable 
+    const updatedTask = ref(props.taskToUpdate.taskName);
 
     // save changes handler
     const saveChanges = () => {
@@ -40,11 +26,11 @@
         props.taskToUpdate.isEditMode = false;
         emits('close-modal');
     }
-    
+
 </script>
 
 <template>
-    <div class="modal-overlay" v-if="showModal">
+    <div class="modal-overlay" >
         <div class="modal-container">
             <h1 class="modal-title">Edit your task!</h1>
             <input class="task-input" type="text" v-model="updatedTask"/>
