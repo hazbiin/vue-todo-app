@@ -26,7 +26,7 @@
 
   // notification message handler
   const showNotification = (message) => {
-    notificationMessages.value.push(message);
+    notificationMessages.value.push({id: Date.now(), text: message});
 
     setTimeout(() => {
       notificationMessages.value.shift();
