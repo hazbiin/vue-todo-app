@@ -91,6 +91,7 @@
       v-if="showModal"
       :taskToUpdate="taskToUpdate"
       @close-modal="closeModal"
+      @show-notification="showNotification"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"
