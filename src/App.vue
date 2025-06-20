@@ -6,11 +6,16 @@
   import TaskInputContainer from './components/TaskInputContainer.vue';
   import TodoListContainer from './components/TodoListContainer.vue';
   import Modal from './components/Modal.vue';
+  import NotificationContainer from './components/NotificationContainer.vue';
+
+  // constants
+  const NOTIFICATION_POP_OUT_TIME = 5000;
 
   //reactive variables
   const tasks = ref([]);
   const showModal = ref(false);
   const taskToUpdate = ref({});
+  const notificationMessages = ref([]);
 
 
   // get the savedTasks from localStorage at onMounted lifecycle hook.
@@ -22,6 +27,16 @@
   });
 
 
+  // notification message handler
+  const showNotification = (message) => {
+    notificationMessages.value.push({id: Date.now(), text: message});
+
+    setTimeout(() => {
+      notificationMessages.value.shift();
+    }, NOTIFICATION_POP_OUT_TIME);
+  };
+
+
   // add task to tasks array
   const addTaskToArray = (newtask) => {
     const newTask = {
@@ -30,6 +45,7 @@
       isEditMode: false
     }
     tasks.value.push(newTask);
+    showNotification('Task Added Successfully');
   }
 
 
@@ -48,6 +64,7 @@
   // delete-task emit handler
   const getTaskToDelete = (index) => {
     tasks.value.splice(index, 1);
+    showNotification('Task Deleted Successfully');
   }
 
 
@@ -77,5 +94,10 @@
       v-if="showModal"
       :taskToUpdate="taskToUpdate"
       @close-modal="closeModal"
+      @show-notification="showNotification"
+    />
+  <NotificationContainer
+      v-if="notificationMessages.length > 0"
+      :notificationMessages
     />
 </template>

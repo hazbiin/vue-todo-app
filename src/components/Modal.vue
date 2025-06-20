@@ -9,7 +9,7 @@
     });
 
     // component emits
-    const emits = defineEmits(['close-modal']);
+    const emits = defineEmits(['close-modal', 'show-notification']);
 
     // reactive variable 
     const updatedTask = ref(props.taskToUpdate.taskName);
@@ -19,6 +19,7 @@
         props.taskToUpdate.taskName = updatedTask.value;
         props.taskToUpdate.isEditMode = false;
         emits('close-modal');
+        emits('show-notification','Task Updated Successfully');
     }
 
     // close modal handler
