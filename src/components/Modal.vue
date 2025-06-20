@@ -1,21 +1,28 @@
-<script setup>
+<script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
 
+    type Obj = {
+        taskId: number;
+        taskName: string;
+        isEditMode: boolean
+    }
+
     // component props
-    const props = defineProps({
-        taskToUpdate: {
-            type: Object,
-        }
-    });
+    const props = defineProps<{
+        taskToUpdate: Obj
+    }>();
 
     // component emits
-    const emits = defineEmits(['close-modal', 'show-notification']);
+    const emits = defineEmits<{
+        (e: 'close-modal'):void
+        (e: 'show-notification', TaskUpdatedSuccessfully: string):void
+    }>();
 
     // reactive variable 
-    const updatedTask = ref(props.taskToUpdate.taskName);
+    const updatedTask = ref<string>(props.taskToUpdate.taskName);
 
     // save changes handler
-    const saveChanges = () => {
+    const saveChanges = ():void => {
         props.taskToUpdate.taskName = updatedTask.value;
         props.taskToUpdate.isEditMode = false;
         emits('close-modal');
@@ -23,7 +30,7 @@
     }
 
     // close modal handler
-    const closeModal = () => {
+    const closeModal = ():void => {
         props.taskToUpdate.isEditMode = false;
         emits('close-modal');
     }
