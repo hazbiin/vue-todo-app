@@ -8,6 +8,9 @@
   import Modal from './components/Modal.vue';
   import NotificationContainer from './components/NotificationContainer.vue';
 
+  // constants
+  const NOTIFICATION_POP_OUT_TIME = 5000;
+
   //reactive variables
   const tasks = ref([]);
   const showModal = ref(false);
@@ -28,7 +31,6 @@
   const showNotification = (message) => {
     notificationMessages.value.push({id: Date.now(), text: message});
 
-    const NOTIFICATION_POP_OUT_TIME = 5000;
     setTimeout(() => {
       notificationMessages.value.shift();
     }, NOTIFICATION_POP_OUT_TIME);
