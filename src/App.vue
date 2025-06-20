@@ -28,10 +28,10 @@
   const showNotification = (message) => {
     notificationMessages.value.push({id: Date.now(), text: message});
 
-    const milliSeconds = 5000;
+    const NOTIFICATION_POP_OUT_TIME = 5000;
     setTimeout(() => {
       notificationMessages.value.shift();
-    }, milliSeconds);
+    }, NOTIFICATION_POP_OUT_TIME);
   };
 
 
