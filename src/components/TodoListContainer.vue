@@ -3,9 +3,9 @@
     import TodoItem from './TodoItem.vue';
 
     type Obj = {
-        taskId: Number;
-        taskName: String;
-        isEditMode: Boolean;
+        taskId: number;
+        taskName: string;
+        isEditMode: boolean;
     }
     type Prop = Obj[];
 
@@ -22,7 +22,7 @@
     
 
     // handle visibility of empty todo-lis
-    const isEmptyTodoList = computed (():boolean => {
+    const isEmptyTodoList = computed<boolean>(():boolean => {
         return props.tasks.length === 0;
     });
 
