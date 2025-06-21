@@ -1,11 +1,13 @@
-<script setup>
+<script setup lang="ts">
     import { ref, defineEmits } from 'vue';
 
-    const emit = defineEmits(['add-new-task']);
+    const emit = defineEmits<{
+      (e: 'add-new-task', trimmedTaskInput: string): void
+    }>();
+    
+    const newTask = ref<string>('');
 
-    const newTask = ref('');
-
-    const addNewTask = () => {
+    const addNewTask = ():void => {
         const trimmedTaskInput = newTask.value.trim();
         if(trimmedTaskInput !== "") {
             emit('add-new-task', trimmedTaskInput);
