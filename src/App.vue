@@ -43,7 +43,7 @@
   const showNotification = (message :string):void => {
     notificationMessages.value.push({id: Date.now(), text: message});
     
-    setTimeout(():void => {
+    setTimeout(() => {
       notificationMessages.value.shift();
     }, NOTIFICATION_POP_OUT_TIME);
   };
