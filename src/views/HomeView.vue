@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { ref, onMounted, watch} from 'vue';
 
-  import Header from '@/components/Header.vue';
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import Modal from '@/components/Modal.vue';
@@ -101,7 +100,6 @@
 </script>
 
 <template>
-  <Header/>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
     :tasks="tasks"
