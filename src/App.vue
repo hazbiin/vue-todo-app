@@ -73,6 +73,15 @@
   }
 
 
+  // save-changes emit handler
+  const saveChanges = (newTaskName: string): void => {
+    taskToUpdate.value.taskName = newTaskName;
+    taskToUpdate.value.isEditMode = false;
+    showModal.value = false;
+    showNotification('Task Updated Successfully');
+  }
+
+
   // delete-task emit handler
   const getTaskToDelete = (index: number): void => {
     tasks.value.splice(index, 1);
@@ -82,6 +91,7 @@
 
   // close-modal emit handler
   const closeModal = (): void => {
+    taskToUpdate.value.isEditMode = false;
     showModal.value = false;
   }
 
@@ -106,7 +116,7 @@
       v-if="showModal"
       :taskToUpdate="taskToUpdate"
       @close-modal="closeModal"
-      @show-notification="showNotification"
+      @save-changes="saveChanges"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"
