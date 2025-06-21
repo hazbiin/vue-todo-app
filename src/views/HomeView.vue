@@ -20,7 +20,7 @@
   }
 
   // constants
-  const NOTIFICATION_POP_OUT_TIME:number = 5000;
+  const NOTIFICATION_POP_OUT_TIME = 5000;
 
   //reactive variables
   const tasks = ref<TaskObj[]>([]);
@@ -30,7 +30,7 @@
 
 
   // get the savedTasks from localStorage at onMounted lifecycle hook.
-  onMounted(():void => {
+  onMounted(() => {
     const savedTasks:string | null = localStorage.getItem('tasks');
     if(savedTasks) {
       tasks.value = JSON.parse(savedTasks);
@@ -42,7 +42,7 @@
   const showNotification = (message :string):void => {
     notificationMessages.value.push({id: Date.now(), text: message});
     
-    setTimeout(():void => {
+    setTimeout(() => {
       notificationMessages.value.shift();
     }, NOTIFICATION_POP_OUT_TIME);
   };
@@ -71,6 +71,13 @@
     showModal.value = true;
   }
 
+  // save-changes emit handler
+  const saveChanges = (newTaskName: string): void => {
+    taskToUpdate.value.taskName = newTaskName;
+    taskToUpdate.value.isEditMode = false;
+    showModal.value = false;
+    showNotification('Task Updated Successfully');
+  }
 
   // delete-task emit handler
   const getTaskToDelete = (index: number): void => {
@@ -81,6 +88,7 @@
 
   // close-modal emit handler
   const closeModal = (): void => {
+    taskToUpdate.value.isEditMode = false;
     showModal.value = false;
   }
 
@@ -104,7 +112,7 @@
       v-if="showModal"
       :taskToUpdate="taskToUpdate"
       @close-modal="closeModal"
-      @show-notification="showNotification"
+      @save-changes="saveChanges"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"
