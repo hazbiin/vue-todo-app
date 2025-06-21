@@ -1,32 +1,25 @@
-<script setup>
+<script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
 
+    type TaskType = {
+        taskId: number;
+        taskName: string;
+        isEditMode: boolean
+    }
+
     // component props
-    const props = defineProps({
-        taskToUpdate: {
-            type: Object,
-        }
-    });
+    const props = defineProps<{
+        taskToUpdate: TaskType
+    }>();
 
     // component emits
-    const emits = defineEmits(['close-modal', 'show-notification']);
+    const emits = defineEmits<{
+        (e: 'save-changes', newTaskName: string):void;
+        (e: 'close-modal'):void;
+    }>();
 
     // reactive variable 
-    const updatedTask = ref(props.taskToUpdate.taskName);
-
-    // save changes handler
-    const saveChanges = () => {
-        props.taskToUpdate.taskName = updatedTask.value;
-        props.taskToUpdate.isEditMode = false;
-        emits('close-modal');
-        emits('show-notification','Task Updated Successfully');
-    }
-
-    // close modal handler
-    const closeModal = () => {
-        props.taskToUpdate.isEditMode = false;
-        emits('close-modal');
-    }
+    const updatedTaskName = ref<string>(props.taskToUpdate.taskName);
 
 </script>
 
@@ -34,10 +27,10 @@
     <div class="modal-overlay" >
         <div class="modal-container">
             <h1 class="modal-title">Edit your task!</h1>
-            <input class="task-input" type="text" v-model="updatedTask"/>
+            <input class="task-input" type="text" v-model="updatedTaskName"/>
             <div class="todo-actions">
-                <button class="action-button" @click="saveChanges">Save Changes</button>
-                <button class="action-button" @click="closeModal">Close</button>
+                <button class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</button>
+                <button class="action-button" @click="$emit('close-modal')">Close</button>
             </div>
         </div>
     </div>
