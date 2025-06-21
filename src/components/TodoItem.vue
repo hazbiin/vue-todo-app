@@ -1,15 +1,16 @@
-<script setup>
+<script setup lang="ts">
     import { defineProps, defineEmits } from 'vue';
 
     // component props
-    const props = defineProps({
-        todoItem: {
-            type: String
-        }
-    });
+    const props = defineProps<{
+        todoItem: string
+    }>();
 
     // component emits
-    const emits = defineEmits(['delete-task','edit-task']);
+    const emits = defineEmits<{
+        (e: 'delete-task'):void
+        (e: 'edit-task'):void
+    }>();
 
 </script>
 
@@ -18,8 +19,8 @@
     <li class="todo-item">
         <span class="todo-item-text">{{ todoItem }}</span>
         <div class="todo-actions">
-            <button class="action-button" @click="$emit('edit-task')">edit</button>
-            <button class="action-button" @click="$emit('delete-task')">delete</button>
+            <button class="action-button" @click="emits('edit-task')">edit</button>
+            <button class="action-button" @click="emits('delete-task')">delete</button>
         </div>
     </li>
 </template>
