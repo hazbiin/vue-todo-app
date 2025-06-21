@@ -1,85 +1,96 @@
-<script setup>
-    import { ref, onMounted, watch} from 'vue';
+<script setup lang="ts">
+  import { ref, onMounted, watch} from 'vue';
 
-    import Header from '@/components/Header.vue';
-    import TaskInputContainer from '@/components/TaskInputContainer.vue';
-    import TodoListContainer from '@/components/TodoListContainer.vue';
-    import Modal from '@/components/Modal.vue';
-    import NotificationContainer from '@/components/NotificationContainer.vue';
+  import Header from '@/components/Header.vue';
+  import TaskInputContainer from '@/components/TaskInputContainer.vue';
+  import TodoListContainer from '@/components/TodoListContainer.vue';
+  import Modal from '@/components/Modal.vue';
+  import NotificationContainer from '@/components/NotificationContainer.vue';
 
-    // constants
-    const NOTIFICATION_POP_OUT_TIME = 5000;
+  
+  // defined types
+  type TaskObj = {
+    taskId: number;
+    taskName: string;
+    isEditMode: boolean;
+  }
+  type MessageObj = {
+    id:number;
+    text: string;
+  }
 
-    //reactive variables
-    const tasks = ref([]);
-    const showModal = ref(false);
-    const taskToUpdate = ref({});
-    const notificationMessages = ref([]);
+  // constants
+  const NOTIFICATION_POP_OUT_TIME:number = 5000;
 
-
-    // get the savedTasks from localStorage at onMounted lifecycle hook.
-    onMounted(() => {
-        const savedTasks = localStorage.getItem('tasks');
-        if(savedTasks) {
-        tasks.value = JSON.parse(savedTasks);
-        }
-    });
-
-
-    // notification message handler
-    const showNotification = (message) => {
-        notificationMessages.value.push({id: Date.now(), text: message});
-
-        setTimeout(() => {
-        notificationMessages.value.shift();
-        }, NOTIFICATION_POP_OUT_TIME);
-    };
+  //reactive variables
+  const tasks = ref<TaskObj[]>([]);
+  const showModal = ref<boolean>(false);
+  const taskToUpdate = ref<TaskObj>({} as TaskObj);
+  const notificationMessages = ref<MessageObj[]>([]);
 
 
-    // add task to tasks array
-    const addTaskToArray = (newtask) => {
-        const newTask = {
-        taskId: Date.now(),
-        taskName: newtask,
-        isEditMode: false
-        }
-        tasks.value.push(newTask);
-        showNotification('Task Added Successfully');
+  // get the savedTasks from localStorage at onMounted lifecycle hook.
+  onMounted(():void => {
+    const savedTasks:string | null = localStorage.getItem('tasks');
+    if(savedTasks) {
+      tasks.value = JSON.parse(savedTasks);
     }
+  });
 
 
-    // edit-task emit handler
-    const getTaskToUpdate = (emittedTask) => {
+  // notification message handler
+  const showNotification = (message :string):void => {
+    notificationMessages.value.push({id: Date.now(), text: message});
+    
+    setTimeout(():void => {
+      notificationMessages.value.shift();
+    }, NOTIFICATION_POP_OUT_TIME);
+  };
 
-        // change the isEditMode value of orignal task object.
-        emittedTask.isEditMode = true;
 
-        // update the reactive variables
-        taskToUpdate.value = emittedTask;
-        showModal.value = true;
+  // add task to tasks array
+  const addTaskToArray = (newtask:string ): void => {
+    const newTask: TaskObj = {
+      taskId: Date.now(),
+      taskName: newtask,
+      isEditMode: false
     }
+    tasks.value.push(newTask);
+    showNotification('Task Added Successfully');
+  }
 
 
-    // delete-task emit handler
-    const getTaskToDelete = (index) => {
-        tasks.value.splice(index, 1);
-        showNotification('Task Deleted Successfully');
-    }
+  // edit-task emit handler
+  const getTaskToUpdate = (emittedTask: TaskObj): void => {
+
+    // change the isEditMode value of orignal task object.
+    emittedTask.isEditMode = true;
+
+    // update the reactive variables
+    taskToUpdate.value = emittedTask;
+    showModal.value = true;
+  }
 
 
-    // close-modal emit handler
-    const closeModal = () => {
-        showModal.value = false;
-    }
+  // delete-task emit handler
+  const getTaskToDelete = (index: number): void => {
+    tasks.value.splice(index, 1);
+    showNotification('Task Deleted Successfully');
+  }
 
 
-    // watch() updates the localStorage when tasks array changes.
-    watch(tasks, (updatedTasks) => {
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-    }, { deep: true });
+  // close-modal emit handler
+  const closeModal = (): void => {
+    showModal.value = false;
+  }
+
+
+  // watch() updates the localStorage when tasks array changes.
+  watch(tasks, (updatedTasks: TaskObj[]) => {
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  }, { deep: true });
 
 </script>
-
 
 <template>
   <Header/>
