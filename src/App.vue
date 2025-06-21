@@ -31,7 +31,7 @@
 
 
   // get the savedTasks from localStorage at onMounted lifecycle hook.
-  onMounted(():void => {
+  onMounted(() => {
     const savedTasks:string | null = localStorage.getItem('tasks');
     if(savedTasks) {
       tasks.value = JSON.parse(savedTasks);
