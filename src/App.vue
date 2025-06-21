@@ -21,7 +21,7 @@
   }
 
   // constants
-  const NOTIFICATION_POP_OUT_TIME:number = 5000;
+  const NOTIFICATION_POP_OUT_TIME = 5000;
 
   //reactive variables
   const tasks = ref<TaskObj[]>([]);
