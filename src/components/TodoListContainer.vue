@@ -50,7 +50,7 @@
             <TodoItem
                 v-for="(task, index) in tasks"
                 :key="task.taskId"
-                :todoItem="task.taskName"
+                :todoItem="task"
                 @delete-task="() => deleteTask(index)"
                 @edit-task="() => editTask(index)"
             />
