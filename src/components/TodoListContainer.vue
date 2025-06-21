@@ -2,12 +2,12 @@
     import { defineProps, computed, defineEmits } from 'vue';
     import TodoItem from './TodoItem.vue';
 
-    type Obj = {
+    type TaskType = {
         taskId: number;
         taskName: string;
         isEditMode: boolean;
     }
-    type Prop = Obj[];
+    type Prop = TaskType[];
 
     // component props
     const props = defineProps<{
@@ -16,7 +16,7 @@
 
     // component emits
     const emits = defineEmits<{
-        (e: 'edit-task', taskToUpdate: Obj):void
+        (e: 'edit-task', taskToUpdate: TaskType):void
         (e: 'delete-task', index:number):void
     }>();
     
@@ -33,7 +33,7 @@
 
     // edit-task emit handler
     const editTask = (index: number): void => {
-        const taskToUpdate: Obj = props.tasks[index];
+        const taskToUpdate: TaskType = props.tasks[index];
         emits('edit-task', taskToUpdate);
     }
 </script>

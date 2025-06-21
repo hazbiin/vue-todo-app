@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
 
-    type Obj = {
+    type TaskType = {
         taskId: number;
         taskName: string;
         isEditMode: boolean
@@ -9,7 +9,7 @@
 
     // component props
     const props = defineProps<{
-        taskToUpdate: Obj
+        taskToUpdate: TaskType
     }>();
 
     // component emits
