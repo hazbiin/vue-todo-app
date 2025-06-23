@@ -23,10 +23,7 @@
 
   //reactive variables
   const tasks = ref<TaskObj[]>([]);
-  const showModal = ref<boolean>(false);
-  const taskToUpdate = ref<TaskObj>({} as TaskObj);
   const notificationMessages = ref<MessageObj[]>([]);
-
 
   // get the savedTasks from localStorage at onMounted lifecycle hook.
   onMounted(() => {
@@ -36,7 +33,6 @@
     }
   });
 
-
   // notification message handler
   const showNotification = (message :string):void => {
     notificationMessages.value.push({id: Date.now(), text: message});
@@ -45,7 +41,6 @@
       notificationMessages.value.shift();
     }, NOTIFICATION_POP_OUT_TIME);
   };
-
 
   // add task to tasks array
   const addTaskToArray = (newtask:string ): void => {
@@ -58,28 +53,11 @@
     showNotification('Task Added Successfully');
   }
 
-
-  // save-changes emit handler
-  const saveChanges = (newTaskName: string): void => {
-    taskToUpdate.value.taskName = newTaskName;
-    taskToUpdate.value.isEditMode = false;
-    showModal.value = false;
-    showNotification('Task Updated Successfully');
-  }
-
   // delete-task emit handler
   const getTaskToDelete = (index: number): void => {
     tasks.value.splice(index, 1);
     showNotification('Task Deleted Successfully');
   }
-
-
-  // close-modal emit handler
-  const closeModal = (): void => {
-    taskToUpdate.value.isEditMode = false;
-    showModal.value = false;
-  }
-
 
   // watch() updates the localStorage when tasks array changes.
   watch(tasks, (updatedTasks: TaskObj[]) => {
@@ -93,12 +71,6 @@
   <TodoListContainer
     :tasks="tasks"
     @delete-task="getTaskToDelete"
-    />
-  <Modal
-      v-if="showModal"
-      :taskToUpdate="taskToUpdate"
-      @close-modal="closeModal"
-      @save-changes="saveChanges"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"
