@@ -5,6 +5,7 @@
     import { useRoute } from 'vue-router';
 
     import useNotification from '@/composables/useNotification.ts';
+    import setLocalStorage from '@/utilities';
 
     // getting task id from url params
     const route = useRoute();
@@ -29,16 +30,15 @@
     if(savedTasks) {
         tasks.value = JSON.parse(savedTasks);
         taskToUpdate.value = tasks.value.filter((t: TaskType) => t.taskId === taskId)[0];
-        taskToUpdate.value.isEditMode = true;
-        localStorage.setItem('tasks', JSON.stringify(tasks.value));
     }
     
     // save-changes emit handler
     const saveChanges = (updatedTaskName: string) => {
-        taskToUpdate.value.taskName = updatedTaskName;
-        taskToUpdate.value.isEditMode = false;
-        localStorage.setItem('tasks', JSON.stringify(tasks.value));
-        showNotification('Task Updated Successfully');
+        if(updatedTaskName !== taskToUpdate.value.taskName) {
+            taskToUpdate.value.taskName = updatedTaskName;
+            setLocalStorage('tasks', tasks.value);
+            showNotification('Task Updated Successfully');
+        }
     }
 
 </script>

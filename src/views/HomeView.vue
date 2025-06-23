@@ -5,6 +5,7 @@
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
+  import setLocalStorage from '@/utilities';
 
   // defined types
   type TaskObj = {
@@ -46,7 +47,7 @@
 
   // watch() updates the localStorage when tasks array changes.
   watch(tasks, (updatedTasks: TaskObj[]) => {
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    setLocalStorage('tasks', updatedTasks);
   }, { deep: true });
 
 </script>
