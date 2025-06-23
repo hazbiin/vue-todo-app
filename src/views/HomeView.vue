@@ -3,27 +3,21 @@
 
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
-  import Modal from '@/components/Modal.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
+  import useNotification from '@/composables/useNotification';
 
-  
   // defined types
   type TaskObj = {
     taskId: number;
     taskName: string;
     isEditMode: boolean;
   }
-  type MessageObj = {
-    id:number;
-    text: string;
-  }
 
-  // constants
-  const NOTIFICATION_POP_OUT_TIME = 5000;
+  // composable imports
+  const { notificationMessages, showNotification } = useNotification();
 
   //reactive variables
   const tasks = ref<TaskObj[]>([]);
-  const notificationMessages = ref<MessageObj[]>([]);
 
   // get the savedTasks from localStorage at onMounted lifecycle hook.
   onMounted(() => {
@@ -32,15 +26,6 @@
       tasks.value = JSON.parse(savedTasks);
     }
   });
-
-  // notification message handler
-  const showNotification = (message :string):void => {
-    notificationMessages.value.push({id: Date.now(), text: message});
-    
-    setTimeout(() => {
-      notificationMessages.value.shift();
-    }, NOTIFICATION_POP_OUT_TIME);
-  };
 
   // add task to tasks array
   const addTaskToArray = (newtask:string ): void => {

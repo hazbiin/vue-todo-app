@@ -1,7 +1,10 @@
 <script setup lang="ts">
     import Modal from '@/components/Modal.vue';
+
     import { ref } from 'vue';
     import { useRoute } from 'vue-router';
+
+    import useNotification from '@/composables/useNotification.ts';
 
     // getting task id from url params
     const route = useRoute();
@@ -13,6 +16,9 @@
         taskName: string;
         isEditMode: boolean;
     }
+
+    // composable imports
+    const { showNotification } = useNotification();
 
     // reactive variables 
     const tasks = ref<TaskType[]>([]);
@@ -32,6 +38,7 @@
         taskToUpdate.value.taskName = updatedTaskName;
         taskToUpdate.value.isEditMode = false;
         localStorage.setItem('tasks', JSON.stringify(tasks.value));
+        showNotification('Task Updated Successfully');
     }
 
 </script>
