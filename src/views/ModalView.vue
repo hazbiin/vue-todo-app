@@ -14,16 +14,24 @@
         isEditMode: boolean;
     }
 
-    // getting task to update from localstorage.
+    // reactive variables 
+    const tasks = ref<TaskType[]>([]);
     const taskToUpdate = ref<TaskType>({} as TaskType);
+
+    // getting task to update from localstorage.
     const savedTasks = localStorage.getItem('tasks');
     if(savedTasks) {
-        taskToUpdate.value = JSON.parse(savedTasks).filter((t: TaskType) => t.taskId === taskId)[0];
+        tasks.value = JSON.parse(savedTasks);
+        taskToUpdate.value = tasks.value.filter((t: TaskType) => t.taskId === taskId)[0];
+        taskToUpdate.value.isEditMode = true;
+        localStorage.setItem('tasks', JSON.stringify(tasks.value));
     }
-
-    // note: need to implement this ///////
+    
+    // save-changes emit handler
     const saveChanges = (updatedTaskName: string) => {
-        console.log(updatedTaskName);
+        taskToUpdate.value.taskName = updatedTaskName;
+        taskToUpdate.value.isEditMode = false;
+        localStorage.setItem('tasks', JSON.stringify(tasks.value));
     }
 
 </script>
