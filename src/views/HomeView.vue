@@ -59,17 +59,6 @@
   }
 
 
-  // edit-task emit handler
-  const getTaskToUpdate = (emittedTask: TaskObj): void => {
-
-    // change the isEditMode value of orignal task object.
-    emittedTask.isEditMode = true;
-
-    // update the reactive variables
-    taskToUpdate.value = emittedTask;
-    showModal.value = true;
-  }
-
   // save-changes emit handler
   const saveChanges = (newTaskName: string): void => {
     taskToUpdate.value.taskName = newTaskName;
@@ -103,7 +92,6 @@
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
     :tasks="tasks"
-    @edit-task="getTaskToUpdate"
     @delete-task="getTaskToDelete"
     />
   <Modal

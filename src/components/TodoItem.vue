@@ -15,7 +15,6 @@
     // component emits
     const emits = defineEmits<{
         (e: 'delete-task'):void
-        (e: 'edit-task'):void
     }>();
 
 </script>
@@ -25,7 +24,7 @@
     <li class="todo-item">
         <span class="todo-item-text">{{ todoItem.taskName }}</span>
         <div class="todo-actions">
-            <RouterLink :to="'/tasks/'+todoItem.taskId" class="action-button" @click="emits('edit-task')">edit</RouterLink>
+            <RouterLink :to="'/tasks/'+todoItem.taskId" class="action-button">edit</RouterLink>
             <button class="action-button" @click="emits('delete-task')">delete</button>
         </div>
     </li>
