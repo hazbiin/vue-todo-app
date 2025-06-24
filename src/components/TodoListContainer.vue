@@ -1,30 +1,38 @@
-<script setup>
+<script setup lang="ts">
     import { defineProps, computed, defineEmits } from 'vue';
     import TodoItem from './TodoItem.vue';
 
+    type TaskType = {
+        taskId: number;
+        taskName: string;
+        isEditMode: boolean;
+    }
+
     // component props
-    const props = defineProps({
-        tasks: {
-            type: Array
-        }
-    });
+    const props = defineProps<{
+        tasks: TaskType[]
+    }>();
 
     // component emits
-    const emits = defineEmits(['edit-task', 'delete-task']);
+    const emits = defineEmits<{
+        (e: 'edit-task', taskToUpdate: TaskType):void
+        (e: 'delete-task', index:number):void
+    }>();
+    
 
     // handle visibility of empty todo-lis
-    const isEmptyTodoList = computed (() => {
+    const isEmptyTodoList = computed<boolean>(():boolean => {
         return props.tasks.length === 0;
     });
 
     // delete-task emit handler
-    const deleteTask = (index) => {
+    const deleteTask = (index: number): void => {
         emits('delete-task', index);
     }
 
     // edit-task emit handler
-    const editTask = (index) => {
-        const taskToUpdate = props.tasks[index];
+    const editTask = (index: number): void => {
+        const taskToUpdate: TaskType = props.tasks[index];
         emits('edit-task', taskToUpdate);
     }
 </script>
