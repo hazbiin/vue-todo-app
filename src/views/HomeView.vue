@@ -11,7 +11,6 @@
   type TaskObj = {
     taskId: number;
     taskName: string;
-    isEditMode: boolean;
   }
 
   // composable imports
@@ -33,7 +32,6 @@
     const newTask: TaskObj = {
       taskId: Date.now(),
       taskName: newtask,
-      isEditMode: false
     }
     tasks.value.push(newTask);
     showNotification('Task Added Successfully');

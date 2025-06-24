@@ -15,7 +15,6 @@
     type TaskType = {
         taskId: number;
         taskName: string;
-        isEditMode: boolean;
     }
 
     // composable imports

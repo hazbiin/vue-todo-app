@@ -5,7 +5,6 @@
     type TaskType = {
         taskId: number;
         taskName: string;
-        isEditMode: boolean
     }
 
     // component props
