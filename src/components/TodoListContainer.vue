@@ -6,11 +6,10 @@
         taskId: number;
         taskName: string;
     }
-    type Prop = TaskType[];
 
     // component props
     const props = defineProps<{
-        tasks: Prop
+        tasks: TaskType[]
     }>();
 
     // component emits
