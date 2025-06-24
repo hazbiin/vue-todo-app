@@ -34,8 +34,10 @@
   // add task to tasks array
   const addTaskToArray = (newtask:string ): void => {
     const newTask: TaskObj = {
-      taskId: Date.now(),
-      taskName: newtask,
+      id: Date.now(),
+      todo: newtask,
+      completed: false,
+      userId: Date.now()
     }
     tasks.value.push(newTask);
     showNotification('Task Added Successfully');

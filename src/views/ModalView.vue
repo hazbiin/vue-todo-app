@@ -35,8 +35,8 @@
     
     // save-changes emit handler
     const saveChanges = (updatedTaskName: string) => {
-        if(updatedTaskName !== taskToUpdate.value.taskName) {
-            taskToUpdate.value.taskName = updatedTaskName;
+        if(updatedTaskName !== taskToUpdate.value.todo) {
+            taskToUpdate.value.todo = updatedTaskName;
             setLocalStorage('tasks', tasks.value);
             showNotification('Task Updated Successfully');
         }
