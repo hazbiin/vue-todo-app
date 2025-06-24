@@ -3,8 +3,10 @@
     import { RouterLink } from 'vue-router';
 
     type TaskType = {
-        taskId: number;
-        taskName: string;
+        id: number;
+        todo: string;
+        completed: boolean;
+        userId: number;
     }
 
     // component props
@@ -18,7 +20,7 @@
     }>();
 
     // reactive variable 
-    const updatedTaskName = ref<string>(props.taskToUpdate.taskName);
+    const updatedTaskName = ref<string>(props.taskToUpdate.todo);
 
 </script>
 

@@ -13,8 +13,10 @@
 
     // typing task
     type TaskType = {
-        taskId: number;
-        taskName: string;
+        id: number;
+        todo: string;
+        completed: boolean;
+        userId: number;
     }
 
     // composable imports
@@ -28,7 +30,7 @@
     const savedTasks = localStorage.getItem('tasks');
     if(savedTasks) {
         tasks.value = JSON.parse(savedTasks);
-        taskToUpdate.value = tasks.value.filter((t: TaskType) => t.taskId === taskId)[0];
+        taskToUpdate.value = tasks.value.filter((t: TaskType) => t.id === taskId)[0];
     }
     
     // save-changes emit handler
