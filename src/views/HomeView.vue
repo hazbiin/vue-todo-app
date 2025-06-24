@@ -9,8 +9,10 @@
 
   // defined types
   type TaskObj = {
-    taskId: number;
-    taskName: string;
+    id: number;
+    todo: string;
+    completed: boolean;
+    userId: number;
   }
 
   // composable imports
@@ -19,11 +21,13 @@
   //reactive variables
   const tasks = ref<TaskObj[]>([]);
 
-  // get the savedTasks from localStorage at onMounted lifecycle hook.
-  onMounted(() => {
-    const savedTasks:string | null = localStorage.getItem('tasks');
-    if(savedTasks) {
-      tasks.value = JSON.parse(savedTasks);
+  onMounted(async() => {
+    try{
+      const response = await fetch('https://dummyjson.com/todos');
+      const data = await response.json();
+      tasks.value = data.todos;
+    }catch(error) {
+      console.log('Error fetching tasks', error);
     }
   });
 

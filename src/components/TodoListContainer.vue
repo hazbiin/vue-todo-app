@@ -3,8 +3,10 @@
     import TodoItem from './TodoItem.vue';
 
     type TaskType = {
-        taskId: number;
-        taskName: string;
+        id: number;
+        todo: string;
+        completed: boolean;
+        userId: number;
     }
     type Prop = TaskType[];
 
@@ -43,7 +45,7 @@
         <ul v-else class="todo-list">
             <TodoItem
                 v-for="(task, index) in tasks"
-                :key="task.taskId"
+                :key="task.id"
                 :todoItem="task"
                 @delete-task="() => deleteTask(index)"
             />
