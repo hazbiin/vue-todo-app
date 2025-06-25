@@ -33,16 +33,19 @@
     }
   });
 
-  // add task to tasks array
-  const addTaskToArray = (newtask:string ): void => {
-    const newTask: TaskObj = {
-      id: Date.now(),
-      todo: newtask,
-      completed: false,
-      userId: Date.now()
-    }
-    tasks.value.push(newTask);
-    showNotification('Task Added Successfully');
+  // add new todo by calling api endpoint
+  const addTaskToArray = async (newTask: string) => {
+    const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        todo: newTask,
+        completed: false,
+        userId: 5
+      })
+    });
+    tasks.value.push(response);
+    showNotification("Task Added Successfully");
   }
 
   // delete-task emit handler
