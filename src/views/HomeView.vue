@@ -34,7 +34,7 @@
   });
 
   // add new todo by calling api endpoint
-  const addTaskToArray = async (newTask: string) => {
+  const addTaskToArray = async (newTask: string): Promise<void> => {
     const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
