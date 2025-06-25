@@ -5,7 +5,7 @@
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
-  import setLocalStorage from '@/utilities';
+  import * as util from '@/utils';
 
   // defined types
   type TaskObj = {
@@ -21,13 +21,15 @@
   //reactive variables
   const tasks = ref<TaskObj[]>([]);
 
-  onMounted(async() => {
-    try{
-      const response = await fetch('https://dummyjson.com/todos');
-      const data = await response.json();
-      tasks.value = data.todos;
-    }catch(error) {
-      console.log('Error fetching tasks', error);
+  // fetching data if not present in localStorage
+  onMounted(async () => {
+    const savedTasks = localStorage.getItem('tasks');
+    if(savedTasks) {
+      tasks.value = JSON.parse(savedTasks);
+    }else {
+      const fetchedData =  await util.fetchDataFromApi('https://dummyjson.com/todos');
+      const todos = fetchedData.todos;
+      tasks.value = todos;
     }
   });
 
@@ -51,7 +53,7 @@
 
   // watch() updates the localStorage when tasks array changes.
   watch(tasks, (updatedTasks: TaskObj[]) => {
-    setLocalStorage('tasks', updatedTasks);
+    util.setLocalStorage('tasks', updatedTasks);
   }, { deep: true });
 
 </script>
