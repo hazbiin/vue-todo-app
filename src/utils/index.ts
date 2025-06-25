@@ -8,9 +8,14 @@ export function setLocalStorage(key: string, value: unknown) {
 export async function fetchDataFromApi(url: string, options?: object){
     try{
       const response = await fetch(url, options);
+
+      if(!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
       return data;
     }catch(error) {
-      console.error(`Error fetching data:${error}`);
+      console.error(`Error fetching data: ${error}`);
     }
 }

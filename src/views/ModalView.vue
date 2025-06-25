@@ -35,7 +35,6 @@
 
     // update task by calling api endpoint
     const saveChanges = async (updatedTaskName: string): Promise<void> => {
-
         if(updatedTaskName !== taskToUpdate.value.todo) {
             const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
                 method: 'PUT',
@@ -44,12 +43,13 @@
                     todo: updatedTaskName,
                 })
             });
-            taskToUpdate.value.todo = response.todo;
-            util.setLocalStorage('tasks', tasks.value);
-            showNotification('Task Updated Successfully');
+            if(response) {
+                taskToUpdate.value.todo = response.todo;
+                util.setLocalStorage('tasks', tasks.value);
+                showNotification('Task Updated Successfully');
+            }
         }
     }
-
 </script>
 
 <template>

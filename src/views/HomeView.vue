@@ -27,9 +27,11 @@
     if(savedTasks) {
       tasks.value = JSON.parse(savedTasks);
     }else {
-      const fetchedData =  await util.fetchDataFromApi('https://dummyjson.com/todos');
-      const todos = fetchedData.todos;
-      tasks.value = todos;
+      const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
+      if(response) {
+        const todos = response.todos;
+        tasks.value = todos;
+      }
     }
   });
 
@@ -44,8 +46,10 @@
         userId: 5
       })
     });
-    tasks.value.push(response);
-    showNotification("Task Added Successfully");
+    if(response) {
+      tasks.value.push(response);
+      showNotification("Task Added Successfully");
+    }
   }
 
   // delete todo by calling api endpoint
@@ -53,8 +57,10 @@
     const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
       method: 'DELETE',
     });
-    tasks.value = tasks.value.filter(t => t.id !== response.id);
-    showNotification('Task Deleted Succesfully');
+    if(response) {
+      tasks.value = tasks.value.filter(t => t.id !== response.id);
+      showNotification('Task Deleted Succesfully');
+    }
   }
 
   // watch() updates the localStorage when tasks array changes.
