@@ -48,10 +48,13 @@
     showNotification("Task Added Successfully");
   }
 
-  // delete-task emit handler
-  const getTaskToDelete = (index: number): void => {
-    tasks.value.splice(index, 1);
-    showNotification('Task Deleted Successfully');
+  // delete todo by calling api endpoint
+  const getTaskToDelete = async (id: number): Promise<void>  => {
+    const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
+      method: 'DELETE',
+    });
+    tasks.value = tasks.value.filter(t => t.id !== response.id);
+    showNotification('Task Deleted Succesfully');
   }
 
   // watch() updates the localStorage when tasks array changes.
