@@ -32,11 +32,19 @@
         tasks.value = JSON.parse(savedTasks);
         taskToUpdate.value = tasks.value.filter((t: TaskType) => t.id === taskId)[0];
     }
-    
-    // save-changes emit handler
-    const saveChanges = (updatedTaskName: string) => {
+
+    // update task by calling api endpoint
+    const saveChanges = async (updatedTaskName: string): Promise<void> => {
+
         if(updatedTaskName !== taskToUpdate.value.todo) {
-            taskToUpdate.value.todo = updatedTaskName;
+            const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    todo: updatedTaskName,
+                })
+            });
+            taskToUpdate.value.todo = response.todo;
             util.setLocalStorage('tasks', tasks.value);
             showNotification('Task Updated Successfully');
         }
