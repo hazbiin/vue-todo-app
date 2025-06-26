@@ -2,10 +2,13 @@
     import Modal from '@/components/Modal.vue';
 
     import { ref } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute , useRouter } from 'vue-router';
 
     import useNotification from '@/composables/useNotification.ts';
     import * as util from '@/utils';
+
+    // router instance
+    const router = useRouter();
 
     // getting task id from url params
     const route = useRoute();
@@ -46,6 +49,7 @@
             if(response) {
                 taskToUpdate.value.todo = response.todo;
                 util.setLocalStorage('tasks', tasks.value);
+                router.push('/');
                 showNotification('Task Updated Successfully');
             }
         }

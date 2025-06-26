@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
-    import { RouterLink } from 'vue-router';
 
     type TaskType = {
         id: number;
@@ -30,7 +29,7 @@
             <h1 class="modal-title">Edit your task!</h1>
             <input class="task-input" type="text" v-model="updatedTaskName"/>
             <div class="todo-actions">
-                <RouterLink  to="/" class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</RouterLink>
+                <button class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</button>
             </div>
         </div>
     </div>
