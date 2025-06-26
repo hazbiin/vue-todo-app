@@ -6,32 +6,23 @@
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
   import * as util from '@/utils';
+  import { useTodoListStore } from '@/stores/useTodoListStore';
+  import { storeToRefs } from 'pinia';
 
-  // defined types
-  type TaskObj = {
-    id: number;
-    todo: string;
-    completed: boolean;
-    userId: number;
-  }
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
-  //reactive variables
-  const tasks = ref<TaskObj[]>([]);
+  // defininig store variable
+  const store = useTodoListStore();
+  const { tasks } = storeToRefs(store);
 
   // fetching data if not present in localStorage
   onMounted(async () => {
-    const savedTasks = localStorage.getItem('tasks');
-    if(savedTasks) {
-      tasks.value = JSON.parse(savedTasks);
-    }else {
-      const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
+    const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
       if(response) {
         const todos = response.todos;
         tasks.value = todos;
-      }
     }
   });
 
@@ -62,11 +53,6 @@
       showNotification('Task Deleted Succesfully');
     }
   }
-
-  // watch() updates the localStorage when tasks array changes.
-  watch(tasks, (updatedTasks: TaskObj[]) => {
-    util.setLocalStorage('tasks', updatedTasks);
-  }, { deep: true });
 
 </script>
 
