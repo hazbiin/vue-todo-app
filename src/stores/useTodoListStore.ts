@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import * as util from '@/utils';
 
 export const useTodoListStore = defineStore('todoList',() => {
 
@@ -13,6 +14,22 @@ export const useTodoListStore = defineStore('todoList',() => {
 
     // states
     const tasks = ref<TodoItemType[]>([]);
+
+    // actions 
+    const addTodo = async (newTask: string): Promise<void> => {
+        const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                todo: newTask,
+                completed: false,
+                userId: 5
+            })
+        });
+        if(response) {
+            tasks.value.push(response);
+        }
+    }
     
-    return { tasks };
+    return { tasks , addTodo };
 });

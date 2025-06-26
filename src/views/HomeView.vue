@@ -9,11 +9,10 @@
   import { useTodoListStore } from '@/stores/useTodoListStore';
   import { storeToRefs } from 'pinia';
 
-
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
-  // defininig store variable
+  // defininig store variables
   const store = useTodoListStore();
   const { tasks } = storeToRefs(store);
 
@@ -26,21 +25,10 @@
     }
   });
 
-  // add new todo by calling api endpoint
-  const addTaskToArray = async (newTask: string): Promise<void> => {
-    const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        todo: newTask,
-        completed: false,
-        userId: 5
-      })
-    });
-    if(response) {
-      tasks.value.push(response);
-      showNotification("Task Added Successfully");
-    }
+  // add todo 
+  const addTaskToArray = (newTask: string) => {
+    store.addTodo(newTask);
+    showNotification("Task Added Successfully");
   }
 
   // delete todo by calling api endpoint
