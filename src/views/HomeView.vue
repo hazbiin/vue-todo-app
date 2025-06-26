@@ -32,14 +32,9 @@
   }
 
   // delete todo by calling api endpoint
-  const getTaskToDelete = async (id: number): Promise<void>  => {
-    const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
-      method: 'DELETE',
-    });
-    if(response) {
-      tasks.value = tasks.value.filter(t => t.id !== response.id);
-      showNotification('Task Deleted Succesfully');
-    }
+  const deleteTaskFromArray = (id: number) => {
+    store.deleteTodo(id);
+    showNotification('Task Deleted Succesfully');
   }
 
 </script>
@@ -48,7 +43,7 @@
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
     :tasks="tasks"
-    @delete-task="getTaskToDelete"
+    @delete-task="deleteTaskFromArray"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"
