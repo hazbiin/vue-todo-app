@@ -5,7 +5,6 @@
     type TaskType = {
         taskId: number;
         taskName: string;
-        isEditMode: boolean;
     }
 
     // component props
@@ -30,11 +29,6 @@
         emits('delete-task', index);
     }
 
-    // edit-task emit handler
-    const editTask = (index: number): void => {
-        const taskToUpdate: TaskType = props.tasks[index];
-        emits('edit-task', taskToUpdate);
-    }
 </script>
 
 <template>
@@ -49,9 +43,8 @@
             <TodoItem
                 v-for="(task, index) in tasks"
                 :key="task.taskId"
-                :todoItem="task.taskName"
+                :todoItem="task"
                 @delete-task="() => deleteTask(index)"
-                @edit-task="() => editTask(index)"
             />
         </ul>
     </div>
