@@ -16,7 +16,6 @@
 
     // component emits
     const emits = defineEmits<{
-        (e: 'edit-task', taskToUpdate: TaskType):void
         (e: 'delete-task', index:number):void
     }>();
     

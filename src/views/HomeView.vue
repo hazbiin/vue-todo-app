@@ -25,12 +25,6 @@
     }
   });
 
-  // add todo
-  const addTaskToArray = (newTask: string) => {
-    store.addTodo(newTask);
-    showNotification("Task Added Successfully");
-  }
-
   // delete todo
   const deleteTaskFromArray = (id: number) => {
     store.deleteTodo(id);
@@ -40,7 +34,7 @@
 </script>
 
 <template>
-  <TaskInputContainer @add-new-task="addTaskToArray"/>
+  <TaskInputContainer/>
   <TodoListContainer
     :tasks="tasks"
     @delete-task="deleteTaskFromArray"

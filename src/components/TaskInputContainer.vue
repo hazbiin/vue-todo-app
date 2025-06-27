@@ -1,17 +1,19 @@
 <script setup lang="ts">
-    import { ref, defineEmits } from 'vue';
+    import { ref } from 'vue';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
+    import useNotification from '@/composables/useNotification';
 
-    const emit = defineEmits<{
-      (e: 'add-new-task', trimmedTaskInput: string): void
-    }>();
-    
+    const store = useTodoListStore();
+    const { showNotification } = useNotification();
+
     const newTask = ref<string>('');
 
     const addNewTask = ():void => {
         const trimmedTaskInput = newTask.value.trim();
         if(trimmedTaskInput !== "") {
-            emit('add-new-task', trimmedTaskInput);
+            store.addTodo(trimmedTaskInput);
             newTask.value= "";
+            showNotification('Task Added Successfully.')
         }
     }
 
