@@ -16,6 +16,15 @@ export const useTodoListStore = defineStore('todoList',() => {
     const tasks = ref<TodoItemType[]>([]);
 
     // actions 
+    const fetchInitialData = async () => {
+        const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
+        if(response) {
+            const todos = response.todos;
+            tasks.value = todos;
+        }
+    }
+    fetchInitialData();
+
     const addTodo = async (newTask: string): Promise<void> => {
         const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
             method: 'POST',
