@@ -5,7 +5,11 @@
     import { useRoute , useRouter } from 'vue-router';
 
     import useNotification from '@/composables/useNotification.ts';
-    import * as util from '@/utils';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
+    import { storeToRefs } from 'pinia';
+
+    // store variables 
+    const store = useTodoListStore();
 
     // router instance
     const router = useRouter();
@@ -26,34 +30,18 @@
     const { showNotification } = useNotification();
 
     // reactive variables 
-    const tasks = ref<TaskType[]>([]);
+    const { tasks } = storeToRefs(store);
     const taskToUpdate = ref<TaskType>({} as TaskType);
+    taskToUpdate.value = tasks.value.filter((t: TaskType) => t.id === taskId)[0];
 
-    // getting task to update from localstorage.
-    const savedTasks = localStorage.getItem('tasks');
-    if(savedTasks) {
-        tasks.value = JSON.parse(savedTasks);
-        taskToUpdate.value = tasks.value.filter((t: TaskType) => t.id === taskId)[0];
-    }
-
-    // update task by calling api endpoint
     const saveChanges = async (updatedTaskName: string): Promise<void> => {
         if(updatedTaskName !== taskToUpdate.value.todo) {
-            const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    todo: updatedTaskName,
-                })
-            });
-            if(response) {
-                taskToUpdate.value.todo = response.todo;
-                util.setLocalStorage('tasks', tasks.value);
-                router.push('/');
-                showNotification('Task Updated Successfully');
-            }
+            await store.updateTodo(updatedTaskName, taskId);
+            router.push('/');
+            showNotification('Task Updated Successfully');
         }
     }
+
 </script>
 
 <template>

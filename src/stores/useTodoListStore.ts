@@ -40,6 +40,16 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
+    const updateTodo = async (updatedTaskName: string, taskId: number): Promise<void> => {
+        const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                todo: updatedTaskName,
+            })
+        });
+    }
+
     const deleteTodo = async (id: number): Promise<void>  => {
         const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
             method: 'DELETE',
@@ -49,5 +59,5 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    return { tasks , addTodo, deleteTodo };
+    return { tasks , addTodo, deleteTodo, updateTodo };
 });
