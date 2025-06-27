@@ -48,6 +48,10 @@ export const useTodoListStore = defineStore('todoList',() => {
                 todo: updatedTaskName,
             })
         });
+        if(response) {
+            const indexOfUpdatedItem = tasks.value.findIndex(item => item.id === taskId);
+            tasks.value.splice(indexOfUpdatedItem, 1, response);
+        }
     }
 
     const deleteTodo = async (id: number): Promise<void>  => {
