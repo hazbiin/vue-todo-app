@@ -25,7 +25,7 @@ export const useTodoListStore = defineStore('todoList',() => {
     }
     fetchInitialData();
 
-    const addTodo = async (newTask: string): Promise<void> => {
+    const addTodo = async (newTask: string): Promise<TodoItemType | undefined> => {
         const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -37,10 +37,11 @@ export const useTodoListStore = defineStore('todoList',() => {
         });
         if(response) {
             tasks.value.push(response);
+            return response;
         }
     }
 
-    const updateTodo = async (updatedTaskName: string, taskId: number): Promise<void> => {
+    const updateTodo = async (updatedTaskName: string, taskId: number): Promise<TodoItemType | undefined> => {
         const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json'},
@@ -51,6 +52,7 @@ export const useTodoListStore = defineStore('todoList',() => {
         if(response) {
             const indexOfUpdatedItem = tasks.value.findIndex(item => item.id === taskId);
             tasks.value.splice(indexOfUpdatedItem, 1, response);
+            return response;
         }
     }
 

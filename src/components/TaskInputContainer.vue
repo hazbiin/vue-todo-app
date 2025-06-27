@@ -8,12 +8,14 @@
 
     const newTask = ref<string>('');
 
-    const addNewTask = ():void => {
+    const addNewTask = async ():Promise<void> => {
         const trimmedTaskInput = newTask.value.trim();
         if(trimmedTaskInput !== "") {
-            store.addTodo(trimmedTaskInput);
-            newTask.value= "";
-            showNotification('Task Added Successfully.')
+            const response = await store.addTodo(trimmedTaskInput);
+            if(response) {
+              newTask.value= "";
+              showNotification('Task Added Successfully.')
+            }
         }
     }
 
