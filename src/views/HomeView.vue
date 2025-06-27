@@ -25,20 +25,11 @@
     }
   });
 
-  // delete todo
-  const deleteTaskFromArray = (id: number) => {
-    store.deleteTodo(id);
-    showNotification('Task Deleted Succesfully');
-  }
-
 </script>
 
 <template>
   <TaskInputContainer/>
-  <TodoListContainer
-    :tasks="tasks"
-    @delete-task="deleteTaskFromArray"
-    />
+  <TodoListContainer/>
   <NotificationContainer
       v-if="notificationMessages.length > 0"
       :notificationMessages
