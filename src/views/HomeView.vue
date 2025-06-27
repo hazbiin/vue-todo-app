@@ -16,7 +16,7 @@
   const store = useTodoListStore();
   const { tasks } = storeToRefs(store);
 
-  // fetching data if not present in localStorage
+  // fetching data
   onMounted(async () => {
     const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
       if(response) {
@@ -25,13 +25,13 @@
     }
   });
 
-  // add todo 
+  // add todo
   const addTaskToArray = (newTask: string) => {
     store.addTodo(newTask);
     showNotification("Task Added Successfully");
   }
 
-  // delete todo by calling api endpoint
+  // delete todo
   const deleteTaskFromArray = (id: number) => {
     store.deleteTodo(id);
     showNotification('Task Deleted Succesfully');
