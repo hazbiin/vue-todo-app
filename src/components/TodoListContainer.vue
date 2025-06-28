@@ -3,9 +3,10 @@
     import TodoItem from './TodoItem.vue';
 
     type TaskType = {
-        taskId: number;
-        taskName: string;
-        isEditMode: boolean;
+        id: number;
+        todo: string;
+        completed: boolean;
+        userId: number;
     }
 
     // component props
@@ -30,11 +31,6 @@
         emits('delete-task', index);
     }
 
-    // edit-task emit handler
-    const editTask = (index: number): void => {
-        const taskToUpdate: TaskType = props.tasks[index];
-        emits('edit-task', taskToUpdate);
-    }
 </script>
 
 <template>
@@ -47,11 +43,10 @@
 
         <ul v-else class="todo-list">
             <TodoItem
-                v-for="(task, index) in tasks"
-                :key="task.taskId"
-                :todoItem="task.taskName"
-                @delete-task="() => deleteTask(index)"
-                @edit-task="() => editTask(index)"
+                v-for="(task) in tasks"
+                :key="task.id"
+                :todoItem="task"
+                @delete-task="() => deleteTask(task.id)"
             />
         </ul>
     </div>

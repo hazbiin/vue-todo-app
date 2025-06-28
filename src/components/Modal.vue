@@ -2,9 +2,10 @@
     import { ref, defineProps, defineEmits } from 'vue';
 
     type TaskType = {
-        taskId: number;
-        taskName: string;
-        isEditMode: boolean
+        id: number;
+        todo: string;
+        completed: boolean;
+        userId: number;
     }
 
     // component props
@@ -15,11 +16,10 @@
     // component emits
     const emits = defineEmits<{
         (e: 'save-changes', newTaskName: string):void;
-        (e: 'close-modal'):void;
     }>();
 
     // reactive variable 
-    const updatedTaskName = ref<string>(props.taskToUpdate.taskName);
+    const updatedTaskName = ref<string>(props.taskToUpdate.todo);
 
 </script>
 
@@ -30,7 +30,6 @@
             <input class="task-input" type="text" v-model="updatedTaskName"/>
             <div class="todo-actions">
                 <button class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</button>
-                <button class="action-button" @click="$emit('close-modal')">Close</button>
             </div>
         </div>
     </div>

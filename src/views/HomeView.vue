@@ -1,118 +1,80 @@
 <script setup lang="ts">
   import { ref, onMounted, watch} from 'vue';
 
-  import Header from '@/components/Header.vue';
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
-  import Modal from '@/components/Modal.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
+  import useNotification from '@/composables/useNotification';
+  import * as util from '@/utils';
 
-  
   // defined types
   type TaskObj = {
-    taskId: number;
-    taskName: string;
-    isEditMode: boolean;
-  }
-  type MessageObj = {
-    id:number;
-    text: string;
+    id: number;
+    todo: string;
+    completed: boolean;
+    userId: number;
   }
 
-  // constants
-  const NOTIFICATION_POP_OUT_TIME = 5000;
+  // composable imports
+  const { notificationMessages, showNotification } = useNotification();
 
   //reactive variables
   const tasks = ref<TaskObj[]>([]);
-  const showModal = ref<boolean>(false);
-  const taskToUpdate = ref<TaskObj>({} as TaskObj);
-  const notificationMessages = ref<MessageObj[]>([]);
 
-
-  // get the savedTasks from localStorage at onMounted lifecycle hook.
-  onMounted(() => {
-    const savedTasks:string | null = localStorage.getItem('tasks');
+  // fetching data if not present in localStorage
+  onMounted(async () => {
+    const savedTasks = localStorage.getItem('tasks');
     if(savedTasks) {
       tasks.value = JSON.parse(savedTasks);
+    }else {
+      const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
+      if(response) {
+        const todos = response.todos;
+        tasks.value = todos;
+      }
     }
   });
 
-
-  // notification message handler
-  const showNotification = (message :string):void => {
-    notificationMessages.value.push({id: Date.now(), text: message});
-    
-    setTimeout(() => {
-      notificationMessages.value.shift();
-    }, NOTIFICATION_POP_OUT_TIME);
-  };
-
-
-  // add task to tasks array
-  const addTaskToArray = (newtask:string ): void => {
-    const newTask: TaskObj = {
-      taskId: Date.now(),
-      taskName: newtask,
-      isEditMode: false
+  // add new todo by calling api endpoint
+  const addTaskToArray = async (newTask: string): Promise<void> => {
+    const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        todo: newTask,
+        completed: false,
+        userId: 5
+      })
+    });
+    if(response) {
+      tasks.value.push(response);
+      showNotification("Task Added Successfully");
     }
-    tasks.value.push(newTask);
-    showNotification('Task Added Successfully');
   }
 
-
-  // edit-task emit handler
-  const getTaskToUpdate = (emittedTask: TaskObj): void => {
-
-    // change the isEditMode value of orignal task object.
-    emittedTask.isEditMode = true;
-
-    // update the reactive variables
-    taskToUpdate.value = emittedTask;
-    showModal.value = true;
+  // delete todo by calling api endpoint
+  const getTaskToDelete = async (id: number): Promise<void>  => {
+    const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
+      method: 'DELETE',
+    });
+    if(response) {
+      tasks.value = tasks.value.filter(t => t.id !== response.id);
+      showNotification('Task Deleted Succesfully');
+    }
   }
-
-  // save-changes emit handler
-  const saveChanges = (newTaskName: string): void => {
-    taskToUpdate.value.taskName = newTaskName;
-    taskToUpdate.value.isEditMode = false;
-    showModal.value = false;
-    showNotification('Task Updated Successfully');
-  }
-
-  // delete-task emit handler
-  const getTaskToDelete = (index: number): void => {
-    tasks.value.splice(index, 1);
-    showNotification('Task Deleted Successfully');
-  }
-
-
-  // close-modal emit handler
-  const closeModal = (): void => {
-    taskToUpdate.value.isEditMode = false;
-    showModal.value = false;
-  }
-
 
   // watch() updates the localStorage when tasks array changes.
   watch(tasks, (updatedTasks: TaskObj[]) => {
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    util.setLocalStorage('tasks', updatedTasks);
   }, { deep: true });
 
 </script>
 
 <template>
-  <Header/>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
     :tasks="tasks"
-    @edit-task="getTaskToUpdate"
     @delete-task="getTaskToDelete"
-    />
-  <Modal
-      v-if="showModal"
-      :taskToUpdate="taskToUpdate"
-      @close-modal="closeModal"
-      @save-changes="saveChanges"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"
