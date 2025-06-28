@@ -1,9 +1,4 @@
 
-// local storage setting utility function.
-export function setLocalStorage(key: string, value: unknown) {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
 // fetching from api utility function.
 export async function fetchDataFromApi(url: string, options?: object){
     try{

@@ -58,8 +58,8 @@ export const useTodoListStore = defineStore('todoList',() => {
             })
         });
         if(response) {
-            const indexOfUpdatedItem = tasks.value.findIndex(item => item.id === taskId);
-            tasks.value.splice(indexOfUpdatedItem, 1, response);
+            const updatedItemIndex = tasks.value.findIndex(item => item.id === taskId);
+            tasks.value.splice(updatedItemIndex, 1, response);
             return response;
         }
     }
