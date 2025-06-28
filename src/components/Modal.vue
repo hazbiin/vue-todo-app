@@ -1,10 +1,10 @@
 <script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
+    import { RouterLink } from 'vue-router';
 
     type TaskType = {
         taskId: number;
         taskName: string;
-        isEditMode: boolean
     }
 
     // component props
@@ -15,7 +15,6 @@
     // component emits
     const emits = defineEmits<{
         (e: 'save-changes', newTaskName: string):void;
-        (e: 'close-modal'):void;
     }>();
 
     // reactive variable 
@@ -29,8 +28,7 @@
             <h1 class="modal-title">Edit your task!</h1>
             <input class="task-input" type="text" v-model="updatedTaskName"/>
             <div class="todo-actions">
-                <button class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</button>
-                <button class="action-button" @click="$emit('close-modal')">Close</button>
+                <RouterLink  to="/" class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</RouterLink>
             </div>
         </div>
     </div>

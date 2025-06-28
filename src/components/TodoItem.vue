@@ -1,15 +1,19 @@
 <script setup lang="ts">
     import { defineProps, defineEmits } from 'vue';
+    import { RouterLink } from 'vue-router';
 
+    type TaskType = {
+        taskId: number;
+        taskName: string;
+    }
     // component props
     const props = defineProps<{
-        todoItem: string
+        todoItem: TaskType
     }>();
 
     // component emits
     const emits = defineEmits<{
         (e: 'delete-task'):void
-        (e: 'edit-task'):void
     }>();
 
 </script>
@@ -17,9 +21,9 @@
 
 <template>
     <li class="todo-item">
-        <span class="todo-item-text">{{ todoItem }}</span>
+        <span class="todo-item-text">{{ todoItem.taskName }}</span>
         <div class="todo-actions">
-            <button class="action-button" @click="emits('edit-task')">edit</button>
+            <RouterLink :to="'/tasks/'+todoItem.taskId" class="action-button">edit</RouterLink>
             <button class="action-button" @click="emits('delete-task')">delete</button>
         </div>
     </li>
