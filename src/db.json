@@ -1,0 +1,24 @@
+{
+    "todos": [
+        {
+            "id" : 1,
+            "todo": "Improve touch typing"
+        },
+        {
+            "id": 2,
+            "todo": "Learn Vue.js"
+        },
+        {
+            "id": 3,
+            "todo": "Research a topic interested in"
+        },
+        {
+            "id": 4,
+            "todo": "Send status e-mail"
+        },
+        {
+            "id": 5,
+            "todo": "Watch a movie"
+        }
+    ]
+}
