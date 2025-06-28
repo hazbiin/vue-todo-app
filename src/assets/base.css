@@ -23,7 +23,10 @@ button{
     font-family: inherit;
     white-space: nowrap;
 }
-
+a{
+  text-decoration: none;
+  color: inherit;
+}
 input{
   outline: none;
   font-family: inherit;
