@@ -8,8 +8,6 @@ export const useTodoListStore = defineStore('todoList',() => {
     type TodoItemType = {
         id: number;
         todo: string;
-        completed: boolean;
-        userId: number;
     }
     type TodoDeteleType = {
         id: number;
@@ -25,10 +23,9 @@ export const useTodoListStore = defineStore('todoList',() => {
 
     // actions 
     const fetchInitialData = async () => {
-        const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
+        const response =  await util.fetchDataFromApi('http://localhost:3000/todos');
         if(response) {
-            const todos = response.todos;
-            tasks.value = todos;
+            tasks.value = response;
         }
     }
     fetchInitialData();

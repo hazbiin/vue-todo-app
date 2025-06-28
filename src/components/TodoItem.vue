@@ -5,8 +5,6 @@
     type TaskType = {
         id: number;
         todo: string;
-        completed: boolean;
-        userId: number;
     }
     // component props
     const props = defineProps<{
