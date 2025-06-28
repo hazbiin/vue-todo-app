@@ -1,34 +1,29 @@
 <script setup lang="ts">
-    import { defineProps, computed, defineEmits } from 'vue';
+    import { computed } from 'vue';
     import TodoItem from './TodoItem.vue';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
+    import { storeToRefs } from 'pinia';
+    import useNotification from '@/composables/useNotification';
 
-    type TaskType = {
-        id: number;
-        todo: string;
-        completed: boolean;
-        userId: number;
-    }
+    // store variables 
+    const store = useTodoListStore();
+    const { tasks } = storeToRefs(store);
 
-    // component props
-    const props = defineProps<{
-        tasks: TaskType[]
-    }>();
-
-    // component emits
-    const emits = defineEmits<{
-        (e: 'edit-task', taskToUpdate: TaskType):void
-        (e: 'delete-task', index:number):void
-    }>();
-    
+    // composable variables
+    const { showNotification } = useNotification();
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
-        return props.tasks.length === 0;
+        // return props.tasks.length === 0;
+        return tasks.value.length === 0;
     });
 
-    // delete-task emit handler
-    const deleteTask = (index: number): void => {
-        emits('delete-task', index);
+    // delete-task handler
+    const deleteTask = async (index: number):Promise<void> => {
+        const response = await store.deleteTodo(index);
+        if(response) {
+            showNotification('Task Deleted Successfully');
+        }
     }
 
 </script>
