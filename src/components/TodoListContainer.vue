@@ -1,40 +1,37 @@
 <script setup lang="ts">
-    import { defineProps, computed, defineEmits } from 'vue';
+    import { computed, onMounted } from 'vue';
     import TodoItem from './TodoItem.vue';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
+    import { storeToRefs } from 'pinia';
+    import useNotification from '@/composables/useNotification';
 
-    type TaskType = {
-        taskId: number;
-        taskName: string;
-        isEditMode: boolean;
-    }
+    // store variables 
+    const store = useTodoListStore();
+    const { tasks } = storeToRefs(store);
 
-    // component props
-    const props = defineProps<{
-        tasks: TaskType[]
-    }>();
+    // composable variables
+    const { showNotification } = useNotification();
 
-    // component emits
-    const emits = defineEmits<{
-        (e: 'edit-task', taskToUpdate: TaskType):void
-        (e: 'delete-task', index:number):void
-    }>();
-    
+    // fetching initial data 
+    onMounted(() => {
+        store.readTodo();
+    });
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
-        return props.tasks.length === 0;
+        // return props.tasks.length === 0;
+        return tasks.value.length === 0;
     });
 
-    // delete-task emit handler
-    const deleteTask = (index: number): void => {
-        emits('delete-task', index);
+    // delete-task handler
+    const deleteTask = async (id: string):Promise<void> => {
+        const response = await store.deleteTodo(id);
+        if(response) {
+            store.readTodo();
+            showNotification('Task Deleted Successfully');
+        }
     }
 
-    // edit-task emit handler
-    const editTask = (index: number): void => {
-        const taskToUpdate: TaskType = props.tasks[index];
-        emits('edit-task', taskToUpdate);
-    }
 </script>
 
 <template>
@@ -47,11 +44,10 @@
 
         <ul v-else class="todo-list">
             <TodoItem
-                v-for="(task, index) in tasks"
-                :key="task.taskId"
-                :todoItem="task.taskName"
-                @delete-task="() => deleteTask(index)"
-                @edit-task="() => editTask(index)"
+                v-for="(task) in tasks"
+                :key="task.id"
+                :todoItem="task"
+                @delete-task="() => deleteTask(task.id)"
             />
         </ul>
     </div>

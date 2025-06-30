@@ -1,0 +1,62 @@
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import * as util from '@/utils';
+
+export const useTodoListStore = defineStore('todoList',() => {
+
+    // types
+    type TodoItemType = {
+        id: string;
+        todo: string;
+    }
+
+    // states
+    const tasks = ref<TodoItemType[]>([]);
+
+    // actions 
+    const readTodo = async () => {
+        const response =  await util.fetchDataFromApi('http://localhost:3000/todos');
+        if(response) {
+            tasks.value = response;
+        }
+    }
+
+    const addTodo = async (newTask: string): Promise<TodoItemType | undefined> => {
+        const response = await util.fetchDataFromApi('http://localhost:3000/todos', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                todo: newTask,
+            })
+        });
+        if(response) {
+            return response;
+        }
+    }
+
+    const updateTodo = async (updatedTaskName: string, taskId: number): Promise<TodoItemType | undefined> => {
+        const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                todo: updatedTaskName,
+            })
+        });
+        if(response) {
+            const updatedItemIndex = tasks.value.findIndex(item => item.id === taskId);
+            tasks.value.splice(updatedItemIndex, 1, response);
+            return response;
+        }
+    }
+
+    const deleteTodo = async (id: string): Promise<TodoItemType | undefined>  => {
+        const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${id}`, {
+            method: 'DELETE',
+        });
+        if(response) {
+            return response;
+        }
+    }
+
+    return { tasks , readTodo, addTodo, deleteTodo, updateTodo };
+});
