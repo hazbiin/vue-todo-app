@@ -28,7 +28,7 @@
     const savedTasks = localStorage.getItem('tasks');
     if(savedTasks) {
         tasks.value = JSON.parse(savedTasks);
-        taskToUpdate.value = tasks.value.filter((t: TaskType) => t.taskId === taskId)[0];
+        taskToUpdate.value = tasks.value.filter((task: TaskType) => task.taskId === taskId)[0];
     }
     
     // save-changes emit handler
