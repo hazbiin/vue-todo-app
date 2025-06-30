@@ -2,12 +2,10 @@
     import { computed, onMounted } from 'vue';
     import TodoItem from './TodoItem.vue';
     import { useTodoListStore } from '@/stores/useTodoListStore';
-    import { storeToRefs } from 'pinia';
     import useNotification from '@/composables/useNotification';
 
     // store variables 
     const store = useTodoListStore();
-    const { tasks } = storeToRefs(store);
 
     // composable variables
     const { showNotification } = useNotification();
@@ -20,7 +18,7 @@
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
         // return props.tasks.length === 0;
-        return tasks.value.length === 0;
+        return store.tasks.length === 0;
     });
 
     // delete-task handler
@@ -44,7 +42,7 @@
 
         <ul v-else class="todo-list">
             <TodoItem
-                v-for="(task) in tasks"
+                v-for="(task) in store.tasks"
                 :key="task.id"
                 :todoItem="task"
                 @delete-task="() => deleteTask(task.id)"
