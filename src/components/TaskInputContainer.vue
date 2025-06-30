@@ -14,6 +14,7 @@
             const response = await store.addTodo(trimmedTaskInput);
             if(response) {
               newTask.value= "";
+              store.readTodo();
               showNotification('Task Added Successfully.')
             }
         }

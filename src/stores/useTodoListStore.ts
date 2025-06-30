@@ -30,17 +30,14 @@ export const useTodoListStore = defineStore('todoList',() => {
     }
 
     const addTodo = async (newTask: string): Promise<TodoItemType | undefined> => {
-        const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
+        const response = await util.fetchDataFromApi('http://localhost:3000/todos', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 todo: newTask,
-                completed: false,
-                userId: 5
             })
         });
         if(response) {
-            tasks.value.push(response);
             return response;
         }
     }
