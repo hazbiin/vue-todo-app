@@ -2,10 +2,8 @@
     import { ref, defineProps, defineEmits } from 'vue';
 
     type TaskType = {
-        id: number;
+        id: string;
         todo: string;
-        completed: boolean;
-        userId: number;
     }
 
     // component props

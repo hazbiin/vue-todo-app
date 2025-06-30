@@ -34,8 +34,8 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    const updateTodo = async (updatedTaskName: string, taskId: number): Promise<TodoItemType | undefined> => {
-        const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
+    const updateTodo = async (updatedTaskName: string, id: string): Promise<TodoItemType | undefined> => {
+        const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -43,8 +43,6 @@ export const useTodoListStore = defineStore('todoList',() => {
             })
         });
         if(response) {
-            const updatedItemIndex = tasks.value.findIndex(item => item.id === taskId);
-            tasks.value.splice(updatedItemIndex, 1, response);
             return response;
         }
     }

@@ -16,14 +16,12 @@
 
     // getting task id from url params
     const route = useRoute();
-    const taskId = Number(route.params.id);
+    const taskId = route.params.id;
 
     // typing task
     type TaskType = {
-        id: number;
+        id: string;
         todo: string;
-        completed: boolean;
-        userId: number;
     }
 
     // composable imports
