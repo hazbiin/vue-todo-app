@@ -1,16 +1,12 @@
 {
   "todos": [
     {
-      "id": "1",
-      "todo": "Improve touch typing"
+      "todo": "test task 1",
+      "id": "1"
     },
     {
       "id": "2",
       "todo": "Learn Vue.js"
-    },
-    {
-      "id": "3",
-      "todo": "Research a topic interested in"
     },
     {
       "id": "5",

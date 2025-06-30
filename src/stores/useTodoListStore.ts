@@ -34,7 +34,7 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    const updateTodo = async (updatedTaskName: string, id: string): Promise<TodoItemType | undefined> => {
+    const updateTodo = async (updatedTaskName: string, id: string | string[]): Promise<TodoItemType | undefined> => {
         const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json'},
