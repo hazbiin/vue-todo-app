@@ -1,6 +1,14 @@
 
+// types
+type TaskType = {
+    id: number;
+    todo: string;
+    completed: boolean;
+    userId: number;
+}
+
 // local storage setting utility function.
-export function setLocalStorage(key: string, value: unknown) {
+export function setLocalStorage(key: string, value: TaskType[]) {
     localStorage.setItem(key, JSON.stringify(value));
 }
 
