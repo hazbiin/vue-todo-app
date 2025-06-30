@@ -1,14 +1,9 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import * as util from '@/utils';
+import type { TodoItemType } from "@/types";
 
 export const useTodoListStore = defineStore('todoList',() => {
-
-    // types
-    type TodoItemType = {
-        id: string;
-        todo: string;
-    }
 
     // states
     const tasks = ref<TodoItemType[]>([]);

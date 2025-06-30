@@ -1,14 +1,10 @@
 <script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
-
-    type TaskType = {
-        id: string;
-        todo: string;
-    }
+    import type { TodoItemType } from '@/types';
 
     // component props
     const props = defineProps<{
-        taskToUpdate: TaskType
+        taskToUpdate: TodoItemType
     }>();
 
     // component emits

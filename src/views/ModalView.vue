@@ -6,6 +6,7 @@
 
     import useNotification from '@/composables/useNotification.ts';
     import * as util from '@/utils';
+    import type { TodoItemType } from '@/types';
     import { useTodoListStore } from '@/stores/useTodoListStore';
 
     // store variables 
@@ -18,17 +19,11 @@
     const route = useRoute();
     const taskId = route.params.id;
 
-    // typing task
-    type TaskType = {
-        id: string;
-        todo: string;
-    }
-
     // composable imports
     const { showNotification } = useNotification();
 
     // reactive variable
-    const taskToUpdate = ref<TaskType>({} as TaskType);
+    const taskToUpdate = ref<TodoItemType>({} as TodoItemType);
     
     onMounted(() => {
         const getTodoToUpdate = async(): Promise<void> => {
