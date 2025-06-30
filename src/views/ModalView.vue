@@ -1,12 +1,12 @@
 <script setup lang="ts">
     import Modal from '@/components/Modal.vue';
 
-    import { ref } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { useRoute , useRouter } from 'vue-router';
 
     import useNotification from '@/composables/useNotification.ts';
+    import * as util from '@/utils';
     import { useTodoListStore } from '@/stores/useTodoListStore';
-    import { storeToRefs } from 'pinia';
 
     // store variables 
     const store = useTodoListStore();
@@ -27,10 +27,18 @@
     // composable imports
     const { showNotification } = useNotification();
 
-    // reactive variables 
-    const { tasks } = storeToRefs(store);
+    // reactive variable
     const taskToUpdate = ref<TaskType>({} as TaskType);
-    taskToUpdate.value = tasks.value.filter((t: TaskType) => t.id === taskId)[0];
+    
+    onMounted(() => {
+        const getTodoToUpdate = async(): Promise<void> => {
+            const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${taskId}`);
+            if(response) {
+                taskToUpdate.value = response;  
+            }
+        }
+        getTodoToUpdate();
+    });
 
     const saveChanges = async (updatedTaskName: string): Promise<void> => {
         if(updatedTaskName !== taskToUpdate.value.todo) {
