@@ -3,7 +3,7 @@
     import { RouterLink } from 'vue-router';
 
     type TaskType = {
-        id: number;
+        id: string;
         todo: string;
     }
     // component props

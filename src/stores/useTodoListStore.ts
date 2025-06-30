@@ -6,7 +6,7 @@ export const useTodoListStore = defineStore('todoList',() => {
 
     // types
     type TodoItemType = {
-        id: number;
+        id: string;
         todo: string;
     }
     type TodoDeteleType = {
