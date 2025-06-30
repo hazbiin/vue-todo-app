@@ -22,13 +22,12 @@ export const useTodoListStore = defineStore('todoList',() => {
     const tasks = ref<TodoItemType[]>([]);
 
     // actions 
-    const fetchInitialData = async () => {
+    const readTodo = async () => {
         const response =  await util.fetchDataFromApi('http://localhost:3000/todos');
         if(response) {
             tasks.value = response;
         }
     }
-    fetchInitialData();
 
     const addTodo = async (newTask: string): Promise<TodoItemType | undefined> => {
         const response = await util.fetchDataFromApi('https://dummyjson.com/todos/add', {
@@ -71,5 +70,5 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    return { tasks , addTodo, deleteTodo, updateTodo };
+    return { tasks , readTodo, addTodo, deleteTodo, updateTodo };
 });

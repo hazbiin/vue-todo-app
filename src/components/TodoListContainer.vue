@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
+    import { computed, onMounted } from 'vue';
     import TodoItem from './TodoItem.vue';
     import { useTodoListStore } from '@/stores/useTodoListStore';
     import { storeToRefs } from 'pinia';
@@ -11,6 +11,11 @@
 
     // composable variables
     const { showNotification } = useNotification();
+
+    // fetching initial data 
+    onMounted(() => {
+        store.readTodo();
+    });
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
