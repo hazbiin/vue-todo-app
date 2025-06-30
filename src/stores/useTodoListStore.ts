@@ -9,14 +9,6 @@ export const useTodoListStore = defineStore('todoList',() => {
         id: string;
         todo: string;
     }
-    type TodoDeteleType = {
-        id: number;
-        todo: string;
-        completed: boolean;
-        userId: number;
-        deletedOn: string;
-        isDeleted: boolean;
-    }
 
     // states
     const tasks = ref<TodoItemType[]>([]);
@@ -57,12 +49,11 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    const deleteTodo = async (id: number): Promise<TodoDeteleType | undefined>  => {
-        const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
+    const deleteTodo = async (id: string): Promise<TodoItemType | undefined>  => {
+        const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${id}`, {
             method: 'DELETE',
         });
         if(response) {
-            tasks.value = tasks.value.filter(t => t.id !== response.id);
             return response;
         }
     }

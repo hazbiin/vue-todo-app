@@ -24,9 +24,10 @@
     });
 
     // delete-task handler
-    const deleteTask = async (index: number):Promise<void> => {
-        const response = await store.deleteTodo(index);
+    const deleteTask = async (id: string):Promise<void> => {
+        const response = await store.deleteTodo(id);
         if(response) {
+            store.readTodo();
             showNotification('Task Deleted Successfully');
         }
     }
