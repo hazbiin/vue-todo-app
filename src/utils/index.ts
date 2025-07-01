@@ -32,8 +32,22 @@ export async function fetchData(): Promise<TaskType[] | undefined>{
   }
 }
 
+// fetch userId
+async function fetchUserId(): Promise<number | undefined>{
+  try{
+    const response = await fetch('https://dummyjson.com/todos/user/91');
+    const data = await response.json();
+    const { userId } = data.todos[0];
+    return userId;
+  }catch(error){
+    console.error(`Error fetching userid, ${error}`);
+  }
+}
+
 // add data
 export async function addData(newTask: string): Promise<TaskType | undefined>{
+
+  const userId = await fetchUserId();
   try{
     const response = await fetch('https://dummyjson.com/todos/add', {
       method: 'POST',
@@ -41,7 +55,7 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
       body: JSON.stringify({
         todo: newTask,
         completed: false,
-        userId: 5
+        userId: userId
       })
     });
     const data =  await response.json();
