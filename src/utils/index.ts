@@ -39,3 +39,22 @@ export async function fetchData(): Promise<TaskType[] | undefined>{
     console.error(`Error fetching data: ${error}`);
   }
 }
+
+// add data
+export async function addData(newTask: string): Promise<TaskType | undefined>{
+  try{
+    const response = await fetch('httgjjhkjhps://dummyjson.com/todos/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        todo: newTask,
+        completed: false,
+        userId: 5
+      })
+    });
+    const data =  await response.json();
+    return data;
+  }catch(error) {
+    console.error(`Error adding data: ${error}`);
+  }
+}
