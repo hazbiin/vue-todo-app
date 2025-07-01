@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import Modal from '@/components/Modal.vue';
+    import EditTodo from '@/components/EditTodo.vue';
 
     import { ref } from 'vue';
     import { useRoute , useRouter } from 'vue-router';
@@ -47,7 +47,7 @@
 </script>
 
 <template>
-    <Modal 
+    <EditTodo
         :taskToUpdate="taskToUpdate"
         @save-changes="saveChanges"
     />
