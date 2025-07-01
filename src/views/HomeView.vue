@@ -34,10 +34,9 @@
     if(savedTasks) {
       return JSON.parse(savedTasks);
     }else {
-      const response = await util.fetchDataFromApi('https://dummyjson.com/todos');
+      const response = await util.fetchData();
       if(response) {
-        const todos = response.todos;
-        return todos;
+        return response;
       }
     }
   }

@@ -27,3 +27,15 @@ export async function fetchDataFromApi(url: string, options?: object){
       console.error(`Error fetching data: ${error}`);
     }
 }
+
+// fetch data 
+export async function fetchData(): Promise<TaskType[] | undefined>{
+  try {
+    const respone = await fetch('https://dummyjson.com/todos');
+    const data = await respone.json();
+    const todos = data.todos;
+    return todos;
+  }catch(error) {
+    console.error(`Error fetching data: ${error}`);
+  }
+}
