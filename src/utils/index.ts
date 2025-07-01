@@ -82,3 +82,25 @@ export async function deleteData(id: number): Promise<DeletedTodoType | undefine
     console.error(`Error deleting data: ${error}`);
   }
 }
+
+// update data
+export async function updateData(id: number, updatedTaskName: string): Promise<TaskType | undefined>{
+  try{
+    const response = await fetch(`https://dummyjson.com/todos/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        todo: updatedTaskName,
+      })
+    });
+
+    if(!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  }catch(error){
+    console.error(`Error updating data: ${error}`);
+  }
+}
