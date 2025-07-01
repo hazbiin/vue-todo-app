@@ -52,11 +52,9 @@
 
   // delete todo by calling api endpoint
   const getTaskToDelete = async (id: number): Promise<void>  => {
-    const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
-      method: 'DELETE',
-    });
+    const response = await util.deleteData(id);
     if(response) {
-      tasks.value = tasks.value?.filter(t => t.id !== response.id);
+      tasks.value = tasks.value?.filter(task => task.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }

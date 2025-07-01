@@ -6,6 +6,14 @@ type TaskType = {
     completed: boolean;
     userId: number;
 }
+type DeletedTodoType = {
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
+  isDeleted: boolean;
+  deletedOn: string;
+}
 
 // local storage setting utility function.
 export function setLocalStorage(key: string, value: TaskType[]) {
@@ -43,7 +51,7 @@ export async function fetchData(): Promise<TaskType[] | undefined>{
 // add data
 export async function addData(newTask: string): Promise<TaskType | undefined>{
   try{
-    const response = await fetch('httgjjhkjhps://dummyjson.com/todos/add', {
+    const response = await fetch('https://dummyjson.com/todos/add', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -56,5 +64,21 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
     return data;
   }catch(error) {
     console.error(`Error adding data: ${error}`);
+  }
+}
+
+// delete data
+export async function deleteData(id: number): Promise<DeletedTodoType | undefined>{
+  try{
+    const response = await fetch(`https://dummyjson.com/todos/${id}`, {
+      method: 'DELETE'
+    });
+    if(!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  }catch(error){
+    console.error(`Error deleting data: ${error}`);
   }
 }
