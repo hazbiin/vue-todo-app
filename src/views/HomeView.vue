@@ -5,47 +5,63 @@
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
-  import setLocalStorage from '@/utilities';
+  import * as util from '@/utils';
 
   // defined types
   type TaskObj = {
-    taskId: number;
-    taskName: string;
+    id: number;
+    todo: string;
+    completed: boolean;
+    userId: number;
   }
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
   //reactive variables
-  const tasks = ref<TaskObj[]>([]);
+  const tasks = ref<TaskObj[] | undefined>([]);
 
-  // get the savedTasks from localStorage at onMounted lifecycle hook.
-  onMounted(() => {
-    const savedTasks:string | null = localStorage.getItem('tasks');
-    if(savedTasks) {
-      tasks.value = JSON.parse(savedTasks);
+  onMounted(async () => {
+    const response = await getInitialData();
+    if(response !== undefined) {
+      tasks.value = response;
     }
   });
 
-  // add task to tasks array
-  const addTaskToArray = (newtask:string ): void => {
-    const newTask: TaskObj = {
-      taskId: Date.now(),
-      taskName: newtask,
+  // fetching data if not present in localStorage
+  async function getInitialData():Promise<TaskObj[] | undefined>{
+    const savedTasks = localStorage.getItem('tasks');
+    if(savedTasks) {
+      return JSON.parse(savedTasks);
+    }else {
+      const response = await util.fetchData();
+      if(response) {
+        return response;
+      }
     }
-    tasks.value.push(newTask);
-    showNotification('Task Added Successfully');
   }
 
-  // delete-task emit handler
-  const getTaskToDelete = (index: number): void => {
-    tasks.value.splice(index, 1);
-    showNotification('Task Deleted Successfully');
+  // add new todo by calling api endpoint
+  const addTaskToArray = async (newTask: string): Promise<void> => {
+    const response = await util.addData(newTask);
+    if(response) {
+      tasks.value?.push(response);
+      showNotification("Task Added Successfully");
+    }
+  }
+
+  // delete todo by calling api endpoint
+  const getTaskToDelete = async (id: number): Promise<void>  => {
+    const response = await util.deleteData(id);
+    if(response) {
+      tasks.value = tasks.value?.filter(task => task.id !== response.id);
+      showNotification('Task Deleted Succesfully');
+    }
   }
 
   // watch() updates the localStorage when tasks array changes.
   watch(tasks, (updatedTasks: TaskObj[]) => {
-    setLocalStorage('tasks', updatedTasks);
+    util.setLocalStorage('tasks', updatedTasks);
   }, { deep: true });
 
 </script>
