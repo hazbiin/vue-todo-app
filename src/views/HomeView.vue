@@ -6,7 +6,6 @@
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
   import * as util from '@/utils';
-import { convertToObject } from 'typescript';
 
   // defined types
   type TaskObj = {
