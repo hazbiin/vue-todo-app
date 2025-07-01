@@ -11,7 +11,7 @@
 
     // component props
     const props = defineProps<{
-        tasks: TaskType[]
+        tasks: TaskType[] | undefined
     }>();
 
     // component emits
@@ -23,7 +23,7 @@
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
-        return props.tasks.length === 0;
+        return props.tasks?.length === 0;
     });
 
     // delete-task emit handler

@@ -6,6 +6,7 @@
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
   import * as util from '@/utils';
+import { convertToObject } from 'typescript';
 
   // defined types
   type TaskObj = {
@@ -19,21 +20,28 @@
   const { notificationMessages, showNotification } = useNotification();
 
   //reactive variables
-  const tasks = ref<TaskObj[]>([]);
+  const tasks = ref<TaskObj[] | undefined>([]);
 
-  // fetching data if not present in localStorage
   onMounted(async () => {
-    const savedTasks = localStorage.getItem('tasks');
-    if(savedTasks) {
-      tasks.value = JSON.parse(savedTasks);
-    }else {
-      const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
-      if(response) {
-        const todos = response.todos;
-        tasks.value = todos;
-      }
+    const response = await getInitialData();
+    if(response !== undefined) {
+      tasks.value = response;
     }
   });
+
+  // fetching data if not present in localStorage
+  async function getInitialData():Promise<TaskObj[] | undefined>{
+    const savedTasks = localStorage.getItem('tasks');
+    if(savedTasks) {
+      return JSON.parse(savedTasks);
+    }else {
+      const response = await util.fetchDataFromApi('https://dummyjson.com/todos');
+      if(response) {
+        const todos = response.todos;
+        return todos;
+      }
+    }
+  }
 
   // add new todo by calling api endpoint
   const addTaskToArray = async (newTask: string): Promise<void> => {
@@ -47,7 +55,7 @@
       })
     });
     if(response) {
-      tasks.value.push(response);
+      tasks.value?.push(response);
       showNotification("Task Added Successfully");
     }
   }
@@ -58,7 +66,7 @@
       method: 'DELETE',
     });
     if(response) {
-      tasks.value = tasks.value.filter(t => t.id !== response.id);
+      tasks.value = tasks.value?.filter(t => t.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }
