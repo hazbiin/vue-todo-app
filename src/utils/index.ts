@@ -57,7 +57,7 @@ export async function deleteData(id: string): Promise<TodoItemType | undefined>{
 }
 
 // update data
-export async function updateData(id: string, updatedTaskName: string): Promise<TodoItemType | undefined>{
+export async function updateData(id: string | string[], updatedTaskName: string): Promise<TodoItemType | undefined>{
   try{
     const response = await fetch(`http://localhost:3000/todos/${id}`, {
       method: 'PUT',
