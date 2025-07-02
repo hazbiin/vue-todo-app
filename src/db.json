@@ -1,7 +1,7 @@
 {
   "todos": [
     {
-      "todo": "test task 1",
+      "todo": "test todo",
       "id": "1"
     },
     {
@@ -9,12 +9,8 @@
       "todo": "Learn Vue.js"
     },
     {
-      "id": "5",
-      "todo": "Watch a movie"
-    },
-    {
-      "id": "a069",
-      "todo": "test task one"
+      "todo": "Improve Touch Typing",
+      "id": "5"
     }
   ]
 }

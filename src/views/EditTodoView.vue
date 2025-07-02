@@ -23,20 +23,26 @@
     const { showNotification } = useNotification();
 
     // reactive variable
-    const taskToUpdate = ref<TodoItemType>({} as TodoItemType);
+    const taskToUpdate = ref<TodoItemType | undefined>();
     
-    onMounted(() => {
-        const getTodoToUpdate = async(): Promise<void> => {
-            const response = await util.fetchDataById(taskId);
-            if(response) {
-                taskToUpdate.value = response;  
-            }
+    onMounted(async() => {
+        const response = await getTodoToUpdate();
+        if(response) {
+            taskToUpdate.value = response;
         }
-        getTodoToUpdate();
     });
 
-    const saveChanges = async (updatedTaskName: string): Promise<void> => {
-        if(updatedTaskName !== taskToUpdate.value.todo) {
+    // get todo to update
+    const getTodoToUpdate = async(): Promise<TodoItemType| undefined> => {
+        const response = await util.fetchDataById(taskId);
+        if(response){
+            return response;
+        }
+    }
+
+    // update todo
+    const saveChanges = async (updatedTaskName: string | undefined): Promise<void> => {
+        if(updatedTaskName !== taskToUpdate.value?.todo) {
             const response = await store.updateTodo(updatedTaskName, taskId);
             if(response) {
                 router.push('/');

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-    import { ref, defineProps, defineEmits } from 'vue';
+    import { ref, defineProps, defineEmits, onMounted } from 'vue';
     import type { TodoItemType } from '@/types';
 
     // component props
     const props = defineProps<{
-        taskToUpdate: TodoItemType
+        taskToUpdate: TodoItemType | undefined
     }>();
 
     // component emits
@@ -13,7 +13,7 @@
     }>();
 
     // reactive variable 
-    const updatedTaskName = ref<string>(props.taskToUpdate.todo);
+    const updatedTaskName = ref<string | undefined>(props.taskToUpdate?.todo);
 
 </script>
 
