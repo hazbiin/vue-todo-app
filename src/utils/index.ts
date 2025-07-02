@@ -11,6 +11,17 @@ export async function fetchData(): Promise<TodoItemType[] | undefined>{
   }
 }
 
+// fetch data with id
+export async function fetchDataById(id: string | string []): Promise<TodoItemType | undefined>{
+  try {
+    const response = await fetch(`http://localhost:3000/todos/${id}`)
+    const data = await response.json();
+    return data;
+  }catch(error){
+    console.error(`Error fetching data with id: ${error}`);
+  }
+}
+
 // add data
 export async function addData(newTask: string): Promise<TodoItemType | undefined>{
 

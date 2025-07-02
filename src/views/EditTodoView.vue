@@ -27,7 +27,7 @@
     
     onMounted(() => {
         const getTodoToUpdate = async(): Promise<void> => {
-            const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${taskId}`);
+            const response = await util.fetchDataById(taskId);
             if(response) {
                 taskToUpdate.value = response;  
             }
