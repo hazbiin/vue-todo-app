@@ -41,15 +41,9 @@ export const useTodoListStore = defineStore('todoList',() => {
     }
 
     const updateTodo = async (updatedTaskName: string, taskId: number): Promise<TodoItemType | undefined> => {
-        const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${taskId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                todo: updatedTaskName,
-            })
-        });
+        const response = await util.updateData(taskId, updatedTaskName);
         if(response) {
-            const updatedItemIndex = tasks.value.findIndex(item => item.id === taskId);
+            const updatedItemIndex = tasks.value.findIndex(item => item.id === response.id);
             tasks.value.splice(updatedItemIndex, 1, response);
             return response;
         }
