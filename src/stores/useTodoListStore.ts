@@ -10,46 +10,32 @@ export const useTodoListStore = defineStore('todoList',() => {
 
     // actions 
     const readTodo = async () => {
-        const response =  await util.fetchDataFromApi('http://localhost:3000/todos');
+        const response =  await util.fetchData();
         if(response) {
             tasks.value = response;
         }
     }
 
     const addTodo = async (newTask: string): Promise<TodoItemType | undefined> => {
-        const response = await util.fetchDataFromApi('http://localhost:3000/todos', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                todo: newTask,
-            })
-        });
+        const response = await util.addData(newTask);
         if(response) {
             return response;
         }
     }
 
-    const updateTodo = async (updatedTaskName: string, id: string | string[]): Promise<TodoItemType | undefined> => {
-        const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                todo: updatedTaskName,
-            })
-        });
+    const updateTodo = async (updatedTaskName: string, id: string): Promise<TodoItemType | undefined> => {
+        const response = await util.updateData(id, updatedTaskName);
         if(response) {
             return response;
         }
     }
 
-    const deleteTodo = async (id: string): Promise<TodoItemType | undefined>  => {
-        const response = await util.fetchDataFromApi(`http://localhost:3000/todos/${id}`, {
-            method: 'DELETE',
-        });
+    const deleteTodo = async (id: string): Promise<TodoItemType| undefined>  => {
+        const response = await util.deleteData(id);
         if(response) {
             return response;
         }
     }
 
-    return { tasks , readTodo, addTodo, deleteTodo, updateTodo };
+    return { tasks ,readTodo, addTodo, deleteTodo, updateTodo };
 });
