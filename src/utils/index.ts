@@ -31,6 +31,7 @@ export async function addData(newTask: string): Promise<TodoItemType | undefined
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         todo: newTask,
+        completed: false,
       })
     });
     const data =  await response.json();
