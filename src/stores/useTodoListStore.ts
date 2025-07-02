@@ -25,10 +25,10 @@ export const useTodoListStore = defineStore('todoList',() => {
 
     // actions 
     const fetchInitialData = async () => {
-        const response =  await util.fetchDataFromApi('https://dummyjson.com/todos');
+        console.log("fetch initial data func called")
+        const response =  await util.fetchData();
         if(response) {
-            const todos = response.todos;
-            tasks.value = todos;
+            tasks.value = response;
         }
     }
     fetchInitialData();
@@ -74,5 +74,5 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    return { tasks , addTodo, deleteTodo, updateTodo };
+    return { tasks ,fetchInitialData, addTodo, deleteTodo, updateTodo };
 });
