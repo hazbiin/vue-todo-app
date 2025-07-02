@@ -3,8 +3,10 @@
     import { RouterLink } from 'vue-router';
 
     type TaskType = {
-        taskId: number;
-        taskName: string;
+        id: number;
+        todo: string;
+        completed: boolean;
+        userId: number;
     }
     // component props
     const props = defineProps<{
@@ -21,9 +23,9 @@
 
 <template>
     <li class="todo-item">
-        <span class="todo-item-text">{{ todoItem.taskName }}</span>
+        <span class="todo-item-text">{{ todoItem.todo }}</span>
         <div class="todo-actions">
-            <RouterLink :to="'/tasks/'+todoItem.taskId" class="action-button">edit</RouterLink>
+            <RouterLink :to="'/tasks/'+todoItem.id" class="action-button">edit</RouterLink>
             <button class="action-button" @click="emits('delete-task')">delete</button>
         </div>
     </li>
