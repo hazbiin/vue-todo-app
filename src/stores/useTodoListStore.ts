@@ -25,7 +25,6 @@ export const useTodoListStore = defineStore('todoList',() => {
 
     // actions 
     const fetchInitialData = async () => {
-        console.log("fetch initial data func called")
         const response =  await util.fetchData();
         if(response) {
             tasks.value = response;
