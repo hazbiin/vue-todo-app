@@ -56,9 +56,7 @@ export const useTodoListStore = defineStore('todoList',() => {
     }
 
     const deleteTodo = async (id: number): Promise<TodoDeteleType | undefined>  => {
-        const response = await util.fetchDataFromApi(`https://dummyjson.com/todos/${id}`, {
-            method: 'DELETE',
-        });
+        const response = await util.deleteData(id);
         if(response) {
             tasks.value = tasks.value.filter(t => t.id !== response.id);
             return response;
