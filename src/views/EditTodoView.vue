@@ -43,7 +43,7 @@
     // update todo
     const saveChanges = async (updatedTaskName: string | undefined): Promise<void> => {
         if(updatedTaskName !== taskToUpdate.value?.todo) {
-            const response = await store.updateTodo(updatedTaskName, taskId);
+            const response = await store.updateTodoName(updatedTaskName, taskId);
             if(response) {
                 router.push('/');
                 showNotification('Task Updated Successfully');

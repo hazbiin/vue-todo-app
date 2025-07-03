@@ -23,7 +23,7 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    const updateTodo = async (updatedTaskName: string | undefined, id: string | string []): Promise<TodoItemType | undefined> => {
+    const updateTodoName = async (updatedTaskName: string | undefined, id: string | string []): Promise<TodoItemType | undefined> => {
         const requestData = {
             id,
             data: {
@@ -56,5 +56,5 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    return { tasks ,readTodo, addTodo, deleteTodo, updateTodo, toggleCompletedStatus };
+    return { tasks ,readTodo, addTodo, deleteTodo, updateTodoName, toggleCompletedStatus };
 });
