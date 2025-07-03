@@ -61,7 +61,7 @@ export async function deleteData(id: string): Promise<TodoItemType | undefined>{
 export async function updateData(id: string | string[], updatedTaskName: string | undefined): Promise<TodoItemType | undefined>{
   try{
     const response = await fetch(`http://localhost:3000/todos/${id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({
         todo: updatedTaskName,
