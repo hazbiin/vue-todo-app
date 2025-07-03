@@ -78,3 +78,20 @@ export async function updateData(id: string | string[], updatedTaskName: string 
     console.error(`Error updating data: ${error}`);
   }
 }
+
+// update completed status
+export async function updateCompletedStatus(id: string, completed: boolean): Promise<TodoItemType | undefined>{
+  try{
+    const response = await fetch(`http://localhost:3000/todos/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        completed: !completed,
+      })
+    });
+    const data = await response.json();
+    return data;
+  }catch(error){
+    console.error(`Error updating data: ${error}`);
+  }
+}
