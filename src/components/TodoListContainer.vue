@@ -30,6 +30,11 @@
         }
     }
 
+    // checked-task handler
+    const handleCompletedTask = async (id: string, isChecked: boolean):Promise<void> => {
+        // need to make patch request here
+    }
+
 </script>
 
 <template>
@@ -46,6 +51,7 @@
                 :key="task.id"
                 :todoItem="task"
                 @delete-task="() => deleteTask(task.id)"
+                @checked-task="() => handleCompletedTask(task.id, task.completed)"
             />
         </ul>
     </div>
