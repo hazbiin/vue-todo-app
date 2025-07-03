@@ -1,18 +1,18 @@
 <script setup lang="ts">
    
-   import { defineProps } from 'vue';
+    import { defineProps } from 'vue';
+    import type { NotificationMessageType } from '@/types';
 
-    type Props = {
-        notificationMessages: {id: number, text: string}[]
-    }
-    const props = defineProps<Props>();
+    const props = defineProps<{
+        notificationMessages: NotificationMessageType[]
+    }>();
 
 </script>
 
 <template>
     <TransitionGroup tag="ul" name="notification-list" class="notification-container" >
         <li v-for="message in notificationMessages" :key="message.id" class="notification">
-            {{ message.text }}
+            {{ message.messagetext }}
         </li>
     </TransitionGroup>
 </template>

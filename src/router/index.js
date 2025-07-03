@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "@/views/HomeView.vue";
-import ModalView from "@/views/ModalView.vue";
+import EditTodoView from "@/views/EditTodoView.vue";
 
 const routes = [
     {
@@ -12,7 +12,7 @@ const routes = [
     {
         path: '/tasks/:id',
         name: 'modal',
-        component: ModalView
+        component: EditTodoView
     }
 ];
 
