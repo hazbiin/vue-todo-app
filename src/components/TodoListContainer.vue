@@ -3,7 +3,6 @@
     import TodoItem from './TodoItem.vue';
     import { useTodoListStore } from '@/stores/useTodoListStore';
     import useNotification from '@/composables/useNotification';
-    import * as util from '@/utils';
 
     // store variables 
     const store = useTodoListStore();
@@ -33,13 +32,7 @@
 
     // checked-task handler
     const handleCompletedTask = async (id: string, completed: boolean):Promise<void> => {
-        const requestData = { 
-            id,
-            data: { 
-                completed: !completed 
-            }
-        };
-        const response = await util.updateData(requestData);
+        const response = await store.toggleCompletedStatus(id, completed);
         if(response) {
             store.readTodo();
         }

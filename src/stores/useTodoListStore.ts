@@ -36,6 +36,19 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
+    const toggleCompletedStatus = async (id: string, completed: boolean):Promise<TodoItemType | undefined> => {
+        const requestData = {
+            id, 
+            data: {
+                completed: !completed
+            }
+        };
+        const response = await util.updateData(requestData);
+        if(response) {
+            return response;
+        }
+    }
+    
     const deleteTodo = async (id: string): Promise<TodoItemType| undefined>  => {
         const response = await util.deleteData(id);
         if(response) {
@@ -43,5 +56,5 @@ export const useTodoListStore = defineStore('todoList',() => {
         }
     }
 
-    return { tasks ,readTodo, addTodo, deleteTodo, updateTodo };
+    return { tasks ,readTodo, addTodo, deleteTodo, updateTodo, toggleCompletedStatus };
 });
