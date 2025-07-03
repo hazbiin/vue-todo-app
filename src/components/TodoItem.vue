@@ -20,7 +20,7 @@
 <template>
     <li class="todo-item">
         <div class="todo-item-group">
-            <input :id="props.todoItem.id" type="checkbox" @change="emits('checked-task')">
+            <input :id="props.todoItem.id" type="checkbox" @change="emits('checked-task')" :checked="todoItem.completed">
             <label :for="props.todoItem.id" class="todo-item-text" :class="{'strike-through': todoItem.completed}">{{ todoItem.todo }}</label>
         </div>
         <div class="todo-item-group">
