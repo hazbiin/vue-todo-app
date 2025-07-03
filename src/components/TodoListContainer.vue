@@ -33,7 +33,13 @@
 
     // checked-task handler
     const handleCompletedTask = async (id: string, completed: boolean):Promise<void> => {
-        const response = await util.updateCompletedStatus(id, completed);
+        const requestData = { 
+            id,
+            data: { 
+                completed: !completed 
+            }
+        };
+        const response = await util.updateData(requestData);
         if(response) {
             store.readTodo();
         }

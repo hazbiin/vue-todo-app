@@ -1,4 +1,5 @@
 import type { TodoItemType } from "@/types";
+import type { CompletedTodoRequestType} from "@/types";
 
 // fetch data 
 export async function fetchData(): Promise<TodoItemType[] | undefined>{
@@ -57,39 +58,20 @@ export async function deleteData(id: string): Promise<TodoItemType | undefined>{
   }
 }
 
-// update data
-export async function updateData(id: string | string[], updatedTaskName: string | undefined): Promise<TodoItemType | undefined>{
+// generic updateData function
+export async function updateData<T extends CompletedTodoRequestType>(requestData: T):Promise<TodoItemType | undefined> {
   try{
-    const response = await fetch(`http://localhost:3000/todos/${id}`, {
+    const response = await fetch(`http://localhost:3000/todos/${requestData.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        todo: updatedTaskName,
-      })
+      body: JSON.stringify(requestData.data),
     });
 
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const data = await response.json();
-    return data;
-  }catch(error){
-    console.error(`Error updating data: ${error}`);
-  }
-}
-
-// update completed status
-export async function updateCompletedStatus(id: string, completed: boolean): Promise<TodoItemType | undefined>{
-  try{
-    const response = await fetch(`http://localhost:3000/todos/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        completed: !completed,
-      })
-    });
-    const data = await response.json();
+    const data = response.json();
     return data;
   }catch(error){
     console.error(`Error updating data: ${error}`);
