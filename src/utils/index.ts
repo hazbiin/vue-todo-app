@@ -1,5 +1,5 @@
 import type { TodoItemType } from "@/types";
-import type { CompletedTodoRequestType} from "@/types";
+import type { UpdateRequestType } from "@/types";
 
 // fetch data 
 export async function fetchData(): Promise<TodoItemType[] | undefined>{
@@ -59,7 +59,7 @@ export async function deleteData(id: string): Promise<TodoItemType | undefined>{
 }
 
 // generic updateData function
-export async function updateData<T extends CompletedTodoRequestType>(requestData: T):Promise<TodoItemType | undefined> {
+export async function updateData<T extends UpdateRequestType>(requestData: T):Promise<TodoItemType | undefined> {
   try{
     const response = await fetch(`http://localhost:3000/todos/${requestData.id}`, {
       method: 'PATCH',

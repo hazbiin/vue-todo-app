@@ -24,7 +24,13 @@ export const useTodoListStore = defineStore('todoList',() => {
     }
 
     const updateTodo = async (updatedTaskName: string | undefined, id: string | string []): Promise<TodoItemType | undefined> => {
-        const response = await util.updateData(id, updatedTaskName);
+        const requestData = {
+            id,
+            data: {
+                todo: updatedTaskName
+            }
+        }
+        const response = await util.updateData(requestData);
         if(response) {
             return response;
         }

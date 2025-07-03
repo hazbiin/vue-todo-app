@@ -9,7 +9,7 @@
 
     // component emits
     const emits = defineEmits<{
-        (e: 'save-changes', newTaskName: string):void;
+        (e: 'save-changes', newTaskName: string | undefined):void;
     }>();
 
     // reactive variable 

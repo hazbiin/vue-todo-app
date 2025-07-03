@@ -7,9 +7,16 @@ export type NotificationMessageType = {
     id: string; 
     messagetext: string;
 }
-export type CompletedTodoRequestType  = {
+type CompletedTodoRequestType  = {
     id: string;
     data : {
         completed: boolean
     }   
 }
+type UpdatedTodoNameRequestType = {
+    id: string | string[];
+    data : {
+        todo : string | undefined
+    }
+}
+export type UpdateRequestType = CompletedTodoRequestType | UpdatedTodoNameRequestType;

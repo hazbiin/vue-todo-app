@@ -2,13 +2,13 @@
   "todos": [
     {
       "id": "df94",
-      "todo": "Improve touch typing",
+      "todo": "Improve touch typing(edited)",
       "completed": false
     },
     {
       "id": "7ace",
       "todo": "Learn Vue.js",
-      "completed": false
+      "completed": true
     }
   ]
 }
