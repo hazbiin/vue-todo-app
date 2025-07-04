@@ -34,7 +34,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     padding: 18px;
