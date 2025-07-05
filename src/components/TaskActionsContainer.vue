@@ -1,5 +1,6 @@
 <script setup lang="ts">
-    import { ref, computed } from 'vue';
+    import { ref, computed, watch } from 'vue';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
 
     // reactive state
     const isChecked = ref<boolean>(false);
@@ -9,6 +10,46 @@
         return isChecked.value ? 'Uncheck All' : 'Check All';
     });
 
+    // store variable 
+    const store = useTodoListStore();
+
+    // watch function for checking All/None checkbox with isChecked ref as watch source.
+    watch((isChecked), () => {
+
+        if(isChecked.value) {
+            // check the uncheckedTodos if any when "checking" the checkAll/None checkbox
+            const uncheckedTodos = store.tasks.filter(task => task.completed !== true);
+            if(uncheckedTodos.length > 0) {
+                uncheckedTodos.forEach(todo => {
+                    toggleCompleted(todo.id, todo.completed);
+                });
+            }else {
+                store.tasks.forEach(task => {
+                    toggleCompleted(task.id, task.completed);
+                });
+            }
+        }else {
+            // uncheck the checkedTodos if any when "unchecking" the checkAll/None checkbox
+            const checkedTodos = store.tasks.filter(task => task.completed === true);
+            if(checkedTodos.length > 0) {
+                checkedTodos.forEach(todo => {
+                    toggleCompleted(todo.id, todo.completed);
+                });
+            }else {
+                store.tasks.forEach(task => {
+                    toggleCompleted(task.id, task.completed);
+                });
+            }
+        }
+    });
+
+    // helper function for making the PATCH request via store
+    const toggleCompleted = async (id: string, completed: boolean): Promise<void> => {
+        const response = await store.toggleCompletedStatus(id, completed);
+        if(response) {
+            store.readTodo();
+        }
+    }
 </script>
 
 <template>
