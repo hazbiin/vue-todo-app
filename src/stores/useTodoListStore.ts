@@ -9,10 +9,11 @@ export const useTodoListStore = defineStore('todoList',() => {
     const tasks = ref<TodoItemType[]>([]);
 
     // actions 
-    const readTodo = async () => {
+    const readTodo = async ():Promise<TodoItemType[] | undefined> => {
         const response =  await util.fetchData();
         if(response) {
             tasks.value = response;
+            return response
         }
     }
 

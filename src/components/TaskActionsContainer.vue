@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, computed, watch } from 'vue';
+    import { ref, computed, watch, onMounted } from 'vue';
     import { useTodoListStore } from '@/stores/useTodoListStore';
 
     // reactive state
@@ -50,6 +50,19 @@
             store.readTodo();
         }
     }
+
+    // persisting the checked state of Check all/none checkbox when onmounted.
+    onMounted(async () => {
+        const response = await store.readTodo();
+        if(response) {
+            const checkedTodos = store.tasks.filter(task => task.completed === true);
+
+            // change isChecked ref when all the todos are checked initially when onload.
+            if(checkedTodos.length === store.tasks.length) {
+                isChecked.value = true;
+            }
+        }
+    });
 </script>
 
 <template>
