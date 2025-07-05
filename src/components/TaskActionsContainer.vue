@@ -14,7 +14,13 @@
     const store = useTodoListStore();
 
     // watch function for checking All/None checkbox with isChecked ref as watch source.
-    watch((isChecked), () => {
+    watch((isChecked), (newVal, oldVal) => { 
+        const checkedTodos = store.tasks.filter(task => task.completed === true);
+        
+        // return early form watch if all is todos are checked to maintain the checked state of check All/None checkbox
+        if(oldVal === false && isChecked && checkedTodos.length === store.tasks.length) {
+            return;
+        }
 
         if(isChecked.value) {
             // check the uncheckedTodos if any when "checking" the checkAll/None checkbox
@@ -30,7 +36,6 @@
             }
         }else {
             // uncheck the checkedTodos if any when "unchecking" the checkAll/None checkbox
-            const checkedTodos = store.tasks.filter(task => task.completed === true);
             if(checkedTodos.length > 0) {
                 checkedTodos.forEach(todo => {
                     toggleCompleted(todo.id, todo.completed);
