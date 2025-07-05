@@ -1,32 +1,41 @@
 <script setup lang="ts">
-    import { defineProps, computed, defineEmits } from 'vue';
+    import { computed, onMounted } from 'vue';
     import TodoItem from './TodoItem.vue';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
+    import useNotification from '@/composables/useNotification';
 
-    type TaskType = {
-        taskId: number;
-        taskName: string;
-    }
+    // store variables 
+    const store = useTodoListStore();
 
-    // component props
-    const props = defineProps<{
-        tasks: TaskType[]
-    }>();
+    // composable variables
+    const { showNotification } = useNotification();
 
-    // component emits
-    const emits = defineEmits<{
-        (e: 'edit-task', taskToUpdate: TaskType):void
-        (e: 'delete-task', index:number):void
-    }>();
-    
+    // fetching initial data 
+    onMounted(() => {
+        store.readTodo();
+    });
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
-        return props.tasks.length === 0;
+        // return props.tasks.length === 0;
+        return store.tasks.length === 0;
     });
 
-    // delete-task emit handler
-    const deleteTask = (index: number): void => {
-        emits('delete-task', index);
+    // delete-task handler
+    const deleteTask = async (id: string):Promise<void> => {
+        const response = await store.deleteTodo(id);
+        if(response) {
+            store.readTodo();
+            showNotification('Task Deleted Successfully');
+        }
+    }
+
+    // checked-task handler
+    const handleCompletedTask = async (id: string, completed: boolean):Promise<void> => {
+        const response = await store.toggleCompletedStatus(id, completed);
+        if(response) {
+            store.readTodo();
+        }
     }
 
 </script>
@@ -41,10 +50,11 @@
 
         <ul v-else class="todo-list">
             <TodoItem
-                v-for="(task, index) in tasks"
-                :key="task.taskId"
+                v-for="(task) in store.tasks"
+                :key="task.id"
                 :todoItem="task"
-                @delete-task="() => deleteTask(index)"
+                @delete-task="() => deleteTask(task.id)"
+                @checked-task="() => handleCompletedTask(task.id, task.completed)"
             />
         </ul>
     </div>

@@ -1,19 +1,17 @@
 <script setup lang="ts">
     import { defineProps, defineEmits } from 'vue';
     import { RouterLink } from 'vue-router';
+    import type { TodoItemType } from '@/types';
 
-    type TaskType = {
-        taskId: number;
-        taskName: string;
-    }
     // component props
     const props = defineProps<{
-        todoItem: TaskType
+        todoItem: TodoItemType
     }>();
 
     // component emits
     const emits = defineEmits<{
         (e: 'delete-task'):void
+        (e: 'checked-task'):void
     }>();
 
 </script>
@@ -21,9 +19,12 @@
 
 <template>
     <li class="todo-item">
-        <span class="todo-item-text">{{ todoItem.taskName }}</span>
-        <div class="todo-actions">
-            <RouterLink :to="'/tasks/'+todoItem.taskId" class="action-button">edit</RouterLink>
+        <div class="todo-item-group">
+            <input :id="props.todoItem.id" type="checkbox" @change="emits('checked-task')" :checked="todoItem.completed">
+            <label :for="props.todoItem.id" class="todo-item-text" :class="{'strike-through': todoItem.completed}">{{ todoItem.todo }}</label>
+        </div>
+        <div class="todo-item-group">
+            <RouterLink :to="'/tasks/'+todoItem.id" class="action-button">edit</RouterLink>
             <button class="action-button" @click="emits('delete-task')">delete</button>
         </div>
     </li>
@@ -43,7 +44,10 @@
         font-weight: bold;
         letter-spacing: 1px;
     }
-    .todo-actions{
+    .strike-through{
+        text-decoration: line-through;
+    }
+    .todo-item-group{
         display: flex;
         gap: 8px;
         align-items: center;

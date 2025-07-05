@@ -1,17 +1,22 @@
 <script setup lang="ts">
-    import { ref, defineEmits } from 'vue';
+    import { ref } from 'vue';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
+    import useNotification from '@/composables/useNotification';
 
-    const emit = defineEmits<{
-      (e: 'add-new-task', trimmedTaskInput: string): void
-    }>();
-    
+    const store = useTodoListStore();
+    const { showNotification } = useNotification();
+
     const newTask = ref<string>('');
 
-    const addNewTask = ():void => {
+    const addNewTask = async ():Promise<void> => {
         const trimmedTaskInput = newTask.value.trim();
         if(trimmedTaskInput !== "") {
-            emit('add-new-task', trimmedTaskInput);
-            newTask.value= "";
+            const response = await store.addTodo(trimmedTaskInput);
+            if(response) {
+              newTask.value= "";
+              store.readTodo();
+              showNotification('Task Added Successfully.')
+            }
         }
     }
 
@@ -29,7 +34,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     padding: 18px;
