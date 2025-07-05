@@ -1,8 +1,21 @@
+<script setup lang="ts">
+    import { ref, computed } from 'vue';
+
+    // reactive state
+    const isChecked = ref<boolean>(false);
+
+    // computed ref for checkbox label
+    const labelText = computed(() => {
+        return isChecked.value ? 'Uncheck All' : 'Check All';
+    });
+
+</script>
+
 <template>
     <div class="status-container">
         <div class="checkbox-section">
-            <input id="all-check-uncheck" type="checkbox" class="checkbox">
-            <label for="all-check-uncheck" class="checkbox-label">Mark All</label>
+            <input id="all-check-uncheck" type="checkbox" class="checkbox" v-model="isChecked">
+            <label for="all-check-uncheck" class="checkbox-label">{{ labelText }}</label>
         </div>
     </div>
 </template>
