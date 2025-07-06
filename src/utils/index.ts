@@ -23,8 +23,13 @@ export function setLocalStorage(key: string, value: TaskType[]) {
 // fetch data 
 export async function fetchData(): Promise<TaskType[] | undefined>{
   try {
-    const respone = await fetch('https://dummyjson.com/todos');
-    const data = await respone.json();
+    const response = await fetch('https://dummyjson.com/todos');
+    
+    if(!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
     const todos = data.todos;
     return todos;
   }catch(error) {
@@ -36,6 +41,11 @@ export async function fetchData(): Promise<TaskType[] | undefined>{
 async function fetchUserId(): Promise<number | undefined>{
   try{
     const response = await fetch('https://dummyjson.com/todos/user/91');
+
+    if(!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
     const data = await response.json();
     const { userId } = data.todos[0];
     return userId;
@@ -58,6 +68,11 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
         userId: userId
       })
     });
+
+    if(!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
     const data =  await response.json();
     return data;
   }catch(error) {
@@ -71,9 +86,11 @@ export async function deleteData(id: number): Promise<DeletedTodoType | undefine
     const response = await fetch(`https://dummyjson.com/todos/${id}`, {
       method: 'DELETE'
     });
+
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
     const data = await response.json();
     return data;
   }catch(error){
@@ -85,7 +102,7 @@ export async function deleteData(id: number): Promise<DeletedTodoType | undefine
 export async function updateData(id: number, updatedTaskName: string): Promise<TaskType | undefined>{
   try{
     const response = await fetch(`https://dummyjson.com/todos/${id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({
         todo: updatedTaskName,
