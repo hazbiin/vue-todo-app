@@ -60,8 +60,10 @@
   }
 
   // watch() updates the localStorage when tasks array changes.
-  watch(tasks, (updatedTasks: TaskObj[]) => {
-    util.setLocalStorage('tasks', updatedTasks);
+  watch(tasks, (updatedTasks: TaskObj[] | undefined) => {
+    if(updatedTasks) {
+      util.setLocalStorage('tasks', updatedTasks);
+    }
   }, { deep: true });
 
 </script>
