@@ -1,13 +1,7 @@
 <script setup lang="ts">
     import { defineProps, computed, defineEmits } from 'vue';
+    import type { TaskType } from '@/types';
     import TodoItem from './TodoItem.vue';
-
-    type TaskType = {
-        id: number;
-        todo: string;
-        completed: boolean;
-        userId: number;
-    }
 
     // component props
     const props = defineProps<{

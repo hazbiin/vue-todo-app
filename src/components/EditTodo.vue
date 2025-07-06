@@ -1,12 +1,6 @@
 <script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
-
-    type TaskType = {
-        id: number;
-        todo: string;
-        completed: boolean;
-        userId: number;
-    }
+    import type { TaskType } from '@/types';
 
     // component props
     const props = defineProps<{

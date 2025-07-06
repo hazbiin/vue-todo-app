@@ -1,19 +1,5 @@
-
-// types
-type TaskType = {
-    id: number;
-    todo: string;
-    completed: boolean;
-    userId: number;
-}
-type DeletedTodoType = {
-  id: number;
-  todo: string;
-  completed: boolean;
-  userId: number;
-  isDeleted: boolean;
-  deletedOn: string;
-}
+import type { TaskType } from "@/types";
+import type { DeletedTodoType } from "@/types";
 
 // local storage setting utility function.
 export function setLocalStorage(key: string, value: TaskType[]) {
@@ -24,7 +10,7 @@ export function setLocalStorage(key: string, value: TaskType[]) {
 export async function fetchData(): Promise<TaskType[] | undefined>{
   try {
     const response = await fetch('https://dummyjson.com/todos');
-    
+
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }

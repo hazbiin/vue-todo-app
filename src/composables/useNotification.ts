@@ -1,12 +1,8 @@
 import { ref } from "vue";
-
-type MessageObj = {
-  id:number;
-  text: string;
-}
+import type { NotificationMessageType } from "@/types";
 
 const NOTIFICATION_POP_OUT_TIME = 5000;
-const notificationMessages = ref<MessageObj[]>([]);
+const notificationMessages = ref<NotificationMessageType[]>([]);
 
 export default function useNotification() {
   const showNotification = (message :string):void => {

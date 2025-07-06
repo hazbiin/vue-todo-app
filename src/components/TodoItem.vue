@@ -1,13 +1,8 @@
 <script setup lang="ts">
     import { defineProps, defineEmits } from 'vue';
     import { RouterLink } from 'vue-router';
+    import type { TaskType } from '@/types';
 
-    type TaskType = {
-        id: number;
-        todo: string;
-        completed: boolean;
-        userId: number;
-    }
     // component props
     const props = defineProps<{
         todoItem: TaskType
