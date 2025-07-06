@@ -5,31 +5,23 @@
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
+  import type { TaskType } from '@/types';
   import * as util from '@/utils';
-
-  // defined types
-  type TaskObj = {
-    id: number;
-    todo: string;
-    completed: boolean;
-    userId: number;
-  }
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
   //reactive variables
-  const tasks = ref<TaskObj[] | undefined>([]);
-
+  const tasks = ref<TaskType[] | undefined>([]);
   onMounted(async () => {
     const response = await getInitialData();
-    if(response !== undefined) {
+    if(response) {
       tasks.value = response;
     }
   });
 
   // fetching data if not present in localStorage
-  async function getInitialData():Promise<TaskObj[] | undefined>{
+  async function getInitialData():Promise<TaskType[] | undefined>{
     const savedTasks = localStorage.getItem('tasks');
     if(savedTasks) {
       return JSON.parse(savedTasks);
@@ -60,7 +52,7 @@
   }
 
   // watch() updates the localStorage when tasks array changes.
-  watch(tasks, (updatedTasks: TaskObj[] | undefined) => {
+  watch(tasks, (updatedTasks: TaskType[] | undefined) => {
     if(updatedTasks) {
       util.setLocalStorage('tasks', updatedTasks);
     }
