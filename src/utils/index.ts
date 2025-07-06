@@ -7,7 +7,7 @@ export function setLocalStorage(key: string, value: TaskType[]) {
 }
 
 // fetch data 
-export async function fetchData(): Promise<TaskType[] | undefined>{
+export async function getTodos(): Promise<TaskType[] | undefined>{
   try {
     const response = await fetch('https://dummyjson.com/todos');
 
@@ -42,7 +42,6 @@ async function fetchUserId(): Promise<number | undefined>{
 
 // add data
 export async function addData(newTask: string): Promise<TaskType | undefined>{
-
   const userId = await fetchUserId();
   try{
     const response = await fetch('https://dummyjson.com/todos/add', {

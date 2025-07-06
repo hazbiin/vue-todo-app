@@ -34,7 +34,7 @@
     if(savedTasks) {
       return JSON.parse(savedTasks);
     }else {
-      const response = await util.fetchData();
+      const response = await util.getTodos();
       if(response) {
         return response;
       }
