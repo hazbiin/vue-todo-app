@@ -5,6 +5,7 @@
     import { useRoute , useRouter } from 'vue-router';
 
     import useNotification from '@/composables/useNotification.ts';
+    import type { TaskType } from '@/types';
     import * as util from '@/utils';
 
     // router instance
@@ -13,14 +14,6 @@
     // getting task id from url params
     const route = useRoute();
     const taskId = Number(route.params.id);
-
-    // typing task
-    type TaskType = {
-        id: number;
-        todo: string;
-        completed: boolean;
-        userId: number;
-    }
 
     // composable imports
     const { showNotification } = useNotification();
