@@ -22,7 +22,7 @@
     }
   });
 
-  // fetching data if not present in localStorage
+  // fetch todos
   async function getInitialData():Promise<TaskType[] | undefined>{
     const response = await util.getTodos();
     if(response) {
@@ -30,7 +30,7 @@
     }
   }
 
-  // add new todo by calling api endpoint
+  // add new todo
   const addTaskToArray = async (newTask: string): Promise<void> => {
     const response = await store.addTodo(newTask);
     if(response) {
@@ -38,11 +38,10 @@
     }
   }
 
-  // delete todo by calling api endpoint
+  // delete todo
   const getTaskToDelete = async (id: number): Promise<void>  => {
-    const response = await util.deleteData(id);
+    const response = await store.deleteTodo(id);
     if(response) {
-      store.tasks = store.tasks?.filter(task => task.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }

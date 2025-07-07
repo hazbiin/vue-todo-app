@@ -16,13 +16,21 @@ export const useTodoListStore = defineStore('todo-list', () => {
             return response;
         }
     }
-
+    const deleteTodo = async (id: number): Promise<TaskType | undefined> => {
+        const response = await util.deleteData(id);
+        if(response) {
+            tasks.value = tasks.value.filter(task => task.id !== response.id);
+            return response;
+        }
+    }
+    
     return { 
 
         // state
         tasks,
 
         // actions 
-        addTodo
+        addTodo,
+        deleteTodo
     }
 });
