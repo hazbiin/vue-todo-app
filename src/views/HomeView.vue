@@ -5,8 +5,6 @@
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
-  import type { TaskType } from '@/types';
-  import * as util from '@/utils';
   import { useTodoListStore } from '@/stores/useTodoListStore';
 
   // composable imports
@@ -19,7 +17,7 @@
     await store.readTodos();
   });
 
-  // add new todo by calling api endpoint
+  // add new todo
   const addTaskToArray = async (newTask: string): Promise<void> => {
     const response = await store.addTodo(newTask);
     if(response) {
@@ -27,11 +25,10 @@
     }
   }
 
-  // delete todo by calling api endpoint
+  // delete todo
   const getTaskToDelete = async (id: number): Promise<void>  => {
-    const response = await util.deleteData(id);
+    const response = await store.deleteTodo(id);
     if(response) {
-      store.tasks = store.tasks?.filter(task => task.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }
