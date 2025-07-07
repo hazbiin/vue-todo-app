@@ -7,29 +7,26 @@
   import useNotification from '@/composables/useNotification';
   import type { TaskType } from '@/types';
   import * as util from '@/utils';
+  import { useTodoListStore } from '@/stores/useTodoListStore';
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
-  //reactive variables
-  const tasks = ref<TaskType[] | undefined>([]);
+  // store variable 
+  const store = useTodoListStore();
+
   onMounted(async () => {
     const response = await getInitialData();
     if(response) {
-      tasks.value = response;
+      store.tasks = response;
     }
   });
 
   // fetching data if not present in localStorage
   async function getInitialData():Promise<TaskType[] | undefined>{
-    const savedTasks = localStorage.getItem('tasks');
-    if(savedTasks) {
-      return JSON.parse(savedTasks);
-    }else {
-      const response = await util.getTodos();
-      if(response) {
-        return response;
-      }
+    const response = await util.getTodos();
+    if(response) {
+      return response;
     }
   }
 
@@ -37,7 +34,7 @@
   const addTaskToArray = async (newTask: string): Promise<void> => {
     const response = await util.addData(newTask);
     if(response) {
-      tasks.value?.push(response);
+      store.tasks?.push(response);
       showNotification("Task Added Successfully");
     }
   }
@@ -46,24 +43,17 @@
   const getTaskToDelete = async (id: number): Promise<void>  => {
     const response = await util.deleteData(id);
     if(response) {
-      tasks.value = tasks.value?.filter(task => task.id !== response.id);
+      store.tasks = store.tasks?.filter(task => task.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }
-
-  // watch() updates the localStorage when tasks array changes.
-  watch(tasks, (updatedTasks: TaskType[] | undefined) => {
-    if(updatedTasks) {
-      util.setLocalStorage('tasks', updatedTasks);
-    }
-  }, { deep: true });
 
 </script>
 
 <template>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
-    :tasks="tasks"
+    :tasks="store.tasks"
     @delete-task="getTaskToDelete"
     />
   <NotificationContainer
