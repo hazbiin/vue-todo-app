@@ -41,7 +41,7 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
 // delete data
 export async function deleteData(id: string): Promise<TaskType | undefined>{
   try{
-    const response = await fetch(`https://dummyjson.com/todos/${id}`, {
+    const response = await fetch(`http://localhost:3000/todos/${id}`, {
       method: 'DELETE'
     });
 

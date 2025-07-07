@@ -30,6 +30,7 @@
   const getTaskToDelete = async (id: string): Promise<void>  => {
     const response = await store.deleteTodo(id);
     if(response) {
+      store.readTodos();
       showNotification('Task Deleted Succesfully');
     }
   }
