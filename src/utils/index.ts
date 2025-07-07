@@ -4,15 +4,14 @@ import type { DeletedTodoType } from "@/types";
 // fetch data 
 export async function getTodos(): Promise<TaskType[] | undefined>{
   try {
-    const response = await fetch('https://dummyjson.com/todos');
+    const response = await fetch('http://localhost:3000/todos');
 
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const data = await response.json();
-    const todos = data.todos;
-    return todos;
+    return data;
   }catch(error) {
     console.error(`Error fetching data: ${error}`);
   }

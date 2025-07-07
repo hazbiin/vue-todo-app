@@ -1,8 +1,6 @@
 export type TaskType = {
-    id: number;
+    id: string;
     todo: string;
-    completed: boolean;
-    userId: number;
 }
 export type NotificationMessageType = {
     id:number;
