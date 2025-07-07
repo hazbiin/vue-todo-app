@@ -1,11 +1,6 @@
 import type { TaskType } from "@/types";
 import type { DeletedTodoType } from "@/types";
 
-// local storage setting utility function.
-export function setLocalStorage(key: string, value: TaskType[]) {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
 // fetch data 
 export async function getTodos(): Promise<TaskType[] | undefined>{
   try {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref, onMounted, watch} from 'vue';
+  import { onMounted } from 'vue';
 
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
