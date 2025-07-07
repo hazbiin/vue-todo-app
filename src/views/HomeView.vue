@@ -32,9 +32,8 @@
 
   // add new todo by calling api endpoint
   const addTaskToArray = async (newTask: string): Promise<void> => {
-    const response = await util.addData(newTask);
+    const response = await store.addTodo(newTask);
     if(response) {
-      store.tasks?.push(response);
       showNotification("Task Added Successfully");
     }
   }
