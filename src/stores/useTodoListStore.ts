@@ -29,6 +29,14 @@ export const useTodoListStore = defineStore('todo-list', () => {
             return response;
         }
     }
+    const updateTodo = async (id: number, updatedTaskName: string): Promise<TaskType | undefined> => {
+        const response = await util.updateData(id, updatedTaskName);
+        if(response) {
+            const indexOfUpdatedItem = tasks.value.findIndex(item => item.id === response.id);
+            tasks.value.splice(indexOfUpdatedItem, 1, response);
+            return response;
+        }
+    }
 
     return { 
 
@@ -38,6 +46,7 @@ export const useTodoListStore = defineStore('todo-list', () => {
         // actions 
         readTodos,
         addTodo,
-        deleteTodo
+        deleteTodo,
+        updateTodo
     }
 });

@@ -6,7 +6,7 @@
 
     import useNotification from '@/composables/useNotification.ts';
     import type { TaskType } from '@/types';
-    import * as util from '@/utils';
+    import { useTodoListStore } from '@/stores/useTodoListStore';
 
     // router instance
     const router = useRouter();
@@ -18,24 +18,18 @@
     // composable imports
     const { showNotification } = useNotification();
 
-    // reactive variables 
-    const tasks = ref<TaskType[]>([]);
-    const taskToUpdate = ref<TaskType>({} as TaskType);
+    // const store variable
+    const store = useTodoListStore();
 
-    // getting task to update from localstorage.
-    const savedTasks = localStorage.getItem('tasks');
-    if(savedTasks) {
-        tasks.value = JSON.parse(savedTasks);
-        taskToUpdate.value = tasks.value.filter((task: TaskType) => task.id === taskId)[0];
-    }
+    // reactive variable
+    const taskToUpdate = ref<TaskType>({} as TaskType);
+    taskToUpdate.value = store.tasks.filter((task: TaskType) => task.id === taskId)[0];
 
     // update task by calling api endpoint
     const saveChanges = async (updatedTaskName: string): Promise<void> => {
         if(updatedTaskName !== taskToUpdate.value.todo) {
-            const response = await util.updateData(taskId, updatedTaskName);
+            const response = await store.updateTodo(taskId, updatedTaskName);
             if(response) {
-                taskToUpdate.value.todo = response.todo;
-                util.setLocalStorage('tasks', tasks.value);
                 router.push('/');
                 showNotification('Task Updated Successfully');
             }
