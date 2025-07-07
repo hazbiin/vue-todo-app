@@ -17,34 +17,14 @@ export async function getTodos(): Promise<TaskType[] | undefined>{
   }
 }
 
-// fetch userId
-async function fetchUserId(): Promise<number | undefined>{
-  try{
-    const response = await fetch('https://dummyjson.com/todos/user/91');
-
-    if(!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const { userId } = data.todos[0];
-    return userId;
-  }catch(error){
-    console.error(`Error fetching userid, ${error}`);
-  }
-}
-
 // add data
 export async function addData(newTask: string): Promise<TaskType | undefined>{
-  const userId = await fetchUserId();
   try{
-    const response = await fetch('https://dummyjson.com/todos/add', {
+    const response = await fetch('http://localhost:3000/todos', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         todo: newTask,
-        completed: false,
-        userId: userId
       })
     });
 

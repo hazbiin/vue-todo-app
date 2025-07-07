@@ -1,5 +1,20 @@
 {
-    "todos" : [
-        
-    ]
+  "todos": [
+    {
+      "id": "a033",
+      "todo": "todo 1"
+    },
+    {
+      "id": "6813",
+      "todo": "todo 2"
+    },
+    {
+      "id": "51a3",
+      "todo": "todo 3"
+    },
+    {
+      "id": "68b9",
+      "todo": "todo 4"
+    }
+  ]
 }

@@ -21,6 +21,7 @@
   const addTaskToArray = async (newTask: string): Promise<void> => {
     const response = await store.addTodo(newTask);
     if(response) {
+      store.readTodos();
       showNotification("Task Added Successfully");
     }
   }
