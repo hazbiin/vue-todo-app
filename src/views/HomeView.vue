@@ -16,19 +16,8 @@
   const store = useTodoListStore();
 
   onMounted(async () => {
-    const response = await getInitialData();
-    if(response) {
-      store.tasks = response;
-    }
+    await store.readTodos();
   });
-
-  // fetching data if not present in localStorage
-  async function getInitialData():Promise<TaskType[] | undefined>{
-    const response = await util.getTodos();
-    if(response) {
-      return response;
-    }
-  }
 
   // add new todo by calling api endpoint
   const addTaskToArray = async (newTask: string): Promise<void> => {

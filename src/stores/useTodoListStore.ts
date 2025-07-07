@@ -9,6 +9,12 @@ export const useTodoListStore = defineStore('todo-list', () => {
     const tasks = ref<TaskType[]>([]);
 
     // actions 
+    const readTodos = async(): Promise<void> => {
+        const response = await util.getTodos();
+        if(response) {
+            tasks.value = response;
+        }
+    }
     const addTodo = async(newTask: string): Promise<TaskType | undefined> => {
         const response = await util.addData(newTask);
         if(response) {
@@ -23,6 +29,7 @@ export const useTodoListStore = defineStore('todo-list', () => {
         tasks,
 
         // actions 
+        readTodos,
         addTodo
     }
 });
