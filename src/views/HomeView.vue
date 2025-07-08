@@ -13,12 +13,18 @@
 
   //reactive variables
   const tasks = ref<TaskType[] | undefined>([]);
-  onMounted(async () => {
+
+  onMounted(() => {
+    setTasksRef();
+  });
+
+  // set tasks ref
+  async function setTasksRef(){
     const response = await getInitialData();
     if(response) {
       tasks.value = response;
     }
-  });
+  }
 
   // fetching data if not present in localStorage
   async function getInitialData():Promise<TaskType[] | undefined>{
