@@ -7,3 +7,6 @@ export type NotificationMessageType = {
     id:number;
     text: string;
 }
+export type ConfirmCheckedButtonType = {
+    disabled: boolean;
+}
