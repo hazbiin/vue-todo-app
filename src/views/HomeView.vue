@@ -40,14 +40,13 @@
   }
   
   // handle toggle completed
-  const handleToggleCompleted = (id: string) => {
-    // need to implement this
+  const handleToggleCompleted = () => {
+    // need to implement dirty check here
   }
 
   //handle confirm checked state button
   const confirmCheckedState = () => {
-    // need to implement this
-    
+    // need to implement dirty check here
   }
 
 </script>

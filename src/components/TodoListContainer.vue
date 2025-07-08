@@ -11,7 +11,7 @@
     // component emits
     const emits = defineEmits<{
         (e: 'delete-task', index:string):void
-        (e: 'toggle-completed', index: string): void
+        (e: 'toggle-completed', index: string, completed: boolean): void
     }>();
     
 
@@ -41,7 +41,7 @@
                 :key="task.id"
                 :todoItem="task"
                 @delete-task="() => deleteTask(task.id)"
-                @toggle-completed="emits('toggle-completed', task.id)"
+                @toggle-completed="emits('toggle-completed', task.id, task.completed)"
             />
         </ul>
     </div>
