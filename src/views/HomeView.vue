@@ -39,6 +39,11 @@
     }
   }
   
+  // handle toggle completed
+  const handleToggleCompleted = (id: string) => {
+    // need to implement this
+  }
+
   //handle confirm checked state button
   const confirmCheckedState = () => {
     // need to implement this
@@ -52,6 +57,7 @@
   <TodoListContainer
     :tasks="store.tasks"
     @delete-task="getTaskToDelete"
+    @toggle-completed="handleToggleCompleted"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"

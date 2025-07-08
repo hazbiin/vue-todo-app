@@ -11,6 +11,7 @@
     // component emits
     const emits = defineEmits<{
         (e: 'delete-task'):void
+        (e: 'toggle-completed'): void
     }>();
 
 </script>
@@ -19,7 +20,7 @@
 <template>
     <li class="todo-item">
         <div class="todo-item-group">
-            <input :id="todoItem.id" type="checkbox">
+            <input :id="todoItem.id" type="checkbox" @change="emits('toggle-completed')" :checked="todoItem.completed">
             <label :for="todoItem.id" class="todo-item-text">{{ todoItem.todo }}</label>
         </div>
         <div class="todo-item-group">
