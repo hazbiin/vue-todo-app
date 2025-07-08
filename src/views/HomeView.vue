@@ -1,10 +1,11 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
+  import Button from '@/components/Button.vue';
   import { useTodoListStore } from '@/stores/useTodoListStore';
 
   // composable imports
@@ -12,6 +13,9 @@
 
   // store variable 
   const store = useTodoListStore();
+
+  // reactive variable
+  const isDisabled = ref(true);
 
   onMounted(async () => {
     await store.readTodos();
@@ -34,6 +38,12 @@
       showNotification('Task Deleted Succesfully');
     }
   }
+  
+  //handle confirm checked state button
+  const confirmCheckedState = () => {
+    // need to implement this
+    
+  }
 
 </script>
 
@@ -47,4 +57,5 @@
       v-if="notificationMessages.length > 0"
       :notificationMessages
     />
+  <Button :disabled="isDisabled" @confirm-checked-state="confirmCheckedState">Confirm check</Button>
 </template>
