@@ -26,7 +26,7 @@
     const savedTasks = localStorage.getItem('tasks');
     if(savedTasks) {
         tasks.value = JSON.parse(savedTasks);
-        taskToUpdate.value = tasks.value.filter((task: TaskType) => task.id === taskId)[0];
+        taskToUpdate.value = tasks.value.find((task: TaskType) => task.id === taskId);
     }
 
     // update task by calling api endpoint
