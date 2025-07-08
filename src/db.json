@@ -1,12 +1,14 @@
 {
   "todos": [
     {
-      "id": "a033",
-      "todo": "todo 1"
+      "id": "b45b",
+      "todo": "learn vue.js",
+      "completed": false
     },
     {
-      "id": "6813",
-      "todo": "new updated task name"
+      "id": "35f5",
+      "todo": "improve touch typing",
+      "completed": false
     }
   ]
 }
