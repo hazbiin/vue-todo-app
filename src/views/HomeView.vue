@@ -12,7 +12,7 @@
   const { notificationMessages, showNotification } = useNotification();
 
   // store variable 
-  const store = useTodoListStore();
+  const todosStore = useTodoListStore();
 
   // set state on onMounted
   onMounted(() => {
@@ -21,12 +21,12 @@
 
   // set tasks state
   async function setTasksState(){
-    await store.readTodos();
+    await todosStore.readTodos();
   }
 
   // add new todo by calling api endpoint
   const addTaskToArray = async (newTask: string): Promise<void> => {
-    const response = await store.addTodo(newTask);
+    const response = await todosStore.addTodo(newTask);
     if(response) {
       showNotification("Task Added Successfully");
     }
@@ -36,7 +36,7 @@
   const getTaskToDelete = async (id: number): Promise<void>  => {
     const response = await util.deleteData(id);
     if(response) {
-      store.tasks = store.tasks?.filter(task => task.id !== response.id);
+      todosStore.tasks = todosStore.tasks?.filter(task => task.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }
@@ -46,7 +46,7 @@
 <template>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
-    :tasks="store.tasks"
+    :tasks="todosStore.tasks"
     @delete-task="getTaskToDelete"
     />
   <NotificationContainer
