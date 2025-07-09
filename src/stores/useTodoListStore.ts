@@ -1,10 +1,9 @@
-import { defineStore } from "pinia";
 import { ref } from "vue";
+import { defineStore } from "pinia";
 import type { TaskType } from "@/types";
 import * as util from '@/utils';
 
 export const useTodoListStore = defineStore('todo-list', () => {
-
     // state 
     const tasks = ref<TaskType[]>([]);
 
@@ -24,7 +23,6 @@ export const useTodoListStore = defineStore('todo-list', () => {
     }
 
     return { 
-
         // state
         tasks,
 
