@@ -20,20 +20,20 @@
 
     // reactive variables 
     const tasks = ref<TaskType[]>([]);
-    const taskToUpdate = ref<TaskType>({} as TaskType);
+    const taskToUpdate = ref<TaskType | undefined>();
 
     // getting task to update from localstorage.
     const savedTasks = localStorage.getItem('tasks');
     if(savedTasks) {
         tasks.value = JSON.parse(savedTasks);
-        taskToUpdate.value = tasks.value.filter((task: TaskType) => task.id === taskId)[0];
+        taskToUpdate.value = tasks.value.find((task: TaskType) => task.id === taskId);
     }
 
     // update task by calling api endpoint
-    const saveChanges = async (updatedTaskName: string): Promise<void> => {
-        if(updatedTaskName !== taskToUpdate.value.todo) {
+    const saveChanges = async (updatedTaskName: string | undefined): Promise<void> => {
+        if(updatedTaskName !== taskToUpdate.value?.todo) {
             const response = await util.updateData(taskId, updatedTaskName);
-            if(response) {
+            if(response && taskToUpdate.value) {
                 taskToUpdate.value.todo = response.todo;
                 util.setLocalStorage('tasks', tasks.value);
                 router.push('/');

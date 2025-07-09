@@ -15,9 +15,15 @@
   // store variable 
   const store = useTodoListStore();
 
-  onMounted(async () => {
-    await store.readTodos();
+  // set state on onMounted
+  onMounted(() => {
+    setTasksState();
   });
+
+  // set tasks state
+  async function setTasksState(){
+    await store.readTodos();
+  }
 
   // add new todo by calling api endpoint
   const addTaskToArray = async (newTask: string): Promise<void> => {

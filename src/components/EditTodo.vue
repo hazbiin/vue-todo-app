@@ -4,16 +4,16 @@
 
     // component props
     const props = defineProps<{
-        taskToUpdate: TaskType
+        taskToUpdate: TaskType | undefined
     }>();
 
     // component emits
     const emits = defineEmits<{
-        (e: 'save-changes', newTaskName: string):void;
+        (e: 'save-changes', newTaskName: string | undefined):void;
     }>();
 
     // reactive variable 
-    const updatedTaskName = ref<string>(props.taskToUpdate.todo);
+    const updatedTaskName = ref<string | undefined>(props.taskToUpdate?.todo);
 
 </script>
 
