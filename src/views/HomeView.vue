@@ -1,11 +1,10 @@
 <script setup lang="ts">
-  import { ref, onMounted, watch} from 'vue';
+  import { onMounted } from 'vue';
 
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
-  import type { TaskType } from '@/types';
   import * as util from '@/utils';
   import { useTodoListStore } from '@/stores/useTodoListStore';
 
