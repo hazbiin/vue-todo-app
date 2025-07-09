@@ -1,24 +1,19 @@
 <script setup lang="ts">
     import { ref, defineProps, defineEmits } from 'vue';
-    import { RouterLink } from 'vue-router';
-
-    type TaskType = {
-        taskId: number;
-        taskName: string;
-    }
+    import type { TaskType } from '@/types';
 
     // component props
     const props = defineProps<{
-        taskToUpdate: TaskType
+        taskToUpdate: TaskType | undefined
     }>();
 
     // component emits
     const emits = defineEmits<{
-        (e: 'save-changes', newTaskName: string):void;
+        (e: 'save-changes', newTaskName: string | undefined):void;
     }>();
 
     // reactive variable 
-    const updatedTaskName = ref<string>(props.taskToUpdate.taskName);
+    const updatedTaskName = ref<string | undefined>(props.taskToUpdate?.todo);
 
 </script>
 
@@ -28,7 +23,7 @@
             <h1 class="modal-title">Edit your task!</h1>
             <input class="task-input" type="text" v-model="updatedTaskName"/>
             <div class="todo-actions">
-                <RouterLink  to="/" class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</RouterLink>
+                <button class="action-button" @click="$emit('save-changes', updatedTaskName)">Save Changes</button>
             </div>
         </div>
     </div>

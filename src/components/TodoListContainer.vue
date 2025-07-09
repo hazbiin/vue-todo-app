@@ -1,15 +1,11 @@
 <script setup lang="ts">
     import { defineProps, computed, defineEmits } from 'vue';
+    import type { TaskType } from '@/types';
     import TodoItem from './TodoItem.vue';
-
-    type TaskType = {
-        taskId: number;
-        taskName: string;
-    }
 
     // component props
     const props = defineProps<{
-        tasks: TaskType[]
+        tasks: TaskType[] | undefined
     }>();
 
     // component emits
@@ -21,7 +17,7 @@
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
-        return props.tasks.length === 0;
+        return props.tasks?.length === 0;
     });
 
     // delete-task emit handler
@@ -41,10 +37,10 @@
 
         <ul v-else class="todo-list">
             <TodoItem
-                v-for="(task, index) in tasks"
-                :key="task.taskId"
+                v-for="(task) in tasks"
+                :key="task.id"
                 :todoItem="task"
-                @delete-task="() => deleteTask(index)"
+                @delete-task="() => deleteTask(task.id)"
             />
         </ul>
     </div>
