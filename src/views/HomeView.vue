@@ -1,49 +1,33 @@
 <script setup lang="ts">
-  import { ref, onMounted, watch} from 'vue';
+  import { onMounted } from 'vue';
 
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import useNotification from '@/composables/useNotification';
-  import type { TaskType } from '@/types';
   import * as util from '@/utils';
+  import { useTodoListStore } from '@/stores/useTodoListStore';
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
-  //reactive variables
-  const tasks = ref<TaskType[] | undefined>([]);
+  // store variable 
+  const todosStore = useTodoListStore();
 
+  // set state on onMounted
   onMounted(() => {
-    setTasksRef();
+    setTasksState();
   });
 
-  // set tasks ref
-  async function setTasksRef(){
-    const response = await getInitialData();
-    if(response) {
-      tasks.value = response;
-    }
-  }
-
-  // fetching data if not present in localStorage
-  async function getInitialData():Promise<TaskType[] | undefined>{
-    const savedTasks = localStorage.getItem('tasks');
-    if(savedTasks) {
-      return JSON.parse(savedTasks);
-    }else {
-      const response = await util.getTodos();
-      if(response) {
-        return response;
-      }
-    }
+  // set tasks state
+  async function setTasksState(){
+    await todosStore.readTodos();
   }
 
   // add new todo by calling api endpoint
   const addTaskToArray = async (newTask: string): Promise<void> => {
-    const response = await util.addData(newTask);
+    const response = await todosStore.addTodo(newTask);
     if(response) {
-      tasks.value?.push(response);
       showNotification("Task Added Successfully");
     }
   }
@@ -52,24 +36,17 @@
   const getTaskToDelete = async (id: number): Promise<void>  => {
     const response = await util.deleteData(id);
     if(response) {
-      tasks.value = tasks.value?.filter(task => task.id !== response.id);
+      todosStore.tasks = todosStore.tasks?.filter(task => task.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }
-
-  // watch() updates the localStorage when tasks array changes.
-  watch(tasks, (updatedTasks: TaskType[] | undefined) => {
-    if(updatedTasks) {
-      util.setLocalStorage('tasks', updatedTasks);
-    }
-  }, { deep: true });
 
 </script>
 
 <template>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
-    :tasks="tasks"
+    :tasks="todosStore.tasks"
     @delete-task="getTaskToDelete"
     />
   <NotificationContainer
