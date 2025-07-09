@@ -1,13 +1,15 @@
 <script setup lang="ts">
-    import EditTodo from '@/components/EditTodo.vue';
-
     import { ref } from 'vue';
     import { useRoute , useRouter } from 'vue-router';
 
-    import useNotification from '@/composables/useNotification.ts';
-    import type { TaskType } from '@/types';
     import { useTodoListStore } from '@/stores/useTodoListStore';
 
+    import EditTodo from '@/components/EditTodo.vue';
+
+    import type { TaskType } from '@/types';
+
+    import useNotification from '@/composables/useNotification';
+    
     // router instance
     const router = useRouter();
 
