@@ -1,18 +1,20 @@
-import { defineStore } from "pinia";
 import { ref } from "vue";
+import { defineStore } from "pinia";
+
 import type { TaskType } from "@/types";
+
 import * as util from "@/utils";
 
-export const useTodoListStore = defineStore("todo-list", () => {
-  // state
+export const useTodoListStore = defineStore('todo-list', () => {
+  // state 
   const tasks = ref<TaskType[]>([]);
 
-  // actions
-  const readTodos = async (): Promise<void> => {
+  // actions 
+  const readTodos = async(): Promise<void> => {
     const response = await util.getTodos();
-    if (response) {
-      tasks.value = response;
-    }
+      if(response) {
+        tasks.value = response;
+      };
   };
   const addTodo = async (newTask: string): Promise<TaskType | undefined> => {
     const response = await util.addData(newTask);
@@ -26,11 +28,11 @@ export const useTodoListStore = defineStore("todo-list", () => {
     if (response) {
       tasks.value = tasks.value.filter((task) => task.id !== response.id);
       return response;
-    }
-  };
+    };
+  }
   const updateTodo = async (
     id: number,
-    updatedTaskName: string
+    updatedTaskName: string | undefined
   ): Promise<TaskType | undefined> => {
     const response = await util.updateData(id, updatedTaskName);
     if (response) {
@@ -53,5 +55,5 @@ export const useTodoListStore = defineStore("todo-list", () => {
     addTodo,
     deleteTodo,
     updateTodo,
-  };
+  }
 });

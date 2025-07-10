@@ -79,7 +79,7 @@ export async function deleteData(id: number): Promise<DeletedTodoType | undefine
 }
 
 // update data
-export async function updateData(id: number, updatedTaskName: string): Promise<TaskType | undefined>{
+export async function updateData(id: number, updatedTaskName: string | undefined): Promise<TaskType | undefined>{
   try{
     const response = await fetch(`https://dummyjson.com/todos/${id}`, {
       method: 'PATCH',

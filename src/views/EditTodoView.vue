@@ -20,17 +20,17 @@
     // composable imports
     const { showNotification } = useNotification();
 
-    // const store variable
-    const store = useTodoListStore();
+    // store variable
+    const todosStore = useTodoListStore();
 
     // reactive variable
-    const taskToUpdate = ref<TaskType>({} as TaskType);
-    taskToUpdate.value = store.tasks.filter((task: TaskType) => task.id === taskId)[0];
+    const taskToUpdate = ref<TaskType | undefined>();
+    taskToUpdate.value = todosStore.tasks.find((task: TaskType) => task.id === taskId);
 
     // update task by calling api endpoint
-    const saveChanges = async (updatedTaskName: string): Promise<void> => {
-        if(updatedTaskName !== taskToUpdate.value.todo) {
-            const response = await store.updateTodo(taskId, updatedTaskName);
+    const saveChanges = async (updatedTaskName: string | undefined ): Promise<void> => {
+        if(updatedTaskName !== taskToUpdate.value?.todo) {
+            const response = await todosStore.updateTodo(taskId, updatedTaskName);
             if(response) {
                 router.push('/');
                 showNotification('Task Updated Successfully');
