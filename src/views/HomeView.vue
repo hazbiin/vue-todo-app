@@ -1,12 +1,13 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
 
+  import { useTodoListStore } from '@/stores/useTodoListStore';
+
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
+
   import useNotification from '@/composables/useNotification';
-  import * as util from '@/utils';
-  import { useTodoListStore } from '@/stores/useTodoListStore';
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
@@ -32,11 +33,10 @@
     }
   }
 
-  // delete todo by calling api endpoint
+  // delete todo
   const getTaskToDelete = async (id: number): Promise<void>  => {
-    const response = await util.deleteData(id);
+    const response = await todosStore.deleteTodo(id);
     if(response) {
-      todosStore.tasks = todosStore.tasks?.filter(task => task.id !== response.id);
       showNotification('Task Deleted Succesfully');
     }
   }
