@@ -38,9 +38,9 @@
       showNotification('Task Deleted Succesfully');
     }
   }
-  
+
   // handle toggle completed
-  const handleToggleCompleted = (index: string, completed: boolean) => {
+  const handleToggleCompleted = (id: string, checked: boolean) => {
     // need to implement dirty check here
   }
 
