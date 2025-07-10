@@ -1,11 +1,13 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
 
+  import { useTodoListStore } from '@/stores/useTodoListStore';
+
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
+  
   import useNotification from '@/composables/useNotification';
-  import { useTodoListStore } from '@/stores/useTodoListStore';
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();

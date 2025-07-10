@@ -11,7 +11,9 @@ export async function getTodos(): Promise<TaskType[] | undefined>{
     }
 
     const data = await response.json();
+
     return data;
+
   }catch(error) {
     console.error(`Error fetching data: ${error}`);
   }
@@ -33,7 +35,9 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
     }
 
     const data =  await response.json();
+
     return data;
+
   }catch(error) {
     console.error(`Error adding data: ${error}`);
   }
@@ -51,7 +55,9 @@ export async function deleteData(id: number): Promise<DeletedTodoType | undefine
     }
 
     const data = await response.json();
+
     return data;
+
   }catch(error){
     console.error(`Error deleting data: ${error}`);
   }
@@ -73,7 +79,9 @@ export async function updateData(id: number, updatedTaskName: string): Promise<T
     }
 
     const data = await response.json();
+
     return data;
+    
   }catch(error){
     console.error(`Error updating data: ${error}`);
   }
