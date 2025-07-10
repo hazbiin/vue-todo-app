@@ -40,7 +40,7 @@
   }
   
   // handle toggle completed
-  const handleToggleCompleted = () => {
+  const handleToggleCompleted = (index: string, completed: boolean) => {
     // need to implement dirty check here
   }
 

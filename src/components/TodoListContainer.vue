@@ -13,7 +13,6 @@
         (e: 'delete-task', index:string):void
         (e: 'toggle-completed', index: string, completed: boolean): void
     }>();
-    
 
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
@@ -23,6 +22,11 @@
     // delete-task emit handler
     const deleteTask = (index: string): void => {
         emits('delete-task', index);
+    }
+
+    // toggle-completed emit handler
+    const toggleCompleted = (id: string, value: boolean) => {
+        emits('toggle-completed', id, value);
     }
 
 </script>
@@ -41,7 +45,7 @@
                 :key="task.id"
                 :todoItem="task"
                 @delete-task="() => deleteTask(task.id)"
-                @toggle-completed="emits('toggle-completed', task.id, task.completed)"
+                @toggle-completed="toggleCompleted"
             />
         </ul>
     </div>
