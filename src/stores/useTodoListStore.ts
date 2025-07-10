@@ -18,7 +18,6 @@ export const useTodoListStore = defineStore('todo-list', () => {
     const addTodo = async(newTask: string): Promise<TaskType | undefined> => {
         const response = await util.addData(newTask);
         if(response) {
-            tasks.value.push(response);
             return response;
         }
     }

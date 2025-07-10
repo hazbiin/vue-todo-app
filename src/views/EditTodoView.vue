@@ -19,16 +19,16 @@
     const { showNotification } = useNotification();
 
     // const store variable
-    const store = useTodoListStore();
+    const tasksStore = useTodoListStore();
 
     // reactive variable
     const taskToUpdate = ref<TaskType>({} as TaskType);
-    taskToUpdate.value = store.tasks.filter((task: TaskType) => task.id === taskId)[0];
+    taskToUpdate.value = tasksStore.tasks.filter((task: TaskType) => task.id === taskId)[0];
 
     // update task by calling api endpoint
     const saveChanges = async (updatedTaskName: string): Promise<void> => {
         if(updatedTaskName !== taskToUpdate.value.todo) {
-            const response = await store.updateTodo(taskId, updatedTaskName);
+            const response = await tasksStore.updateTodo(taskId, updatedTaskName);
             if(response) {
                 router.push('/');
                 showNotification('Task Updated Successfully');
