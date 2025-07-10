@@ -13,7 +13,7 @@
 
     // getting task id from url params
     const route = useRoute();
-    const taskId = Number(route.params.id);
+    const taskId = route.params.id;
 
     // composable imports
     const { showNotification } = useNotification();

@@ -10,7 +10,7 @@
 
     // component emits
     const emits = defineEmits<{
-        (e: 'delete-task', index:number):void
+        (e: 'delete-task', index:string):void
     }>();
     
 
@@ -20,7 +20,7 @@
     });
 
     // delete-task emit handler
-    const deleteTask = (index: number): void => {
+    const deleteTask = (index: string): void => {
         emits('delete-task', index);
     }
 
