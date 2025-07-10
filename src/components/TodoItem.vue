@@ -11,7 +11,14 @@
     // component emits
     const emits = defineEmits<{
         (e: 'delete-task'):void
+        (e: 'toggle-completed', id: string, value: boolean): void
     }>();
+
+    // checkbox change handler
+    const handleChange = (event: Event) => {
+        const target = event.target as HTMLInputElement;
+        emits('toggle-completed',props.todoItem.id, target.checked);
+    }
 
 </script>
 
@@ -19,8 +26,8 @@
 <template>
     <li class="todo-item">
         <div class="todo-item-group">
-            <input :id="todoItem.id" type="checkbox">
-            <label :for="todoItem.id" class="todo-item-text">{{ todoItem.todo }}</label>
+            <input :id="todoItem.id" type="checkbox" @change="handleChange" :checked="todoItem.completed">
+            <label :for="todoItem.id" class="todo-item-text" :class="{' strike-through':todoItem.completed }">{{ todoItem.todo }}</label>
         </div>
         <div class="todo-item-group">
             <RouterLink :to="'/tasks/'+todoItem.id" class="action-button">edit</RouterLink>
@@ -42,6 +49,9 @@
         font-size: 16px;
         font-weight: bold;
         letter-spacing: 1px;
+    }
+    .strike-through{
+        text-decoration: line-through;
     }
     .todo-item-group{
         display: flex;

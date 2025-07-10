@@ -38,11 +38,15 @@
       showNotification('Task Deleted Succesfully');
     }
   }
-  
+
+  // handle toggle completed
+  const handleToggleCompleted = (id: string, checked: boolean) => {
+    // need to implement dirty check here
+  }
+
   //handle confirm checked state button
   const confirmCheckedState = () => {
-    // need to implement this
-    
+    // need to implement dirty check here
   }
 
 </script>
@@ -52,6 +56,7 @@
   <TodoListContainer
     :tasks="store.tasks"
     @delete-task="getTaskToDelete"
+    @toggle-completed="handleToggleCompleted"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"

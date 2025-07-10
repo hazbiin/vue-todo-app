@@ -33,6 +33,12 @@ export const useTodoListStore = defineStore('todo-list', () => {
             return response;
         }
     }
+    const toggleCompleted = async (id: string, completed: boolean): Promise<TaskType | undefined> => {
+        const response = await util.updateCompleted(id, completed);
+        if(response) {
+            return response;
+        }
+    }
 
     return { 
 
@@ -43,6 +49,7 @@ export const useTodoListStore = defineStore('todo-list', () => {
         readTodos,
         addTodo,
         deleteTodo,
-        updateTodo
+        updateTodo,
+        toggleCompleted
     }
 });
