@@ -29,9 +29,10 @@
   }
 
   // delete todo
-  const getTaskToDelete = async (id: number): Promise<void>  => {
+  const getTaskToDelete = async (id: string): Promise<void>  => {
     const response = await tasksStore.deleteTodo(id);
     if(response) {
+      tasksStore.readTodos();
       showNotification('Task Deleted Succesfully');
     }
   }

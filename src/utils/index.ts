@@ -1,5 +1,4 @@
 import type { TaskType } from "@/types";
-import type { DeletedTodoType } from "@/types";
 
 // fetch data 
 export async function getTodos(): Promise<TaskType[] | undefined>{
@@ -38,9 +37,9 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
 }
 
 // delete data
-export async function deleteData(id: number): Promise<DeletedTodoType | undefined>{
+export async function deleteData(id: string): Promise<TaskType | undefined>{
   try{
-    const response = await fetch(`https://dummyjson.com/todos/${id}`, {
+    const response = await fetch(`http://localhost:3000/todos/${id}`, {
       method: 'DELETE'
     });
     if(!response.ok) {
@@ -55,9 +54,9 @@ export async function deleteData(id: number): Promise<DeletedTodoType | undefine
 }
 
 // update data
-export async function updateData(id: number, updatedTaskName: string): Promise<TaskType | undefined>{
+export async function updateData(id: string | string[], updatedTaskName: string): Promise<TaskType | undefined>{
   try{
-    const response = await fetch(`https://dummyjson.com/todos/${id}`, {
+    const response = await fetch(`http://localhost:3000/todos/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({
