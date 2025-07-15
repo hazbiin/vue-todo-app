@@ -4,12 +4,11 @@ import type { TaskType } from "@/types";
 export async function getTodos(): Promise<TaskType[] | undefined>{
   try {
     const response = await fetch('http://localhost:3000/todos');
-
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
     const data = await response.json();
+
     return data;
   }catch(error) {
     console.error(`Error fetching data: ${error}`);
@@ -26,12 +25,11 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
         todo: newTask,
       })
     });
-
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
     const data =  await response.json();
+
     return data;
   }catch(error) {
     console.error(`Error adding data: ${error}`);
@@ -44,12 +42,11 @@ export async function deleteData(id: string): Promise<TaskType | undefined>{
     const response = await fetch(`http://localhost:3000/todos/${id}`, {
       method: 'DELETE'
     });
-
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
     const data = await response.json();
+
     return data;
   }catch(error){
     console.error(`Error deleting data: ${error}`);
@@ -66,12 +63,11 @@ export async function updateData(id: string | string[], updatedTaskName: string)
         todo: updatedTaskName,
       })
     });
-
     if(!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-
     const data = await response.json();
+
     return data;
   }catch(error){
     console.error(`Error updating data: ${error}`);

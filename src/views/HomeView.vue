@@ -1,36 +1,38 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
 
+  import { useTodoListStore } from '@/stores/useTodoListStore';
+
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
+
   import useNotification from '@/composables/useNotification';
-  import { useTodoListStore } from '@/stores/useTodoListStore';
 
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
   // store variable 
-  const store = useTodoListStore();
+  const tasksStore = useTodoListStore();
 
   onMounted(async () => {
-    await store.readTodos();
+    await tasksStore.readTodos();
   });
 
   // add new todo
   const addTaskToArray = async (newTask: string): Promise<void> => {
-    const response = await store.addTodo(newTask);
+    const response = await tasksStore.addTodo(newTask);
     if(response) {
-      store.readTodos();
+      tasksStore.readTodos();
       showNotification("Task Added Successfully");
     }
   }
 
   // delete todo
   const getTaskToDelete = async (id: string): Promise<void>  => {
-    const response = await store.deleteTodo(id);
+    const response = await tasksStore.deleteTodo(id);
     if(response) {
-      store.readTodos();
+      tasksStore.readTodos();
       showNotification('Task Deleted Succesfully');
     }
   }
@@ -40,7 +42,7 @@
 <template>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
   <TodoListContainer
-    :tasks="store.tasks"
+    :tasks="tasksStore.tasks"
     @delete-task="getTaskToDelete"
     />
   <NotificationContainer
