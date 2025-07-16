@@ -23,6 +23,7 @@ export async function addData(newTask: string): Promise<TaskType | undefined>{
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         todo: newTask,
+        completed: false,
       })
     });
     if(!response.ok) {

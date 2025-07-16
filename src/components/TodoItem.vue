@@ -13,13 +13,20 @@
         (e: 'delete-task'):void
     }>();
 
+    const handleChange = (event: Event) => {
+        // need to implement functionality
+    }
+
 </script>
 
 
 <template>
     <li class="todo-item">
-        <span class="todo-item-text">{{ todoItem.todo }}</span>
-        <div class="todo-actions">
+        <div class="todo-item-group">
+            <input :id="todoItem.id" type="checkbox" @change="handleChange" :checked="todoItem.completed"/>
+            <label :for="todoItem.id" class="todo-item-text">{{ todoItem.todo }}</label>
+        </div>
+        <div class="todo-item-group">
             <RouterLink :to="'/tasks/'+todoItem.id" class="action-button">edit</RouterLink>
             <button class="action-button" @click="emits('delete-task')">delete</button>
         </div>
@@ -40,7 +47,7 @@
         font-weight: bold;
         letter-spacing: 1px;
     }
-    .todo-actions{
+    .todo-item-group{
         display: flex;
         gap: 8px;
         align-items: center;
