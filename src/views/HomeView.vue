@@ -18,7 +18,6 @@
   onMounted(() => {
     setTasksState();
   });
-
   async function setTasksState() {
     await todosStore.readTodos();
   }
@@ -27,7 +26,7 @@
   const addTaskToArray = async (newTask: string): Promise<void> => {
     const response = await todosStore.addTodo(newTask);
     if(response) {
-      todosStore.readTodos();
+      setTasksState();
       showNotification("Task Added Successfully");
     }
   }
@@ -36,7 +35,7 @@
   const getTaskToDelete = async (id: string): Promise<void>  => {
     const response = await todosStore.deleteTodo(id);
     if(response) {
-      todosStore.readTodos();
+      setTasksState();
       showNotification('Task Deleted Succesfully');
     }
   }
