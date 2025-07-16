@@ -7,3 +7,6 @@ export type NotificationMessageType = {
     id:number;
     text: string;
 }
+export type DirtyCheckButtonType = {
+    isDisabled: boolean;
+}

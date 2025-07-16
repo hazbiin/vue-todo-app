@@ -1,11 +1,12 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   import { useTodoListStore } from '@/stores/useTodoListStore';
 
   import TaskInputContainer from '@/components/TaskInputContainer.vue';
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
+  import CustomButton from '@/components/CustomButton.vue';
 
   import useNotification from '@/composables/useNotification';
 
@@ -14,6 +15,9 @@
 
   // store variable 
   const todosStore = useTodoListStore();
+
+  // reactive variables 
+  const isDirty = ref<boolean>(true);
 
   onMounted(() => {
     setTasksState();
@@ -45,6 +49,11 @@
     // need to implement toggle logic here
   }
 
+  // handle api call if dirty
+  const handleSaveChanges = () => {
+    // neet to make api call here
+  }
+
 </script>
 
 <template>
@@ -58,4 +67,5 @@
       v-if="notificationMessages.length > 0"
       :notificationMessages
     />
+  <CustomButton :isDisabled="isDirty" @button-click="handleSaveChanges">Save Changes</CustomButton>
 </template>
