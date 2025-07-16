@@ -7,34 +7,26 @@
     const props = defineProps<{
         tasks: TaskType[] | undefined
     }>();
-
     // component emits
     const emits = defineEmits<{
-        (e: 'edit-task', taskToUpdate: TaskType):void
-        (e: 'delete-task', index:number):void
+        (e: 'delete-task', index:string):void
     }>();
-    
-
     // handle visibility of empty todo-lis
     const isEmptyTodoList = computed<boolean>(():boolean => {
         return props.tasks?.length === 0;
     });
-
     // delete-task emit handler
-    const deleteTask = (index: number): void => {
+    const deleteTask = (index: string): void => {
         emits('delete-task', index);
     }
-
 </script>
 
 <template>
     <div class="todo-list-container">
-
         <div v-if="isEmptyTodoList" class="empty-list">
             <h2 class="empty-list-title">No tasks found!</h2>
             <p class="empty-list-subtitle">Add your first task to get started.</p>
         </div>
-
         <ul v-else class="todo-list">
             <TodoItem
                 v-for="(task) in tasks"
