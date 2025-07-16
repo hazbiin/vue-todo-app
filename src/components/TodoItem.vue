@@ -10,11 +10,14 @@
 
     // component emits
     const emits = defineEmits<{
-        (e: 'delete-task'):void
+        (e: 'delete-task'):void;
+        (e: 'toggle-completed', id: string, value: boolean):void;
     }>();
 
-    const handleChange = (event: Event) => {
-        // need to implement functionality
+    // checkbox change handler
+    const handleChange = (event: Event): void => {
+        const target = event.target as HTMLInputElement;
+        emits('toggle-completed', props.todoItem.id, target.checked);
     }
 
 </script>

@@ -40,6 +40,11 @@
     }
   }
 
+  //toggle completed state of todo
+  const handleToggleCompleted = (id: string, checked: boolean): void => {
+    // need to implement toggle logic here
+  }
+
 </script>
 
 <template>
@@ -47,6 +52,7 @@
   <TodoListContainer
     :tasks="todosStore.tasks"
     @delete-task="getTaskToDelete"
+    @toggle-completed="handleToggleCompleted"
     />
   <NotificationContainer
       v-if="notificationMessages.length > 0"
