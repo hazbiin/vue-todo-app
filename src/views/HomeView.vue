@@ -59,8 +59,13 @@
 
   // computed refs 
   const isAllChecked = computed(() => {
-    // need to implement logic
-    return false;
+    const totalTodos = todosStore.tasks.length;
+    if(totalTodos === 0) return false;
+
+    return todosStore.tasks.every(task => {
+      const changedTodo = changedTodos.value.find(changedTodo => changedTodo.id === task.id);
+      return changedTodo ? changedTodo.isChecked : task.completed;
+    });
   });
 
   // handle all select 
