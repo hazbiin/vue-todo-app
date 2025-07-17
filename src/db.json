@@ -1,12 +1,14 @@
 {
   "todos": [
     {
-      "id": "764a",
-      "todo": "todo 1"
+      "id": "d159",
+      "todo": "todo 1",
+      "completed": false
     },
     {
-      "id": "ac90",
-      "todo": "todo 2"
+      "id": "7beb",
+      "todo": "todo 2",
+      "completed": false
     }
   ]
 }

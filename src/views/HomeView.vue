@@ -31,6 +31,14 @@
     await todosStore.readTodos();
   }
 
+  // update IsDirty ref helper function 
+  const updateIsDirty = () => {
+    isDirty.value = changedTodos.value.some(changedTodo => {
+      const savedTodo = todosStore.tasks.find(task => task.id === changedTodo.id);
+      return savedTodo ? savedTodo.completed !== changedTodo.isChecked : false;
+    });
+  }
+
   // add new todo
   const addTaskToArray = async (newTask: string): Promise<void> => {
     const response = await todosStore.addTodo(newTask);
@@ -55,10 +63,19 @@
     return false;
   });
 
+  // handle all select 
   const handelAllSelect = (checked: boolean) => {
-    // need to implement logic 
+    const newChanged: ChangedTodoType[] = [];
+    for(const task of todosStore.tasks) {
+      newChanged.push({
+        id: task.id,
+        isChecked: checked
+      });
+    }
+    changedTodos.value = newChanged;
+    updateIsDirty();
   }
-  
+
   //toggle completed state of todo
   const handleToggleCompleted = (id: string, checked: boolean): void => {
     const index = changedTodos.value.findIndex(todo => todo.id === id);
