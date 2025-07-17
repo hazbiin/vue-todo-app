@@ -10,3 +10,7 @@ export type NotificationMessageType = {
 export type DirtyCheckButtonType = {
     isDisabled: boolean;
 }
+export type ChangedTodoType = {
+    id: string;
+    isChecked: boolean
+}

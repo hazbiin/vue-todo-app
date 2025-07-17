@@ -10,6 +10,8 @@
 
   import useNotification from '@/composables/useNotification';
 
+  import type { ChangedTodoType } from '@/types';
+
   // composable imports
   const { notificationMessages, showNotification } = useNotification();
 
@@ -18,7 +20,9 @@
 
   // reactive variables 
   const isDirty = ref<boolean>(true);
+  const changedTodos = ref<ChangedTodoType[]>([]);
 
+  // updating state on onMounted
   onMounted(() => {
     setTasksState();
   });
@@ -46,12 +50,30 @@
 
   //toggle completed state of todo
   const handleToggleCompleted = (id: string, checked: boolean): void => {
-    // need to implement toggle logic here
+    const index = changedTodos.value.findIndex(todo => todo.id === id);
+    if(index === -1) {
+      changedTodos.value.push({id: id, isChecked : checked});
+    }else {
+      changedTodos.value.splice(index, 1);
+    }
+
+    if(changedTodos.value.length > 0) {
+      isDirty.value = false;
+    }else {
+      isDirty.value = true;
+    }
   }
 
   // handle api call if dirty
-  const handleSaveChanges = () => {
-    // neet to make api call here
+  const handleSaveChanges = async(): Promise<void> => {
+    for(const todo of changedTodos.value) {
+      const response = await todosStore.toggleCompleted(todo.id, todo.isChecked);
+      if(response) {
+        isDirty.value = true;
+      }
+    }
+    setTasksState();
+    changedTodos.value = [];
   }
 
 </script>

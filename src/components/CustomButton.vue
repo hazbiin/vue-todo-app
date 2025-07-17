@@ -23,7 +23,7 @@
         opacity: 0.9;
         color: white;
         border-radius: 12px;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
         letter-spacing: 1px;
         box-shadow: 0 1px 10px rgba(255, 255, 255, 0.2);
