@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, computed } from 'vue';
 
   import { useTodoListStore } from '@/stores/useTodoListStore';
 
@@ -7,6 +7,7 @@
   import TodoListContainer from '@/components/TodoListContainer.vue';
   import NotificationContainer from '@/components/NotificationContainer.vue';
   import CustomButton from '@/components/CustomButton.vue';
+  import SelectAllCheckboxContainer from '@/components/SelectAllCheckboxContainer.vue';
 
   import useNotification from '@/composables/useNotification';
 
@@ -48,6 +49,16 @@
     }
   }
 
+  // computed refs 
+  const isAllChecked = computed(() => {
+    // need to implement logic
+    return false;
+  });
+
+  const handelAllSelect = (checked: boolean) => {
+    // need to implement logic 
+  }
+  
   //toggle completed state of todo
   const handleToggleCompleted = (id: string, checked: boolean): void => {
     const index = changedTodos.value.findIndex(todo => todo.id === id);
@@ -80,6 +91,10 @@
 
 <template>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
+  <SelectAllCheckboxContainer
+    :isAllChecked="isAllChecked"
+    @all-select="handelAllSelect"
+  />
   <TodoListContainer
     :tasks="todosStore.tasks"
     @delete-task="getTaskToDelete"
