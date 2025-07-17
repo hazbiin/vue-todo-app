@@ -1,11 +1,15 @@
 <script setup lang="ts">
     import { defineProps, computed, defineEmits } from 'vue';
-    import type { TaskType } from '@/types';
+
     import TodoItem from './TodoItem.vue';
+
+    import type { TaskType } from '@/types';
+    import type { ChangedTodoType } from '@/types';
 
     // component props
     const props = defineProps<{
         tasks: TaskType[] | undefined
+        changedTodos : ChangedTodoType[]
     }>();
     // component emits
     const emits = defineEmits<{
@@ -24,6 +28,12 @@
     const toggleTask = (id: string, checked: boolean): void => {
         emits('toggle-completed', id, checked);
     }
+
+    // get latest checked state 
+    const getLatestChecked = (task :TaskType): boolean => {
+        const changedTodo = props.changedTodos.find(changedTodo => changedTodo.id === task.id);
+        return changedTodo ? changedTodo.isChecked : task.completed;
+    }
 </script>
 
 <template>
@@ -39,6 +49,7 @@
                 :todoItem="task"
                 @delete-task="() => deleteTask(task.id)"
                 @toggle-completed="toggleTask"
+                :isChecked="getLatestChecked(task)"
             />
         </ul>
     </div>

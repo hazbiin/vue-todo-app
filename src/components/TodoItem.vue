@@ -6,6 +6,7 @@
     // component props
     const props = defineProps<{
         todoItem: TaskType
+        isChecked: boolean
     }>();
 
     // component emits
@@ -25,7 +26,7 @@
 <template>
     <li class="todo-item">
         <div class="todo-item-group">
-            <input :id="todoItem.id" type="checkbox" @change="handleChange" :checked="todoItem.completed"/>
+            <input :id="todoItem.id" type="checkbox" @change="handleChange" :checked="isChecked"/>
             <label :for="todoItem.id" class="todo-item-text" :class="{'strike-through': todoItem.completed}">{{ todoItem.todo }}</label>
         </div>
         <div class="todo-item-group">

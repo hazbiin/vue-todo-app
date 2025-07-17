@@ -119,6 +119,7 @@
   />
   <TodoListContainer
     :tasks="todosStore.tasks"
+    :changedTodos="changedTodos"
     @delete-task="getTaskToDelete"
     @toggle-completed="handleToggleCompleted"
     />
