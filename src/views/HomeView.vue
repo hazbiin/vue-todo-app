@@ -50,10 +50,14 @@
 
   // delete todo
   const getTaskToDelete = async (id: string): Promise<void>  => {
-    const response = await todosStore.deleteTodo(id);
-    if(response) {
-      setTasksState();
-      showNotification('Task Deleted Succesfully');
+    if(window.confirm("Are you sure you want to delete this todo?")) {
+      const response = await todosStore.deleteTodo(id);
+      if(response) {
+        setTasksState();
+        showNotification('Task Deleted Succesfully');
+        changedTodos.value = changedTodos.value.filter(todo => todo.id !== id);
+        updateIsDirty();
+      }
     }
   }
 
@@ -152,6 +156,7 @@
 
 <template>
   <TaskInputContainer @add-new-task="addTaskToArray"/>
+  {{ changedTodos }}
   <SelectAllCheckboxContainer
     :isAllChecked="isAllChecked"
     :isIndeterminate="isIndeterminate"
