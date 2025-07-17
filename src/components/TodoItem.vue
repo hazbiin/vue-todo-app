@@ -22,7 +22,6 @@
 
 </script>
 
-
 <template>
     <li class="todo-item">
         <div class="todo-item-group">
@@ -52,6 +51,8 @@
     }
     .strike-through{
         text-decoration: line-through;
+        text-decoration-color:#552275c0;
+        text-decoration-thickness: 3px;
     }
     .todo-item-group{
         display: flex;
