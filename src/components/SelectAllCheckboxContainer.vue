@@ -1,17 +1,15 @@
 <script setup lang="ts">
     import { defineEmits } from 'vue';
+
+    import type { SelectAllCheckBoxPropType } from '@/types';
     
-    const props = defineProps<{
-        isAllChecked: boolean;
-        isIndeterminate: boolean;
-        completedCount: number;
-    }>();
+    const props = defineProps<SelectAllCheckBoxPropType>();
 
     const emits = defineEmits<{
         (e: 'all-select', value: boolean): void;
     }>();
 
-    const handleChange = (e: Event) => {
+    const handleChange = (e: Event): void => {
         const target = e.target as HTMLInputElement;
         emits('all-select', target.checked);
     }

@@ -27,12 +27,12 @@
   onMounted(() => {
     setTasksState();
   });
-  async function setTasksState() {
+  async function setTasksState(): Promise<void> {
     await todosStore.readTodos();
   }
 
   // update IsDirty ref helper function 
-  const updateIsDirty = () => {
+  const updateIsDirty = (): void => {
     isDirty.value = changedTodos.value.some(changedTodo => {
       const savedTodo = todosStore.tasks.find(task => task.id === changedTodo.id);
       return savedTodo ? savedTodo.completed !== changedTodo.isChecked : false;
@@ -102,7 +102,7 @@
   });
 
   // handle all select 
-  const handelAllSelect = (checked: boolean) => {
+  const handelAllSelect = (checked: boolean): void => {
     const newChanged: ChangedTodoType[] = [];
     for(const task of todosStore.tasks) {
       newChanged.push({

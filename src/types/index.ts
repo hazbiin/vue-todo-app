@@ -14,3 +14,8 @@ export type ChangedTodoType = {
     id: string;
     isChecked: boolean
 }
+export type SelectAllCheckBoxPropType = {
+    isAllChecked: boolean;
+    isIndeterminate: boolean;
+    completedCount: number;
+}
