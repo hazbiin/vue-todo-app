@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <button :disabled="isDisabled" @click="emits('button-click')" class="confirm-button">
+    <button :disabled="!isDisabled" @click="emits('button-click')" class="confirm-button">
         <slot></slot>
     </button>
 </template>

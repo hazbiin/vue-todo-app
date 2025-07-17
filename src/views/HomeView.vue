@@ -19,7 +19,7 @@
   const todosStore = useTodoListStore();
 
   // reactive variables 
-  const isDirty = ref<boolean>(true);
+  const isDirty = ref<boolean>(false);
   const changedTodos = ref<ChangedTodoType[]>([]);
 
   // updating state on onMounted
@@ -58,9 +58,9 @@
     }
 
     if(changedTodos.value.length > 0) {
-      isDirty.value = false;
-    }else {
       isDirty.value = true;
+    }else {
+      isDirty.value = false;
     }
   }
 
@@ -69,7 +69,7 @@
     for(const todo of changedTodos.value) {
       const response = await todosStore.toggleCompleted(todo.id, todo.isChecked);
       if(response) {
-        isDirty.value = true;
+        isDirty.value = false;
       }
     }
     setTasksState();
