@@ -3,6 +3,7 @@
     
     const props = defineProps<{
         isAllChecked: boolean;
+        isIndeterminate: boolean;
     }>();
 
     const emits = defineEmits<{
@@ -18,7 +19,12 @@
 <template>
     <div class="select-all-container">
         <div class="select-all-container-contents">
-            <input type="checkbox" id="select-all-checkbox" @change="handleChange" :checked="isAllChecked"/>
+            <input 
+                type="checkbox" 
+                id="select-all-checkbox" 
+                @change="handleChange" 
+                :checked="isAllChecked"
+                :indeterminate="isIndeterminate"/>
             <label for="select-all-checkbox">0 completed</label>
         </div>
     </div>
