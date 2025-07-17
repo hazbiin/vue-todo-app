@@ -83,18 +83,24 @@
 
   //toggle completed state of todo
   const handleToggleCompleted = (id: string, checked: boolean): void => {
-    const index = changedTodos.value.findIndex(todo => todo.id === id);
-    if(index === -1) {
-      changedTodos.value.push({id: id, isChecked : checked});
-    }else {
-      changedTodos.value.splice(index, 1);
-    }
+    const savedTodo = todosStore.tasks.find(task => task.id === id);
+    const changedTodoIndex = changedTodos.value.findIndex(todo => todo.id === id);
 
-    if(changedTodos.value.length > 0) {
-      isDirty.value = true;
+    if(savedTodo?.completed !== checked) {
+      if(changedTodoIndex === -1) {
+        changedTodos.value.push({
+          id, 
+          isChecked: checked
+        });
+      }else {
+        changedTodos.value[changedTodoIndex].isChecked = checked;
+      }
     }else {
-      isDirty.value = false;
+      if(changedTodoIndex !== -1) {
+        changedTodos.value.splice(changedTodoIndex, 1);
+      }
     }
+    updateIsDirty();
   }
 
   // handle api call if dirty
