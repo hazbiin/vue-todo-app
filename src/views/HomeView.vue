@@ -72,7 +72,7 @@
   const isIndeterminate = computed(() => {
     let changedTodoCount = 0;
     const totalTodos = todosStore.tasks.length;
-    
+
     if(totalTodos === 0) return false;
 
     for(const task of todosStore.tasks) {
@@ -84,6 +84,21 @@
     }
 
     return changedTodoCount > 0 && changedTodoCount < totalTodos;
+  });
+
+  // computed ref - completed count 
+  const completedCount = computed(() => {
+    let changedTodoCount = 0;
+    for(const task of todosStore.tasks) {
+      const changedTodo = changedTodos.value.find(changedTodo => changedTodo.id === task.id);
+      const isChanged = changedTodo ? changedTodo.isChecked : task.completed;
+
+      if(isChanged) {
+        changedTodoCount ++;
+      }
+    }
+
+    return changedTodoCount;
   });
 
   // handle all select 
@@ -140,6 +155,7 @@
   <SelectAllCheckboxContainer
     :isAllChecked="isAllChecked"
     :isIndeterminate="isIndeterminate"
+    :completedCount="completedCount"
     @all-select="handelAllSelect"
   />
   <TodoListContainer

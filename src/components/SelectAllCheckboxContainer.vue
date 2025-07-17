@@ -4,6 +4,7 @@
     const props = defineProps<{
         isAllChecked: boolean;
         isIndeterminate: boolean;
+        completedCount: number;
     }>();
 
     const emits = defineEmits<{
@@ -24,8 +25,9 @@
                 id="select-all-checkbox" 
                 @change="handleChange" 
                 :checked="isAllChecked"
-                :indeterminate="isIndeterminate"/>
-            <label for="select-all-checkbox">0 completed</label>
+                :indeterminate="isIndeterminate"
+            />
+            <label for="select-all-checkbox">{{ completedCount }} completed</label>
         </div>
     </div>
 </template>
